@@ -1,7 +1,9 @@
-package com.xmartlabs.moviefan;
+package com.xmartlabs.moviefan.ui;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.xmartlabs.moviefan.R;
 
 public class StartActivity extends AppCompatActivity {
   @Override
