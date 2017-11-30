@@ -6,9 +6,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-
+import com.annimon.stream.Optional;
 import com.f2prateek.dart.Dart;
 
 public abstract class BaseAppCompatActivity extends AppCompatActivity {
@@ -28,9 +27,8 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
 
   protected void hideKeyboard() {
     InputMethodManager inputMethodManager = (InputMethodManager) this.getSystemService(Activity.INPUT_METHOD_SERVICE);
-    View currentFocus = this.getCurrentFocus();
-    if (currentFocus != null) {
-      inputMethodManager.hideSoftInputFromWindow(currentFocus.getWindowToken(), 0);
-    }
+    //noinspection ConstantConditions
+    Optional.ofNullable(getCurrentFocus())
+        .ifPresent(currentFocus -> inputMethodManager.hideSoftInputFromWindow(currentFocus.getWindowToken(), 0));
   }
 }
