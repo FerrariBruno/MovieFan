@@ -34,18 +34,23 @@ final JUNIT_VERSION = '4.12'
 
 
 dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation "com.android.support:appcompat-v7:${ANDROID_SUPPORT_VERSION}"
-    implementation "com.android.support.constraint:constraint-layout:${ANDROID_SUPPORT_CONSTRAINT_VERSION}"
-    androidTestImplementation "com.android.support.test:runner:${ANDROID_SUPPORT_TEST_RUNNER_VERSION}"
     androidTestImplementation "com.android.support.test.espresso:espresso-core:${ANDROID_ESPRESSO_CORE_VERSION}"
-    implementation "com.annimon:stream:${ANNIMON_STREAM_VERSION}"
-    implementation "com.jakewharton:butterknife:${BUTTERKNIFE_VERSION}"
-    annotationProcessor "com.jakewharton:butterknife-compiler:${BUTTERKNIFE_VERSION}"
-    implementation "com.f2prateek.dart:dart:${DART_VERSION}"
+    androidTestImplementation "com.android.support.test:runner:${ANDROID_SUPPORT_TEST_RUNNER_VERSION}"
+
     annotationProcessor "com.f2prateek.dart:dart-processor:${DART_VERSION}"
-    compileOnly "com.f2prateek.dart:dart-processor:${DART_VERSION}"
-    implementation "com.hannesdorfmann.fragmentargs:annotation:${FRAGMENTARGS_VERSION}"
+    annotationProcessor "com.f2prateek.dart:henson-processor:${DART_VERSION}"
     annotationProcessor "com.hannesdorfmann.fragmentargs:processor:${FRAGMENTARGS_VERSION}"
+    annotationProcessor "com.jakewharton:butterknife-compiler:${BUTTERKNIFE_VERSION}"
+
+    implementation "com.android.support.constraint:constraint-layout:${ANDROID_SUPPORT_CONSTRAINT_VERSION}"
+    implementation "com.android.support:appcompat-v7:${ANDROID_SUPPORT_VERSION}"
+    implementation "com.android.support:design:${ANDROID_SUPPORT_VERSION}"
+    implementation "com.annimon:stream:${ANNIMON_STREAM_VERSION}"
+    implementation "com.f2prateek.dart:dart:${DART_VERSION}"
+    implementation "com.f2prateek.dart:henson:${DART_VERSION}"
+    implementation "com.hannesdorfmann.fragmentargs:annotation:${FRAGMENTARGS_VERSION}"
+    implementation "com.jakewharton:butterknife:${BUTTERKNIFE_VERSION}"
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+
     testImplementation "junit:junit:${JUNIT_VERSION}"
 }

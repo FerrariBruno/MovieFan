@@ -1,6 +1,7 @@
-package com.xmartlabs.moviefan.ui;
+package com.xmartlabs.moviefan.ui.common;
 
 import android.os.Bundle;
+import android.support.annotation.CallSuper;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -28,7 +29,7 @@ public abstract class BaseFragment extends Fragment {
     FragmentArgs.inject(this);
   }
 
-  @NonNull
+  @CallSuper
   @Override
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
     View view = inflater.inflate(getLayoutResId(), container, false);
@@ -42,7 +43,7 @@ public abstract class BaseFragment extends Fragment {
     unbinder.unbind();
   }
 
-  protected void  showAlertError(int stringResId) {
+  protected void showAlertError(int stringResId) {
     new AlertDialog.Builder(getContext())
         .setMessage(stringResId)
         .setNeutralButton(android.R.string.ok, null)
