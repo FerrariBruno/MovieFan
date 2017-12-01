@@ -8,8 +8,4 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="MovieFanTabLayout" parent="Widget.Design.TabLayout">
-        <item name="tabIndicatorColor">#0000FF</item>
-    </style>
-
 </resources>

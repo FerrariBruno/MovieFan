@@ -30,6 +30,7 @@ final ANNIMON_STREAM_VERSION = '1.1.9'
 final BUTTERKNIFE_VERSION = '8.8.1'
 final DART_VERSION = '2.0.2'
 final FRAGMENTARGS_VERSION = '3.0.2'
+final LOMBOK_VERSION = '1.16.18'
 final JUNIT_VERSION = '4.12'
 
 
@@ -41,6 +42,7 @@ dependencies {
     annotationProcessor "com.f2prateek.dart:henson-processor:${DART_VERSION}"
     annotationProcessor "com.hannesdorfmann.fragmentargs:processor:${FRAGMENTARGS_VERSION}"
     annotationProcessor "com.jakewharton:butterknife-compiler:${BUTTERKNIFE_VERSION}"
+    annotationProcessor "org.projectlombok:lombok:${LOMBOK_VERSION}"
 
     implementation "com.android.support.constraint:constraint-layout:${ANDROID_SUPPORT_CONSTRAINT_VERSION}"
     implementation "com.android.support:appcompat-v7:${ANDROID_SUPPORT_VERSION}"
@@ -50,6 +52,7 @@ dependencies {
     implementation "com.f2prateek.dart:henson:${DART_VERSION}"
     implementation "com.hannesdorfmann.fragmentargs:annotation:${FRAGMENTARGS_VERSION}"
     implementation "com.jakewharton:butterknife:${BUTTERKNIFE_VERSION}"
+    implementation "org.projectlombok:lombok:${LOMBOK_VERSION}"
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
     testImplementation "junit:junit:${JUNIT_VERSION}"

@@ -1,36 +1,34 @@
 package com.xmartlabs.moviefan.ui.main;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
+import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
 import com.xmartlabs.moviefan.R;
 import com.xmartlabs.moviefan.ui.common.BaseFragment;
-import com.xmartlabs.moviefan.ui.slidingtabs.FragmentAdapter;
+import com.xmartlabs.moviefan.ui.slidingtabs.SlidingTabsAdapter;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Created by bruno on 11/30/17.
  */
+@FragmentWithArgs
 public class TabsFragment extends BaseFragment {
-  @BindView(R.id.viewpager) ViewPager viewPager;
-  @BindView(R.id.sliding_tabs) TabLayout tabLayout;
+  @BindView(R.id.viewpager)
+  ViewPager viewPager;
+  @BindView(R.id.sliding_tabs)
+  TabLayout tabLayout;
 
   @Override
-  public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                           Bundle savedInstanceState) {
-    View view = super.onCreateView(inflater,container,savedInstanceState);
-    ButterKnife.bind(this, view);
+  public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    super.onViewCreated(view, savedInstanceState);
 
-    viewPager.setAdapter(new FragmentAdapter(getFragmentManager(), getContext()));
+    viewPager.setAdapter(new SlidingTabsAdapter(getFragmentManager(), getContext()));
     tabLayout.setupWithViewPager(viewPager);
-
-    return view;
   }
 
   @Override
