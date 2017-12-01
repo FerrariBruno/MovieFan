@@ -4,15 +4,32 @@ import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import com.xmartlabs.moviefan.ui.main.PageFragment;
+
+import com.xmartlabs.moviefan.R;
+import com.xmartlabs.moviefan.ui.main.LatestPageFragment;
+import com.xmartlabs.moviefan.ui.main.SpecificYearPageFragment;
+import com.xmartlabs.moviefan.ui.main.ThisYearPageFragment;
 
 /**
  * Created by bruno on 11/30/17.
  */
 public class FragmentAdapter extends FragmentPagerAdapter {
-  private final int PAGE_COUNT = 3;
   private Context context;
-  private String tabTitles[] = new String[] { "LATEST", "THIS YEAR", "1985" };
+
+  private enum FragmentPage{
+    LATEST(new LatestPageFragment(), R.string.home_view_latest),
+    THIS_YEAR(new ThisYearPageFragment(), R.string.home_view_this_year),
+    SPECIFIC_YEAR(new SpecificYearPageFragment(), R.string.home_view_1985);
+
+    private Fragment fragment;
+    private int titleResourceID;
+    private static final int size = FragmentPage.values().length;
+
+    FragmentPage(Fragment fragment, int titleResourceID){
+      this.fragment = fragment;
+      this.titleResourceID = titleResourceID;
+    }
+  }
 
   public FragmentAdapter(FragmentManager fm, Context context) {
     super(fm);
@@ -21,17 +38,16 @@ public class FragmentAdapter extends FragmentPagerAdapter {
 
   @Override
   public int getCount() {
-    return PAGE_COUNT;
+    return FragmentPage.size;
   }
 
   @Override
   public Fragment getItem(int position) {
-    return PageFragment.newInstance(position + 1);
+    return FragmentPage.values()[position].fragment;
   }
 
   @Override
   public CharSequence getPageTitle(int position) {
-    // Generate title based on item position
-    return tabTitles[position];
+    return context.getString(FragmentPage.values()[position].titleResourceID);
   }
 }

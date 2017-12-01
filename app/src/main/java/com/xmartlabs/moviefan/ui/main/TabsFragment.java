@@ -11,21 +11,28 @@ import com.xmartlabs.moviefan.R;
 import com.xmartlabs.moviefan.ui.common.BaseFragment;
 import com.xmartlabs.moviefan.ui.slidingtabs.FragmentAdapter;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by bruno on 11/30/17.
  */
 public class TabsFragment extends BaseFragment {
+  @BindView(R.id.viewpager) ViewPager viewPager;
+  @BindView(R.id.sliding_tabs) TabLayout tabLayout;
+
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
-    View v = super.onCreateView(inflater,container,savedInstanceState);
-    ViewPager viewPager = v.findViewById(R.id.viewpager);
+    View view = super.onCreateView(inflater,container,savedInstanceState);
+    ButterKnife.bind(this, view);
 
     viewPager.setAdapter(new FragmentAdapter(getFragmentManager(), getContext()));
-    TabLayout tabLayout = v.findViewById(R.id.sliding_tabs);
     tabLayout.setupWithViewPager(viewPager);
-    return v;
+
+    return view;
   }
+
   @Override
   protected int getLayoutResId() {
     return R.layout.tabs_fragment;
