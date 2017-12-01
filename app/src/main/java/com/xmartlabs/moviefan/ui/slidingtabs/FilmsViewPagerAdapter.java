@@ -23,8 +23,8 @@ public class FilmsViewPagerAdapter extends FragmentPagerAdapter {
   @RequiredArgsConstructor
   private enum Page {
     LATEST(R.string.home_view_latest),
-    SPECIFIC_YEAR(R.string.home_view_1985),
     THIS_YEAR(R.string.home_view_this_year),
+    SPECIFIC_YEAR(R.string.home_view_1985),
     ;
 
     private static final int SIZE = Page.values().length;
@@ -61,12 +61,12 @@ public class FilmsViewPagerAdapter extends FragmentPagerAdapter {
   }
 
   @Override
-  public Fragment getItem(@NonNull int position) {
+  public Fragment getItem(int position) {
     return createFragment(Page.values()[position]);
   }
 
   @Override
-  public CharSequence getPageTitle(@NonNull int position) {
+  public CharSequence getPageTitle(int position) {
     return context.getString(Page.values()[position].titleResourceId);
   }
 }

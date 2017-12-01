@@ -1,11 +1,46 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+    <style name="AppTheme" parent="Theme.AppCompat.Light">
+        <item name="colorPrimary">@color/black</item>
+        <item name="colorPrimaryDark">@color/black</item>
+        <item name="colorAccent">@color/red</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Toolbar" parent="Widget.AppCompat.Toolbar" />
+
+    <style name="Toolbar.Transparent" parent="Toolbar">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:theme">@style/Toolbar.Transparent.Theme</item>
+        <item name="popupTheme">@style/Toolbar.Transparent.Theme</item>
+    </style>
+
+    <style name="Toolbar.Transparent.Theme" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="android:windowActionBarOverlay">true</item>
+        <item name="windowActionBarOverlay">true</item>
+    </style>
+
+    <style name="FilmsTabLayout" parent="Widget.Design.TabLayout">
+        <item name="tabIndicatorColor">@color/red</item>
+        <item name="tabIndicatorHeight">2dp</item>
+        <item name="tabPaddingStart">33dp</item>
+        <item name="tabPaddingEnd">40dp</item>
+        <item name="tabBackground">@color/black</item>
+        <item name="tabTextAppearance">@style/FilmsTabLayoutTextAppearance</item>
+        <item name="tabSelectedTextColor">@color/white</item>
+    </style>
+
+    <style name="FilmsTabLayoutTextAppearance" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/grey_warm</item>
+        <item name="textAllCaps">true</item>
     </style>
 
 </resources>

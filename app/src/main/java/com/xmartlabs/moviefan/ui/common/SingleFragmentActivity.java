@@ -6,10 +6,16 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.widget.Toolbar;
 
 import com.xmartlabs.moviefan.R;
 
+import butterknife.BindView;
+
 public abstract class SingleFragmentActivity extends BaseAppCompatActivity {
+  @BindView(R.id.toolbar)
+  Toolbar toolbar;
+
   @NonNull
   protected abstract BaseFragment createFragment();
 
@@ -32,6 +38,8 @@ public abstract class SingleFragmentActivity extends BaseAppCompatActivity {
           .add(R.id.fragment_container, fragment)
           .commit();
     }
+
+    setSupportActionBar(toolbar);
   }
 
   @Nullable
