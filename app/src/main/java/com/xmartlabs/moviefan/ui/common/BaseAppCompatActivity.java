@@ -1,4 +1,4 @@
-package com.xmartlabs.moviefan.ui;
+package com.xmartlabs.moviefan.ui.common;
 
 import android.app.Activity;
 import android.content.Context;
