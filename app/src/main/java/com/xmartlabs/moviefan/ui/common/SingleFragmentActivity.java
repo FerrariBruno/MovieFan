@@ -8,7 +8,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
 import com.xmartlabs.moviefan.R;
-import com.xmartlabs.moviefan.ui.common.BaseAppCompatActivity;
 
 public abstract class SingleFragmentActivity extends BaseAppCompatActivity {
   @NonNull

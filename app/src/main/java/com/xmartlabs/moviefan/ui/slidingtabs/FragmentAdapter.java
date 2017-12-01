@@ -16,16 +16,16 @@ import com.xmartlabs.moviefan.ui.main.ThisYearPageFragment;
 public class FragmentAdapter extends FragmentPagerAdapter {
   private Context context;
 
-  private enum FragmentPage{
+  private enum PageFragment {
     LATEST(new LatestPageFragment(), R.string.home_view_latest),
-    THIS_YEAR(new ThisYearPageFragment(), R.string.home_view_this_year),
-    SPECIFIC_YEAR(new SpecificYearPageFragment(), R.string.home_view_1985);
+    SPECIFIC_YEAR(new SpecificYearPageFragment(), R.string.home_view_1985),
+    THIS_YEAR(new ThisYearPageFragment(), R.string.home_view_this_year);
 
     private Fragment fragment;
     private int titleResourceID;
-    private static final int size = FragmentPage.values().length;
+    private static final int size = PageFragment.values().length;
 
-    FragmentPage(Fragment fragment, int titleResourceID){
+    PageFragment(Fragment fragment, int titleResourceID){
       this.fragment = fragment;
       this.titleResourceID = titleResourceID;
     }
@@ -38,16 +38,16 @@ public class FragmentAdapter extends FragmentPagerAdapter {
 
   @Override
   public int getCount() {
-    return FragmentPage.size;
+    return PageFragment.size;
   }
 
   @Override
   public Fragment getItem(int position) {
-    return FragmentPage.values()[position].fragment;
+    return PageFragment.values()[position].fragment;
   }
 
   @Override
   public CharSequence getPageTitle(int position) {
-    return context.getString(FragmentPage.values()[position].titleResourceID);
+    return context.getString(PageFragment.values()[position].titleResourceID);
   }
 }
