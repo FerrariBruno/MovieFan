@@ -9,7 +9,7 @@ import com.xmartlabs.moviefan.ui.common.BaseAppCompatActivity;
 
 @HensonNavigable
 public class StartActivity extends BaseAppCompatActivity {
-  //TODO Someone should add the onboarding check
+  //TODO add the onboarding check
   @Override
   protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);

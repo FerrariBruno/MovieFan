@@ -9,7 +9,7 @@ import android.view.View;
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
 import com.xmartlabs.moviefan.R;
 import com.xmartlabs.moviefan.ui.common.BaseFragment;
-import com.xmartlabs.moviefan.ui.slidingtabs.SlidingTabsAdapter;
+import com.xmartlabs.moviefan.ui.slidingtabs.FilmsViewPagerAdapter;
 
 import butterknife.BindView;
 
@@ -27,7 +27,7 @@ public class TabsFragment extends BaseFragment {
   public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
 
-    viewPager.setAdapter(new SlidingTabsAdapter(getFragmentManager(), getContext()));
+    viewPager.setAdapter(new FilmsViewPagerAdapter(getFragmentManager(), getContext()));
     tabLayout.setupWithViewPager(viewPager);
   }
 

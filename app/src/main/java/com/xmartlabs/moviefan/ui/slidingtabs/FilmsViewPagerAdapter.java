@@ -1,6 +1,7 @@
 package com.xmartlabs.moviefan.ui.slidingtabs;
 
 import android.content.Context;
+import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -16,7 +17,7 @@ import lombok.RequiredArgsConstructor;
 /**
  * Created by bruno on 11/30/17.
  */
-public class SlidingTabsAdapter extends FragmentPagerAdapter {
+public class FilmsViewPagerAdapter extends FragmentPagerAdapter {
   private Context context;
 
   @RequiredArgsConstructor
@@ -28,10 +29,11 @@ public class SlidingTabsAdapter extends FragmentPagerAdapter {
 
     private static final int SIZE = Page.values().length;
 
-    private final int titleResourceID;
+    @StringRes
+    private final int titleResourceId;
   }
 
-  public SlidingTabsAdapter(@NonNull FragmentManager fm, @NonNull Context context) {
+  public FilmsViewPagerAdapter(@NonNull FragmentManager fm, @NonNull Context context) {
     super(fm);
     this.context = context;
   }
@@ -65,6 +67,6 @@ public class SlidingTabsAdapter extends FragmentPagerAdapter {
 
   @Override
   public CharSequence getPageTitle(@NonNull int position) {
-    return context.getString(Page.values()[position].titleResourceID);
+    return context.getString(Page.values()[position].titleResourceId);
   }
 }
