@@ -27,7 +27,12 @@ public class TabsFragment extends BaseFragment {
   public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
 
+    initViewPagerAdapter();
+  }
+
+  private void initViewPagerAdapter() {
     viewPager.setAdapter(new FilmsViewPagerAdapter(getFragmentManager(), getContext()));
+    viewPager.setOffscreenPageLimit(4);
     tabLayout.setupWithViewPager(viewPager);
   }
 

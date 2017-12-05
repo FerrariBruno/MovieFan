@@ -20,14 +20,14 @@
             style="@style/Toolbar"
             />
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:contentDescription="@string/logo_content_description"
-                android:layout_gravity="center"
-                android:src="@drawable/navbar_logo"
-                android:paddingBottom="9dp"
-                />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/logo_content_description"
+            android:layout_gravity="center"
+            android:paddingBottom="9dp"
+            android:src="@drawable/navbar_logo"
+            />
 
     </android.support.design.widget.AppBarLayout>
 

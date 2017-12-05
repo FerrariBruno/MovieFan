@@ -46,6 +46,7 @@ dependencies {
 
     implementation "com.android.support.constraint:constraint-layout:${ANDROID_SUPPORT_CONSTRAINT_VERSION}"
     implementation "com.android.support:appcompat-v7:${ANDROID_SUPPORT_VERSION}"
+    implementation "com.android.support:recyclerview-v7:${ANDROID_SUPPORT_VERSION}"
     implementation "com.android.support:design:${ANDROID_SUPPORT_VERSION}"
     implementation "com.annimon:stream:${ANNIMON_STREAM_VERSION}"
     implementation "com.f2prateek.dart:dart:${DART_VERSION}"

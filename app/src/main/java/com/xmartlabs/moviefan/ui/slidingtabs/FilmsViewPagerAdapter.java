@@ -7,8 +7,11 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.xmartlabs.moviefan.R;
+import com.xmartlabs.moviefan.ui.main.LatestPageFragment;
 import com.xmartlabs.moviefan.ui.main.LatestPageFragmentBuilder;
+import com.xmartlabs.moviefan.ui.main.SpecificYearPageFragment;
 import com.xmartlabs.moviefan.ui.main.SpecificYearPageFragmentBuilder;
+import com.xmartlabs.moviefan.ui.main.ThisYearPageFragment;
 import com.xmartlabs.moviefan.ui.main.ThisYearPageFragmentBuilder;
 
 import lombok.NonNull;
@@ -19,13 +22,15 @@ import lombok.RequiredArgsConstructor;
  */
 public class FilmsViewPagerAdapter extends FragmentPagerAdapter {
   private Context context;
+  private LatestPageFragment latestPageFragment = new LatestPageFragmentBuilder().build();
+  private ThisYearPageFragment thisYearPageFragment = new ThisYearPageFragmentBuilder().build();
+  private SpecificYearPageFragment specificYearPageFragment = new SpecificYearPageFragmentBuilder().build();
 
   @RequiredArgsConstructor
   private enum Page {
     LATEST(R.string.home_view_latest),
     THIS_YEAR(R.string.home_view_this_year),
-    SPECIFIC_YEAR(R.string.home_view_1985),
-    ;
+    SPECIFIC_YEAR(R.string.home_view_1985),;
 
     private static final int SIZE = Page.values().length;
 
@@ -39,17 +44,14 @@ public class FilmsViewPagerAdapter extends FragmentPagerAdapter {
   }
 
   @NonNull
-  private Fragment createFragment(@NonNull Page page){
-    switch(page){
+  private Fragment getFragmentFromPage(@NonNull Page page) {
+    switch (page) {
       case LATEST:
-        return new LatestPageFragmentBuilder()
-            .build();
+        return latestPageFragment;
       case THIS_YEAR:
-        return new ThisYearPageFragmentBuilder()
-            .build();
+        return thisYearPageFragment;
       case SPECIFIC_YEAR:
-        return new SpecificYearPageFragmentBuilder()
-            .build();
+        return specificYearPageFragment;
       default:
         throw new ExceptionInInitializerError();
     }
@@ -57,12 +59,12 @@ public class FilmsViewPagerAdapter extends FragmentPagerAdapter {
 
   @Override
   public int getCount() {
-      return Page.SIZE;
+    return Page.SIZE;
   }
 
   @Override
   public Fragment getItem(int position) {
-    return createFragment(Page.values()[position]);
+    return getFragmentFromPage(Page.values()[position]);
   }
 
   @Override

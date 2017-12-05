@@ -43,4 +43,25 @@
         <item name="textAllCaps">true</item>
     </style>
 
+    <style name="FilmTitle">
+        <item name="android:textSize">19sp</item>
+        <item name="android:fontFamily">"@font/Lato-Bold"</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="GreyedFilmData">
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/grey_warm</item>
+    </style>
+
+    <style name="FilmDescription">
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">"@font/Lato-Regular"</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
 </resources>
