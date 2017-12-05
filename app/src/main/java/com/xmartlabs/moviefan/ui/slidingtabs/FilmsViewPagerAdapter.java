@@ -22,9 +22,12 @@ import lombok.RequiredArgsConstructor;
  */
 public class FilmsViewPagerAdapter extends FragmentPagerAdapter {
   private Context context;
-  private LatestPageFragment latestPageFragment = new LatestPageFragmentBuilder().build();
-  private ThisYearPageFragment thisYearPageFragment = new ThisYearPageFragmentBuilder().build();
-  private SpecificYearPageFragment specificYearPageFragment = new SpecificYearPageFragmentBuilder().build();
+  private LatestPageFragment latestPageFragment = new LatestPageFragmentBuilder()
+      .build();
+  private SpecificYearPageFragment specificYearPageFragment = new SpecificYearPageFragmentBuilder()
+      .build();
+  private ThisYearPageFragment thisYearPageFragment = new ThisYearPageFragmentBuilder()
+      .build();
 
   @RequiredArgsConstructor
   private enum Page {

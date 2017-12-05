@@ -18,6 +18,8 @@ import butterknife.BindView;
  */
 @FragmentWithArgs
 public class TabsFragment extends BaseFragment {
+  private final int OFFSCREEN_PAGE_LIMIT = 4;
+
   @BindView(R.id.viewpager)
   ViewPager viewPager;
   @BindView(R.id.sliding_tabs)
@@ -26,13 +28,12 @@ public class TabsFragment extends BaseFragment {
   @Override
   public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
-
     initViewPagerAdapter();
   }
 
   private void initViewPagerAdapter() {
     viewPager.setAdapter(new FilmsViewPagerAdapter(getFragmentManager(), getContext()));
-    viewPager.setOffscreenPageLimit(4);
+    viewPager.setOffscreenPageLimit(OFFSCREEN_PAGE_LIMIT);
     tabLayout.setupWithViewPager(viewPager);
   }
 

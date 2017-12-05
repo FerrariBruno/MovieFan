@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
 import com.xmartlabs.moviefan.R;
-import com.xmartlabs.moviefan.ui.common.BaseFragment;
 import com.xmartlabs.moviefan.ui.models.Film;
 import com.xmartlabs.moviefan.ui.recyclerview.FilmsRecyclerViewAdapter;
 
@@ -41,7 +40,7 @@ public class SpecificYearPageFragment extends MovieFanPageBaseFragment {
     adapter = new FilmsRecyclerViewAdapter();
   }
 
-  private List<Film> prepareFilmData(){
+  private List<Film> prepareFilmData() {
     List<Film> filmData = new ArrayList<>();
     Bitmap bitmap = BitmapFactory.decodeResource(this.getContext().getResources(),
         R.drawable.navbar_logo);

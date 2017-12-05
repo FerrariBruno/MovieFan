@@ -20,12 +20,9 @@ import lombok.NonNull;
 /**
  * Created by bruno on 12/4/17.
  */
-public class FilmsRecyclerViewAdapter extends
-    RecyclerView.Adapter<RecyclerView.ViewHolder>{
+public class FilmsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
   private final int DETAILED_FILM_VIEWHOLDER = 0;
-
   private final int COLLAPSED_FILM_VIEWHOLDER = 1;
-
   private final int VIEWHOLDER_POSITION_LIMIT = 3;
 
   @NonNull
@@ -47,7 +44,7 @@ public class FilmsRecyclerViewAdapter extends
     @BindView(R.id.poster)
     ImageView poster;
 
-    DetailedFilmViewHolder(@NonNull View view){
+    DetailedFilmViewHolder(@NonNull View view) {
       super(view);
       ButterKnife.bind(this, view);
     }
@@ -60,7 +57,7 @@ public class FilmsRecyclerViewAdapter extends
     @BindView(R.id.collapsed_title)
     TextView title;
 
-    CollapsedFilmViewHolder(@NonNull View view){
+    CollapsedFilmViewHolder(@NonNull View view) {
       super(view);
       ButterKnife.bind(this, view);
     }
@@ -69,40 +66,48 @@ public class FilmsRecyclerViewAdapter extends
   @Override
   public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
     View itemView;
-    switch(viewType) {
+    switch (viewType) {
       case DETAILED_FILM_VIEWHOLDER:
         itemView = LayoutInflater.from(parent.getContext())
             .inflate(R.layout.item_detailed_film, parent, false);
         return new DetailedFilmViewHolder(itemView);
       case COLLAPSED_FILM_VIEWHOLDER:
-      itemView = LayoutInflater.from(parent.getContext())
-            .inflate(R.layout.item_collapsed_film, parent, false);
-      return new CollapsedFilmViewHolder(itemView);
-      default:
         itemView = LayoutInflater.from(parent.getContext())
             .inflate(R.layout.item_collapsed_film, parent, false);
         return new CollapsedFilmViewHolder(itemView);
+      default:
+        throw new ExceptionInInitializerError();
     }
   }
 
   @Override
   public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
     Film film = films.get(position);
-    switch(getItemViewType(position)){
+    switch (getItemViewType(position)) {
       case DETAILED_FILM_VIEWHOLDER:
         DetailedFilmViewHolder detailedHolder = (DetailedFilmViewHolder) holder;
-        detailedHolder.poster.setImageBitmap(film.getPoster());
-        detailedHolder.title.setText(film.getTitle());
-        detailedHolder.durationGenre.setText(film.getDuration());
-        detailedHolder.popularity.setText(String.valueOf(film.getPopularity()));
-        detailedHolder.description.setText(film.getDescription());
+        setDetailedHolderData(film, detailedHolder);
         break;
       case COLLAPSED_FILM_VIEWHOLDER:
         CollapsedFilmViewHolder collapsedHolder = (CollapsedFilmViewHolder) holder;
-        collapsedHolder.poster.setImageBitmap(film.getPoster());
-        collapsedHolder.title.setText(film.getTitle());
+        setCollapsedHolderData(film, collapsedHolder);
         break;
+      default:
+        throw new ExceptionInInitializerError();
     }
+  }
+
+  private void setCollapsedHolderData(Film film, CollapsedFilmViewHolder collapsedHolder) {
+    collapsedHolder.poster.setImageBitmap(film.getPoster());
+    collapsedHolder.title.setText(film.getTitle());
+  }
+
+  private void setDetailedHolderData(Film film, DetailedFilmViewHolder detailedHolder) {
+    detailedHolder.poster.setImageBitmap(film.getPoster());
+    detailedHolder.title.setText(film.getTitle());
+    detailedHolder.durationGenre.setText(film.getDuration());
+    detailedHolder.popularity.setText(String.valueOf(film.getPopularity()));
+    detailedHolder.description.setText(film.getDescription());
   }
 
   @Override
@@ -115,7 +120,7 @@ public class FilmsRecyclerViewAdapter extends
     return films.size();
   }
 
-  public void addAllFilms(List<Film> films){
+  public void addAllFilms(List<Film> films) {
     this.films.addAll(films);
   }
 }

@@ -48,7 +48,7 @@ public abstract class MovieFanPageBaseFragment extends BaseFragment {
 
   protected abstract void bindAdapterToRecyclerView();
 
-  protected void bindFilmsToRecyclerView(List<Film> films){
+  protected void bindFilmsToRecyclerView(@NonNull List<Film> films) {
     adapter.addAllFilms(films);
     adapter.notifyDataSetChanged();
   }
