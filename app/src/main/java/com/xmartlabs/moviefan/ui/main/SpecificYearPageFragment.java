@@ -1,5 +1,7 @@
 package com.xmartlabs.moviefan.ui.main;
 
+import android.support.annotation.NonNull;
+
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
 import com.xmartlabs.moviefan.controller.FilmController;
 import com.xmartlabs.moviefan.ui.models.Film;
@@ -12,11 +14,13 @@ import java.util.List;
  */
 @FragmentWithArgs
 public class SpecificYearPageFragment extends MovieFanPageBaseFragment {
+  @NonNull
   @Override
   protected FilmsRecyclerViewAdapter createFilmsAdapter() {
     return new FilmsRecyclerViewAdapter();
   }
 
+  @NonNull
   @Override
   protected List<Film> requestFilms(int pageNumber) {
     return FilmController.getInstance().getSpecificYearFilms(pageNumber);
