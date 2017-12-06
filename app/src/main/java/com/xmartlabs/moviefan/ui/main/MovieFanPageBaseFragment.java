@@ -3,7 +3,6 @@ package com.xmartlabs.moviefan.ui.main;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -25,9 +24,9 @@ import butterknife.BindView;
  */
 public abstract class MovieFanPageBaseFragment extends BaseFragment {
   @BindView(R.id.films)
-  RecyclerView recyclerView;
+  RecyclerView filmsRecyclerView;
 
-  FilmsRecyclerViewAdapter adapter;
+  private FilmsRecyclerViewAdapter adapter;
 
   @NonNull
   @Override
@@ -38,15 +37,14 @@ public abstract class MovieFanPageBaseFragment extends BaseFragment {
   }
 
   private void initRecyclerView(@NonNull View view) {
-    bindAdapterToRecyclerView();
+    adapter = createFilmsAdapter();
     RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(view.getContext());
-    recyclerView.setLayoutManager(layoutManager);
-    recyclerView.setItemAnimator(new DefaultItemAnimator());
-    recyclerView.setAdapter(adapter);
-    recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
+    filmsRecyclerView.setLayoutManager(layoutManager);
+    filmsRecyclerView.setAdapter(adapter);
+    filmsRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
   }
 
-  protected abstract void bindAdapterToRecyclerView();
+  protected abstract FilmsRecyclerViewAdapter createFilmsAdapter();
 
   protected void bindFilmsToRecyclerView(@NonNull List<Film> films) {
     adapter.addAllFilms(films);

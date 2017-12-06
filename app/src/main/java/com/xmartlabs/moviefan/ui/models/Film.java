@@ -1,6 +1,7 @@
 package com.xmartlabs.moviefan.ui.models;
 
 import android.graphics.Bitmap;
+import android.support.annotation.Nullable;
 
 import java.util.List;
 
@@ -14,7 +15,7 @@ import lombok.NonNull;
 @Builder
 @Data
 public class Film {
-  @NonNull
+  @Nullable
   private Bitmap poster;
   @NonNull
   private String title;

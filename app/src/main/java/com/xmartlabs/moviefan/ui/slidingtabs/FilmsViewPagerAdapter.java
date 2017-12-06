@@ -14,6 +14,8 @@ import com.xmartlabs.moviefan.ui.main.SpecificYearPageFragmentBuilder;
 import com.xmartlabs.moviefan.ui.main.ThisYearPageFragment;
 import com.xmartlabs.moviefan.ui.main.ThisYearPageFragmentBuilder;
 
+import java.util.Locale;
+
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
@@ -22,18 +24,19 @@ import lombok.RequiredArgsConstructor;
  */
 public class FilmsViewPagerAdapter extends FragmentPagerAdapter {
   private Context context;
-  private LatestPageFragment latestPageFragment = new LatestPageFragmentBuilder()
+  private final LatestPageFragment latestPageFragment = new LatestPageFragmentBuilder()
       .build();
-  private SpecificYearPageFragment specificYearPageFragment = new SpecificYearPageFragmentBuilder()
+  private final SpecificYearPageFragment specificYearPageFragment = new SpecificYearPageFragmentBuilder()
       .build();
-  private ThisYearPageFragment thisYearPageFragment = new ThisYearPageFragmentBuilder()
+  private final ThisYearPageFragment thisYearPageFragment = new ThisYearPageFragmentBuilder()
       .build();
 
   @RequiredArgsConstructor
   private enum Page {
     LATEST(R.string.home_view_latest),
     THIS_YEAR(R.string.home_view_this_year),
-    SPECIFIC_YEAR(R.string.home_view_1985),;
+    SPECIFIC_YEAR(R.string.home_view_1985),
+    ;
 
     private static final int SIZE = Page.values().length;
 
@@ -56,7 +59,8 @@ public class FilmsViewPagerAdapter extends FragmentPagerAdapter {
       case SPECIFIC_YEAR:
         return specificYearPageFragment;
       default:
-        throw new ExceptionInInitializerError();
+        throw new ExceptionInInitializerError(String.format(Locale.US,"viewType: %d was not found",
+            page.ordinal()));
     }
   }
 

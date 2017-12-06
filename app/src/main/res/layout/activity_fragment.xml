@@ -16,18 +16,19 @@
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="20dp"
+            android:layout_height="wrap_content"
             style="@style/Toolbar"
-            />
+            >
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:contentDescription="@string/logo_content_description"
-            android:layout_gravity="center"
-            android:paddingBottom="9dp"
-            android:src="@drawable/navbar_logo"
-            />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/logo_content_description"
+                android:layout_gravity="center"
+                android:src="@drawable/navbar_logo"
+                />
+
+        </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
 
