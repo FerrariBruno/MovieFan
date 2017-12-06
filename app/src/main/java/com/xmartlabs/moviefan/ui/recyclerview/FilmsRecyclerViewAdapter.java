@@ -29,8 +29,7 @@ public class FilmsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
 
   private enum FilmViewHolder {
     DETAILED_FILM_VIEWHOLDER,
-    COLLAPSED_FILM_VIEWHOLDER,
-    ;
+    COLLAPSED_FILM_VIEWHOLDER
   }
 
   @NonNull

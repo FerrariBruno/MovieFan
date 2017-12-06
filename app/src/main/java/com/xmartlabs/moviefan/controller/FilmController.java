@@ -7,21 +7,23 @@ import com.xmartlabs.moviefan.ui.models.Film;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 /**
  * Created by bruno on 12/6/17.
  */
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class FilmController {
-  private static FilmController filmController = new FilmController();
-
-  private FilmController() {}
+  private static final FilmController FILM_CONTROLLER = new FilmController();
 
   @NonNull
-  public static FilmController getFilmControllerInstance() {
-    return filmController;
+  public static FilmController getInstance() {
+    return FILM_CONTROLLER;
   }
 
   @NonNull
-  public List<Film> getLatestFilms() {
+  public List<Film> getLatestFilms(int pageNumber) {
     List<Film> filmData = new ArrayList<>();
     Film firstFilm = Film.builder()
         .title("2001: a space Odyssey")
@@ -62,7 +64,7 @@ public class FilmController {
   }
 
   @NonNull
-  public List<Film> getThisYearsFilms() {
+  public List<Film> getThisYearsFilms(int pageNumber) {
     List<Film> filmData = new ArrayList<>();
     Film firstFilm = Film.builder()
         .title("2001: a space Odyssey")
@@ -77,7 +79,7 @@ public class FilmController {
   }
 
   @NonNull
-  public List<Film> getSpecificYearFilms() {
+  public List<Film> getSpecificYearFilms(int pageNumber) {
     List<Film> filmData = new ArrayList<>();
     Film firstFilm = Film.builder()
         .title("2001: a space Odyssey")

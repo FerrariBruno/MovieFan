@@ -1,14 +1,13 @@
 package com.xmartlabs.moviefan.ui.main;
 
 import android.os.Bundle;
+import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.xmartlabs.moviefan.R;
 import com.xmartlabs.moviefan.ui.common.BaseFragment;
@@ -28,12 +27,10 @@ public abstract class MovieFanPageBaseFragment extends BaseFragment {
 
   private FilmsRecyclerViewAdapter adapter;
 
-  @NonNull
   @Override
-  public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-    View view = super.onCreateView(inflater, container, savedInstanceState);
+  public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
     initRecyclerView(view);
-    return view;
+    bindFilmsToRecyclerView();
   }
 
   private void initRecyclerView(@NonNull View view) {
@@ -46,7 +43,16 @@ public abstract class MovieFanPageBaseFragment extends BaseFragment {
 
   protected abstract FilmsRecyclerViewAdapter createFilmsAdapter();
 
-  protected void bindFilmsToRecyclerView(@NonNull List<Film> films) {
+  protected abstract List<Film> requestFilms();
+
+  @Override
+  protected int getLayoutResId() {
+    return R.layout.movie_page_fragment;
+  }
+
+  @MainThread
+  protected void bindFilmsToRecyclerView() {
+    List<Film> films = requestFilms();
     adapter.addAllFilms(films);
     adapter.notifyDataSetChanged();
   }
