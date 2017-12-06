@@ -18,7 +18,7 @@ public class ThisYearPageFragment extends MovieFanPageBaseFragment {
   }
 
   @Override
-  protected List<Film> requestFilms() {
-    return FilmController.getInstance().getThisYearsFilms(1);
+  protected List<Film> requestFilms(int pageNumber) {
+    return FilmController.getInstance().getThisYearsFilms(pageNumber);
   }
 }

@@ -25,6 +25,7 @@ public abstract class MovieFanPageBaseFragment extends BaseFragment {
   @BindView(R.id.films)
   RecyclerView filmsRecyclerView;
 
+  private int actualPageNumber = 1;
   private FilmsRecyclerViewAdapter adapter;
 
   @Override
@@ -41,9 +42,11 @@ public abstract class MovieFanPageBaseFragment extends BaseFragment {
     filmsRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
   }
 
+  @NonNull
   protected abstract FilmsRecyclerViewAdapter createFilmsAdapter();
 
-  protected abstract List<Film> requestFilms();
+  @NonNull
+  protected abstract List<Film> requestFilms(int pageNumber);
 
   @Override
   protected int getLayoutResId() {
@@ -52,7 +55,7 @@ public abstract class MovieFanPageBaseFragment extends BaseFragment {
 
   @MainThread
   protected void bindFilmsToRecyclerView() {
-    List<Film> films = requestFilms();
+    List<Film> films = requestFilms(actualPageNumber);
     adapter.addAllFilms(films);
     adapter.notifyDataSetChanged();
   }
