@@ -25,8 +25,9 @@ public abstract class MovieFanPageBaseFragment extends BaseFragment {
   @BindView(R.id.films)
   RecyclerView filmsRecyclerView;
 
-  private int actualPageNumber = 1;
-  private FilmsRecyclerViewAdapter adapter;
+  private final int FIRST_PAGE = 1;
+  @NonNull
+  private FilmsRecyclerViewAdapter adapter = createFilmsAdapter();
 
   @Override
   public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
@@ -35,18 +36,11 @@ public abstract class MovieFanPageBaseFragment extends BaseFragment {
   }
 
   private void initRecyclerView(@NonNull View view) {
-    adapter = createFilmsAdapter();
     RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(view.getContext());
     filmsRecyclerView.setLayoutManager(layoutManager);
     filmsRecyclerView.setAdapter(adapter);
     filmsRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
   }
-
-  @NonNull
-  protected abstract FilmsRecyclerViewAdapter createFilmsAdapter();
-
-  @NonNull
-  protected abstract List<Film> requestFilms(int pageNumber);
 
   @Override
   protected int getLayoutResId() {
@@ -55,8 +49,14 @@ public abstract class MovieFanPageBaseFragment extends BaseFragment {
 
   @MainThread
   protected void bindFilmsToRecyclerView() {
-    List<Film> films = requestFilms(actualPageNumber);
+    List<Film> films = requestFilms(FIRST_PAGE);
     adapter.addAllFilms(films);
     adapter.notifyDataSetChanged();
   }
+
+  @NonNull
+  protected abstract FilmsRecyclerViewAdapter createFilmsAdapter();
+
+  @NonNull
+  protected abstract List<Film> requestFilms(int pageNumber);
 }

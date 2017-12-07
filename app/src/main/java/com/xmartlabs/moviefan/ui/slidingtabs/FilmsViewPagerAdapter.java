@@ -23,19 +23,17 @@ import lombok.RequiredArgsConstructor;
  * Created by bruno on 11/30/17.
  */
 public class FilmsViewPagerAdapter extends FragmentPagerAdapter {
+  @NonNull
   private Context context;
-  private final LatestPageFragment latestPageFragment = new LatestPageFragmentBuilder()
-      .build();
-  private final SpecificYearPageFragment specificYearPageFragment = new SpecificYearPageFragmentBuilder()
-      .build();
-  private final ThisYearPageFragment thisYearPageFragment = new ThisYearPageFragmentBuilder()
-      .build();
+  private final LatestPageFragment LATEST_PAGE_FRAGMENT = new LatestPageFragmentBuilder().build();
+  private final SpecificYearPageFragment SPECIFIC_YEAR_PAGE_FRAGMENT = new SpecificYearPageFragmentBuilder().build();
+  private final ThisYearPageFragment THIS_YEAR_PAGE_FRAGMENT = new ThisYearPageFragmentBuilder().build();
 
   @RequiredArgsConstructor
   private enum Page {
     LATEST(R.string.home_view_latest),
-    THIS_YEAR(R.string.home_view_this_year),
     SPECIFIC_YEAR(R.string.home_view_1985),
+    THIS_YEAR(R.string.home_view_this_year),
     ;
 
     private static final int SIZE = Page.values().length;
@@ -53,11 +51,11 @@ public class FilmsViewPagerAdapter extends FragmentPagerAdapter {
   private Fragment getFragmentFromPage(@NonNull Page page) {
     switch (page) {
       case LATEST:
-        return latestPageFragment;
+        return LATEST_PAGE_FRAGMENT;
       case THIS_YEAR:
-        return thisYearPageFragment;
+        return THIS_YEAR_PAGE_FRAGMENT;
       case SPECIFIC_YEAR:
-        return specificYearPageFragment;
+        return SPECIFIC_YEAR_PAGE_FRAGMENT;
       default:
         throw new ExceptionInInitializerError(String.format(Locale.US,"viewType: %d was not found",
             page.ordinal()));
@@ -69,11 +67,13 @@ public class FilmsViewPagerAdapter extends FragmentPagerAdapter {
     return Page.SIZE;
   }
 
+  @NonNull
   @Override
   public Fragment getItem(int position) {
     return getFragmentFromPage(Page.values()[position]);
   }
 
+  @NonNull
   @Override
   public CharSequence getPageTitle(int position) {
     return context.getString(Page.values()[position].titleResourceId);

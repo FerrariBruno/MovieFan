@@ -24,24 +24,25 @@ public class FilmController {
 
   @NonNull
   public List<Film> getLatestFilms(int pageNumber) {
-    List<Film> filmData = new ArrayList<>();
-    Film firstFilm = Film.builder()
-        .title("2001: a space Odyssey")
-        .duration("2:50 hs - Sci-Fi, Drama")
-        .popularity(8.12f)
-        .description("a description")
-        .genres(new ArrayList<>())
-        .build();
-    filmData.add(firstFilm);
+    //TODO replace with service call when service is done
+    return getHardcodedLatestFilms();
+  }
 
-    Film secondFilm = Film.builder()
-        .title("The shining")
-        .duration("2:50 hs - Sci-Fi, Drama")
-        .popularity(8.12f)
-        .description("a description")
-        .genres(new ArrayList<>())
-        .build();
-    filmData.add(secondFilm);
+  @NonNull
+  public List<Film> getThisYearsFilms(int pageNumber) {
+    //TODO replace with service call when service is done
+    return getHardcodedThisYearsFilms();
+  }
+
+  @NonNull
+  public List<Film> getSpecificYearFilms(int pageNumber) {
+    //TODO replace with service call when service is done
+    return getHardcodedSpecificYearFilms();
+  }
+
+  @NonNull
+  private List<Film> getHardcodedLatestFilms() {
+    List<Film> filmData = new ArrayList<>();
 
     Film thirdFilm = Film.builder()
         .title("The shining")
@@ -64,22 +65,7 @@ public class FilmController {
   }
 
   @NonNull
-  public List<Film> getThisYearsFilms(int pageNumber) {
-    List<Film> filmData = new ArrayList<>();
-    Film firstFilm = Film.builder()
-        .title("2001: a space Odyssey")
-        .duration("2:50 hs - Sci-Fi, Drama")
-        .popularity(8.12f)
-        .description("a description")
-        .genres(new ArrayList<>())
-        .build();
-    filmData.add(firstFilm);
-
-    return filmData;
-  }
-
-  @NonNull
-  public List<Film> getSpecificYearFilms(int pageNumber) {
+  private List<Film> getHardcodedSpecificYearFilms() {
     List<Film> filmData = new ArrayList<>();
     Film firstFilm = Film.builder()
         .title("2001: a space Odyssey")
@@ -98,6 +84,20 @@ public class FilmController {
         .genres(new ArrayList<>())
         .build();
     filmData.add(secondFilm);
+    return filmData;
+  }
+
+  @NonNull
+  private List<Film> getHardcodedThisYearsFilms() {
+    List<Film> filmData = new ArrayList<>();
+    Film firstFilm = Film.builder()
+        .title("2001: a space Odyssey")
+        .duration("2:50 hs - Sci-Fi, Drama")
+        .popularity(8.12f)
+        .description("a description")
+        .genres(new ArrayList<>())
+        .build();
+    filmData.add(firstFilm);
 
     return filmData;
   }
