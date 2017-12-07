@@ -1,16 +1,28 @@
 package com.xmartlabs.moviefan.ui.main;
 
+import android.support.annotation.NonNull;
+
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
-import com.xmartlabs.moviefan.R;
-import com.xmartlabs.moviefan.ui.common.BaseFragment;
+import com.xmartlabs.moviefan.controller.FilmController;
+import com.xmartlabs.moviefan.ui.models.Film;
+import com.xmartlabs.moviefan.ui.recyclerview.FilmsRecyclerViewAdapter;
+
+import java.util.List;
 
 /**
  * Created by bruno on 12/1/17.
  */
 @FragmentWithArgs
-public class ThisYearPageFragment extends BaseFragment {
+public class ThisYearPageFragment extends MovieFanPageBaseFragment {
+  @NonNull
   @Override
-  protected int getLayoutResId() {
-    return R.layout.this_year_page_fragment;
+  protected FilmsRecyclerViewAdapter createFilmsAdapter() {
+    return new FilmsRecyclerViewAdapter();
+  }
+
+  @NonNull
+  @Override
+  protected List<Film> requestFilms(int pageNumber) {
+    return FilmController.getInstance().getThisYearsFilms(pageNumber);
   }
 }

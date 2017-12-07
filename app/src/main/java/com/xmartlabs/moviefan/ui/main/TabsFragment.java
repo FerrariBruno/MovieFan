@@ -1,6 +1,7 @@
 package com.xmartlabs.moviefan.ui.main;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -18,16 +19,22 @@ import butterknife.BindView;
  */
 @FragmentWithArgs
 public class TabsFragment extends BaseFragment {
+  private final int OFFSCREEN_PAGE_LIMIT = 3;
+
   @BindView(R.id.viewpager)
   ViewPager viewPager;
   @BindView(R.id.sliding_tabs)
   TabLayout tabLayout;
 
   @Override
-  public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+  public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
+    initViewPagerAdapter();
+  }
 
+  private void initViewPagerAdapter() {
     viewPager.setAdapter(new FilmsViewPagerAdapter(getFragmentManager(), getContext()));
+    viewPager.setOffscreenPageLimit(OFFSCREEN_PAGE_LIMIT);
     tabLayout.setupWithViewPager(viewPager);
   }
 
