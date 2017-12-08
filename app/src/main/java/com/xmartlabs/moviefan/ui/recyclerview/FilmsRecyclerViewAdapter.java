@@ -1,7 +1,6 @@
 package com.xmartlabs.moviefan.ui.recyclerview;
 
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,9 +16,6 @@ import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.reactivex.Flowable;
-import io.reactivex.Observable;
-import io.reactivex.Single;
 import lombok.NonNull;
 
 /**
@@ -110,11 +106,10 @@ public class FilmsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
     }
 
     void bind(@NonNull Film film) {
-      poster.setImageBitmap(film.getPoster());
+      //TODO load image and duration genre
       title.setText(film.getTitle());
-      durationGenre.setText(film.getDuration());
       popularity.setText(String.valueOf(film.getPopularity()));
-      description.setText(film.getDescription());
+      description.setText(film.getOverview());
     }
   }
 
@@ -130,7 +125,7 @@ public class FilmsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
     }
 
     void bind(@NonNull Film film) {
-      poster.setImageBitmap(film.getPoster());
+      //TODO load image
       title.setText(film.getTitle());
     }
   }

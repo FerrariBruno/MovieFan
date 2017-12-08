@@ -1,7 +1,8 @@
 package com.xmartlabs.moviefan.ui.models;
 
-import android.graphics.Bitmap;
 import android.support.annotation.Nullable;
+
+import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
@@ -16,15 +17,15 @@ import lombok.NonNull;
 @Data
 public class Film {
   @Nullable
-  private Bitmap poster;
+  @SerializedName("poster_path")
+  private String poster;
   @NonNull
   private String title;
   @NonNull
-  private String duration;
-  @NonNull
   private float popularity;
   @NonNull
-  private String description;
+  private String overview;
   @NonNull
+  @SerializedName("genre_ids")
   private List<String> genres;
 }
