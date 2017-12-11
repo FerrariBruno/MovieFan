@@ -84,8 +84,8 @@ public class FilmsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
     return films.size();
   }
 
-  public void addAllFilms(@NonNull List<Film> films) {
-    this.films.addAll(films);
+  public void addFilm(@NonNull Film film) {
+    this.films.add(film);
   }
 
   static class DetailedFilmViewHolder extends RecyclerView.ViewHolder {

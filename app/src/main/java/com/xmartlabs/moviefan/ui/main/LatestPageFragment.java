@@ -9,6 +9,8 @@ import com.xmartlabs.moviefan.ui.recyclerview.FilmsRecyclerViewAdapter;
 
 import java.util.List;
 
+import io.reactivex.Single;
+
 /**
  * Created by bruno on 12/1/17.
  */
@@ -22,10 +24,7 @@ public class LatestPageFragment extends MovieFanPageBaseFragment {
 
   @NonNull
   @Override
-  protected List<Film> requestFilms(int pageNumber) {
-    FilmController.getInstance().getLatestFilms(pageNumber)
-        .subscribe(films -> {
-
-        });
+  protected Single<List<Film>> requestFilms(int pageNumber) {
+    return FilmController.getInstance().getLatestFilms(pageNumber);
   }
 }
