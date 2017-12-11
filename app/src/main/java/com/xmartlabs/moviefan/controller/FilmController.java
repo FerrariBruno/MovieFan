@@ -8,8 +8,11 @@ import com.xmartlabs.moviefan.services.FilmsService;
 import com.xmartlabs.moviefan.ui.models.Film;
 import com.xmartlabs.moviefan.ui.models.FilmResponse;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -25,6 +28,7 @@ import retrofit2.Retrofit;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class FilmController {
   private static final FilmController FILM_CONTROLLER = new FilmController();
+  private final String SORT_BY_QUERY_VALUE = "release_date.desc";
 
   @NonNull
   public static FilmController getInstance() {
@@ -35,7 +39,7 @@ public class FilmController {
   public List<Film> getLatestFilms(int pageNumber) {
     Retrofit retrofit = RestProvider.getInstance().provideRetrofit();
     FilmsService service = retrofit.create(FilmsService.class);
-    service.getLatestFilms("release_date.desc", "2017-12-08",
+    service.getLatestFilms(SORT_BY_QUERY_VALUE, getTodaysDate(),
         null, null, null, pageNumber)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
@@ -68,6 +72,12 @@ public class FilmController {
   public List<Film> getSpecificYearFilms(int pageNumber) {
     //TODO replace with service call when service is done
     return getHardcodedSpecificYearFilms();
+  }
+
+  @NonNull
+  public String getTodaysDate(){
+    Date todaysDate = new Date();
+    return new SimpleDateFormat("yyyy-MM-dd", Locale.US).format(todaysDate);
   }
 
   @NonNull

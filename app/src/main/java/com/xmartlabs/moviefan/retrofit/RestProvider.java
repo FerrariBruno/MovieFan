@@ -17,7 +17,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class RestProvider {
   private static RestProvider instance = new RestProvider();
-  private final String BASE_URL = "https://api.themoviedb.org/4/";
+  private final String BASE_URL = "https://api.themoviedb.org/3/";
 
   @NonNull
   public static RestProvider getInstance(){
@@ -31,13 +31,13 @@ public class RestProvider {
         .baseUrl(HttpUrl.parse(BASE_URL))
         .addConverterFactory(GsonConverterFactory.create())
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-        .client(createClientWithInterceptors(createLoggingInterceptor(), createSessionInterceptor()))
+        .client(createClientWithInterceptors(createLoggingInterceptor(), createQueryInterceptor()))
         .build();
   }
 
   @NonNull
   private OkHttpClient createClientWithInterceptors(@NonNull HttpLoggingInterceptor loggingInterceptor,
-                                                    @NonNull SessionInterceptor sessionInterceptor){
+                                                    @NonNull QueryInterceptor sessionInterceptor){
     return new OkHttpClient.Builder()
         .addInterceptor(sessionInterceptor)
         .addInterceptor(loggingInterceptor)
@@ -45,8 +45,8 @@ public class RestProvider {
   }
 
   @NonNull
-  private SessionInterceptor createSessionInterceptor(){
-    return new SessionInterceptor();
+  private QueryInterceptor createQueryInterceptor(){
+    return new QueryInterceptor();
   }
 
   @NonNull

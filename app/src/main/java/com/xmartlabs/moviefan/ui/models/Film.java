@@ -16,16 +16,17 @@ import lombok.NonNull;
 @Builder
 @Data
 public class Film {
-  @Nullable
-  @SerializedName("poster_path")
-  private String poster;
-  @NonNull
-  private String title;
-  @NonNull
-  private float popularity;
-  @NonNull
-  private String overview;
   @NonNull
   @SerializedName("genre_ids")
   private List<String> genres;
+  @Nullable
+  @SerializedName("poster_path")
+  private String poster;
+
+  @NonNull
+  private String overview;
+  @NonNull
+  private float popularity;
+  @NonNull
+  private String title;
 }

@@ -15,14 +15,12 @@ import lombok.Data;
 @Builder
 @Data
 public class FilmResponse {
-  @NonNull
-  private int page;
-  @NonNull
-  @SerializedName("total_results")
-  private int totalResults;
-  @NonNull
   @SerializedName("total_pages")
   private int totalPages;
+  @SerializedName("total_results")
+  private int totalResults;
+
   @NonNull
   private List<Film> results;
+  private int page;
 }
