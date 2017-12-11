@@ -33,12 +33,12 @@
             />
 
         <TextView
-            android:id="@+id/duration_genre"
+            android:id="@+id/genres"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
             android:layout_marginStart="15dp"
-            tools:text="2:50hs - Sci-Fi, Drama"
+            tools:text="Sci-Fi, Drama"
             style="@style/GreyedFilmData"
             />
 

@@ -5,14 +5,21 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
 import com.xmartlabs.moviefan.R;
+import com.xmartlabs.moviefan.controller.GenreController;
 import com.xmartlabs.moviefan.ui.common.BaseFragment;
+import com.xmartlabs.moviefan.ui.models.Genre;
 import com.xmartlabs.moviefan.ui.slidingtabs.FilmsViewPagerAdapter;
 
+import java.util.Map;
+
 import butterknife.BindView;
+import io.reactivex.SingleObserver;
+import io.reactivex.disposables.Disposable;
 
 /**
  * Created by bruno on 11/30/17.

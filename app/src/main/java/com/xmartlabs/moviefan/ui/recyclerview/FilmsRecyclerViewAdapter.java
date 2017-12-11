@@ -91,8 +91,8 @@ public class FilmsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
   static class DetailedFilmViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.title)
     TextView title;
-    @BindView(R.id.duration_genre)
-    TextView durationGenre;
+    @BindView(R.id.genres)
+    TextView genres;
     @BindView(R.id.popularity)
     TextView popularity;
     @BindView(R.id.description)
@@ -106,7 +106,7 @@ public class FilmsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
     }
 
     void bind(@NonNull Film film) {
-      //TODO load image and duration genre
+      //TODO load image and genres
       title.setText(film.getTitle());
       popularity.setText(String.valueOf(film.getPopularity()));
       description.setText(film.getOverview());

@@ -30,9 +30,10 @@ final ANNIMON_STREAM_VERSION = '1.1.9'
 final BUTTERKNIFE_VERSION = '8.8.1'
 final DART_VERSION = '2.0.2'
 final FRAGMENTARGS_VERSION = '3.0.2'
+final JUNIT_VERSION = '4.12'
 final LOGGING_INTERCEPTOR_VERSION = '3.9.0'
 final LOMBOK_VERSION = '1.16.18'
-final JUNIT_VERSION = '4.12'
+final OK2CURL_VERSION = '0.3.1'
 final RXANDROID_VERSION = '2.0.1'
 final RXJAVA_VERSION = '2.1.7'
 final RETROFIT_VERSION = '2.3.0'
@@ -58,6 +59,7 @@ dependencies {
     implementation "com.hannesdorfmann.fragmentargs:annotation:${FRAGMENTARGS_VERSION}"
     implementation "com.jakewharton:butterknife:${BUTTERKNIFE_VERSION}"
     implementation "com.squareup.okhttp3:logging-interceptor:${LOGGING_INTERCEPTOR_VERSION}"
+    implementation "com.github.mrmike:Ok2Curl:${OK2CURL_VERSION}"
     implementation "io.reactivex.rxjava2:rxjava:${RXJAVA_VERSION}"
     implementation "io.reactivex.rxjava2:rxandroid:${RXANDROID_VERSION}"
     implementation "com.squareup.retrofit2:converter-gson:${RETROFIT_VERSION}"

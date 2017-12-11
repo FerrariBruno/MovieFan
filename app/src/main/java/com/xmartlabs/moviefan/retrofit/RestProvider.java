@@ -1,6 +1,16 @@
 package com.xmartlabs.moviefan.retrofit;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
+
+import com.google.gson.FieldNamingPolicy;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.moczul.ok2curl.CurlInterceptor;
+import com.xmartlabs.moviefan.MovieFanApplication;
+import com.xmartlabs.moviefan.R;
+import com.xmartlabs.moviefan.services.FilmsService;
+import com.xmartlabs.moviefan.services.GenresService;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -17,7 +27,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class RestProvider {
   private static RestProvider instance = new RestProvider();
-  private final String BASE_URL = "https://api.themoviedb.org/3/";
 
   @NonNull
   public static RestProvider getInstance(){
@@ -25,23 +34,50 @@ public class RestProvider {
   }
 
   @NonNull
-  public Retrofit provideRetrofit(){
+  public FilmsService provideFilmService(){
+    Retrofit retrofit = provideRetrofit();
+    return retrofit.create(FilmsService.class);
+  }
+
+  @NonNull
+  public GenresService provideGenresService(){
+    Retrofit retrofit = provideRetrofit();
+    return retrofit.create(GenresService.class);
+  }
+
+  @NonNull
+  private Retrofit provideRetrofit(){
     //noinspection ConstantConditions
     return new Retrofit.Builder()
-        .baseUrl(HttpUrl.parse(BASE_URL))
-        .addConverterFactory(GsonConverterFactory.create())
+        .baseUrl(HttpUrl.parse(MovieFanApplication.getContext().getResources().getString(R.string.base_url)))
+        .addConverterFactory(GsonConverterFactory.create(createGsonWithSerializationPolicy()))
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-        .client(createClientWithInterceptors(createLoggingInterceptor(), createQueryInterceptor()))
+        .client(createClientWithInterceptors(createCurlInterceptor(), createLoggingInterceptor(),
+            createQueryInterceptor()))
         .build();
   }
 
   @NonNull
-  private OkHttpClient createClientWithInterceptors(@NonNull HttpLoggingInterceptor loggingInterceptor,
+  private Gson createGsonWithSerializationPolicy() {
+    return new GsonBuilder()
+        .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+        .create();
+  }
+
+  @NonNull
+  private OkHttpClient createClientWithInterceptors(@NonNull CurlInterceptor curlInterceptor,
+                                                    @NonNull HttpLoggingInterceptor loggingInterceptor,
                                                     @NonNull QueryInterceptor sessionInterceptor){
     return new OkHttpClient.Builder()
         .addInterceptor(sessionInterceptor)
+        .addInterceptor(curlInterceptor)
         .addInterceptor(loggingInterceptor)
         .build();
+  }
+
+  @NonNull
+  private CurlInterceptor createCurlInterceptor(){
+    return new CurlInterceptor(message -> Log.d("Ok2Curl", message));
   }
 
   @NonNull

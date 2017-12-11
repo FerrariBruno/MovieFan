@@ -7,4 +7,6 @@
     <string name="poster_description">Film Poster</string>
 
     <string name="api_key">c0c90156bc48b653d60bcc5147dead77</string>
+
+    <string name="base_url">https://api.themoviedb.org/3/</string>
 </resources>

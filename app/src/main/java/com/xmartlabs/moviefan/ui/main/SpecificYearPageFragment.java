@@ -2,11 +2,13 @@ package com.xmartlabs.moviefan.ui.main;
 
 import android.support.annotation.NonNull;
 
+import com.annimon.stream.Stream;
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
 import com.xmartlabs.moviefan.controller.FilmController;
 import com.xmartlabs.moviefan.ui.models.Film;
 import com.xmartlabs.moviefan.ui.recyclerview.FilmsRecyclerViewAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,6 +25,12 @@ public class SpecificYearPageFragment extends MovieFanPageBaseFragment {
   @NonNull
   @Override
   protected List<Film> requestFilms(int pageNumber) {
-    return FilmController.getInstance().getSpecificYearFilms(pageNumber);
+    List<Film> requestedFilms = new ArrayList<>();
+    FilmController.getInstance().getSpecificYearFilms(pageNumber)
+        .subscribe(films -> {
+          Stream.of(films)
+              .forEach(requestedFilms::add);
+        });
+    return requestedFilms;
   }
 }

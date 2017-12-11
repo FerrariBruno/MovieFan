@@ -23,6 +23,9 @@ public class LatestPageFragment extends MovieFanPageBaseFragment {
   @NonNull
   @Override
   protected List<Film> requestFilms(int pageNumber) {
-    return FilmController.getInstance().getLatestFilms(pageNumber);
+    FilmController.getInstance().getLatestFilms(pageNumber)
+        .subscribe(films -> {
+
+        });
   }
 }
