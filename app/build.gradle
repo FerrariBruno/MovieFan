@@ -36,7 +36,9 @@ final LOMBOK_VERSION = '1.16.18'
 final OK2CURL_VERSION = '0.3.1'
 final RXANDROID_VERSION = '2.0.1'
 final RXJAVA_VERSION = '2.1.7'
+final RXLIFECYCLE_VERSION = '2.2.1'
 final RETROFIT_VERSION = '2.3.0'
+final TIMBER_VERSION = '4.6.0'
 
 
 dependencies {
@@ -54,18 +56,22 @@ dependencies {
     implementation "com.android.support:recyclerview-v7:${ANDROID_SUPPORT_VERSION}"
     implementation "com.android.support:design:${ANDROID_SUPPORT_VERSION}"
     implementation "com.annimon:stream:${ANNIMON_STREAM_VERSION}"
+    implementation "com.jakewharton:butterknife:${BUTTERKNIFE_VERSION}"
     implementation "com.f2prateek.dart:dart:${DART_VERSION}"
     implementation "com.f2prateek.dart:henson:${DART_VERSION}"
     implementation "com.hannesdorfmann.fragmentargs:annotation:${FRAGMENTARGS_VERSION}"
-    implementation "com.jakewharton:butterknife:${BUTTERKNIFE_VERSION}"
     implementation "com.squareup.okhttp3:logging-interceptor:${LOGGING_INTERCEPTOR_VERSION}"
+    implementation "org.projectlombok:lombok:${LOMBOK_VERSION}"
     implementation "com.github.mrmike:Ok2Curl:${OK2CURL_VERSION}"
-    implementation "io.reactivex.rxjava2:rxjava:${RXJAVA_VERSION}"
     implementation "io.reactivex.rxjava2:rxandroid:${RXANDROID_VERSION}"
+    implementation "io.reactivex.rxjava2:rxjava:${RXJAVA_VERSION}"
+    implementation "com.trello.rxlifecycle2:rxlifecycle:${RXLIFECYCLE_VERSION}"
+    implementation "com.trello.rxlifecycle2:rxlifecycle-android:${RXLIFECYCLE_VERSION}"
+    implementation "com.trello.rxlifecycle2:rxlifecycle-components:${RXLIFECYCLE_VERSION}"
     implementation "com.squareup.retrofit2:converter-gson:${RETROFIT_VERSION}"
     implementation "com.squareup.retrofit2:adapter-rxjava2:${RETROFIT_VERSION}"
     implementation "com.squareup.retrofit2:retrofit:${RETROFIT_VERSION}"
-    implementation "org.projectlombok:lombok:${LOMBOK_VERSION}"
+    implementation "com.jakewharton.timber:timber:${TIMBER_VERSION}"
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
     testImplementation "junit:junit:${JUNIT_VERSION}"

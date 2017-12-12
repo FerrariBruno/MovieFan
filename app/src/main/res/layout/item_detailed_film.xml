@@ -36,8 +36,10 @@
             android:id="@+id/genres"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:ellipsize="end"
             android:layout_marginBottom="4dp"
             android:layout_marginStart="15dp"
+            android:maxLines="1"
             tools:text="Sci-Fi, Drama"
             style="@style/GreyedFilmData"
             />
@@ -56,7 +58,9 @@
             android:id="@+id/description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:ellipsize="end"
             android:layout_marginStart="15dp"
+            android:maxLines="3"
             tools:text="One of the best from Kubrick, a man embarcs on an epic journey lorem ipsum the thig is that the… "
             style="@style/FilmDescription"
             />

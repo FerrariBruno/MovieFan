@@ -19,8 +19,8 @@ public class QueryInterceptor implements Interceptor {
   @Override
   public Response intercept(@NonNull Chain chain) throws IOException {
     Request request = chain.request();
-    HttpUrl url = request.url().newBuilder().addQueryParameter("api_key", MovieFanApplication.getContext().
-        getResources().getString(R.string.api_key)).build();
+    HttpUrl url = request.url().newBuilder().addQueryParameter("api_key", MovieFanApplication.getContext()
+        .getString(R.string.api_key)).build();
     request = request.newBuilder()
         .url(url)
         .build();

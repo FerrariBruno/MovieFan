@@ -8,7 +8,7 @@ import lombok.NonNull;
 /**
  * Created by bruno on 12/8/17.
  */
-public class SessionController {
+public class SessionController extends BaseController {
   @Getter
   private static Session currentSession = new Session();
 

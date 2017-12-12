@@ -19,8 +19,6 @@ import java.util.Locale;
 import java.util.Map;
 
 import io.reactivex.Single;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -28,7 +26,7 @@ import lombok.NoArgsConstructor;
  * Created by bruno on 12/6/17.
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class FilmController {
+public class FilmController extends BaseController {
   private static final FilmController FILM_CONTROLLER = new FilmController();
   private SimpleDateFormat DATE_FORMATTER = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
 
@@ -44,21 +42,24 @@ public class FilmController {
   public Single<List<Film>> getLatestFilms(int pageNumber) {
     return Single.zip(GenreController.getInstance().getAllGenres(),
         getLatestFilmsFromService(pageNumber).map(ListResponse::getResults),
-        this::replaceGenreIdsForGenreNames);
+        this::replaceGenreIdsForGenreNames)
+        .compose(applySingleIoSchedulers());
   }
 
   @NonNull
   public Single<List<Film>> getThisYearsFilms(int pageNumber) {
     return Single.zip(GenreController.getInstance().getAllGenres(),
         getYearFilmsFromService(getCurrentYear(), pageNumber).map(ListResponse::getResults),
-        this::replaceGenreIdsForGenreNames);
+        this::replaceGenreIdsForGenreNames)
+        .compose(applySingleIoSchedulers());
   }
 
   @NonNull
   public Single<List<Film>> getSpecificYearFilms(int pageNumber) {
     return Single.zip(GenreController.getInstance().getAllGenres(),
         getYearFilmsFromService(YEAR_1985, pageNumber).map(ListResponse::getResults),
-        this::replaceGenreIdsForGenreNames);
+        this::replaceGenreIdsForGenreNames)
+        .compose(applySingleIoSchedulers());
   }
 
   @NonNull
@@ -66,16 +67,14 @@ public class FilmController {
     FilmsService service = RestProvider.getInstance().provideFilmService();
     return service.getLatestFilms(SORT_BY_QUERY_VALUE, getTodaysDate(),
         null, null, null, pageNumber)
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread());
+        .compose(applySingleIoSchedulers());
   }
 
   @NonNull
   private Single<ListResponse<FilmResponse>> getYearFilmsFromService(int year, int pageNumber){
     FilmsService service = RestProvider.getInstance().provideFilmService();
     return service.getSpecificYearFilms(year, null, null, pageNumber)
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread());
+        .compose(applySingleIoSchedulers());
   }
 
   @NonNull
@@ -83,19 +82,18 @@ public class FilmController {
                                                   @NonNull List<FilmResponse> filmsResponse) {
     return Stream.of(filmsResponse)
         .map(response -> {
-              Stream.of(response.getGenresIds())
-                  .map(genreMap::get)
-                  .forEach(response.getGenres()::add);
-              return response;
-            }
-        )
+          List<Genre> genres = Stream.of(response.getGenresIds())
+              .map(genreMap::get)
+              .toList();
+          response.setGenres(genres);
+          return response;
+        })
         .collect(Collectors.<Film>toList());
   }
 
   @NonNull
   private String getTodaysDate(){
-    Date todaysDate = new Date();
-    return DATE_FORMATTER.format(todaysDate);
+    return DATE_FORMATTER.format(new Date());
   }
 
   private int getCurrentYear(){

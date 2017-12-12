@@ -1,7 +1,6 @@
 package com.xmartlabs.moviefan.retrofit;
 
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
@@ -20,6 +19,7 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
+import timber.log.Timber;
 
 /**
  * Created by bruno on 12/8/17.
@@ -49,7 +49,7 @@ public class RestProvider {
   private Retrofit provideRetrofit(){
     //noinspection ConstantConditions
     return new Retrofit.Builder()
-        .baseUrl(HttpUrl.parse(MovieFanApplication.getContext().getResources().getString(R.string.base_url)))
+        .baseUrl(HttpUrl.parse(MovieFanApplication.getContext().getString(R.string.base_url)))
         .addConverterFactory(GsonConverterFactory.create(createGsonWithSerializationPolicy()))
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
         .client(createClientWithInterceptors(createCurlInterceptor(), createLoggingInterceptor(),
@@ -77,7 +77,7 @@ public class RestProvider {
 
   @NonNull
   private CurlInterceptor createCurlInterceptor(){
-    return new CurlInterceptor(message -> Log.d("Ok2Curl", message));
+    return new CurlInterceptor(message -> Timber.d(message));
   }
 
   @NonNull

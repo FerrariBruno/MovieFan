@@ -12,8 +12,6 @@ import java.util.Map;
 
 import io.reactivex.Observable;
 import io.reactivex.Single;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,7 +20,7 @@ import lombok.NoArgsConstructor;
  * Created by bruno on 12/8/17.
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class GenreController {
+public class GenreController extends BaseController {
   private static GenreController GENRE_CONTROLLER = new GenreController();
 
   @Getter
@@ -40,7 +38,7 @@ public class GenreController {
       .firstOrError();
 
   @NonNull
-  public static GenreController getInstance() {
+  static GenreController getInstance() {
     return GENRE_CONTROLLER;
   }
 
@@ -51,7 +49,6 @@ public class GenreController {
         .defer(() -> genres == null
             ? getGenresFromService
             : Single.just(genres))
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread());
+        .compose(applySingleIoSchedulers());
   }
 }

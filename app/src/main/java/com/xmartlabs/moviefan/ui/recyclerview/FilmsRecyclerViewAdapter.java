@@ -7,8 +7,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.annimon.stream.Collectors;
+import com.annimon.stream.Stream;
+import com.xmartlabs.moviefan.MovieFanApplication;
 import com.xmartlabs.moviefan.R;
 import com.xmartlabs.moviefan.ui.models.Film;
+import com.xmartlabs.moviefan.ui.models.Genre;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -89,6 +93,9 @@ public class FilmsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
   }
 
   static class DetailedFilmViewHolder extends RecyclerView.ViewHolder {
+    private final String DELIMITER = ", ";
+    private final String FORMATTER = "%s %s";
+
     @BindView(R.id.title)
     TextView title;
     @BindView(R.id.genres)
@@ -106,10 +113,18 @@ public class FilmsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
     }
 
     void bind(@NonNull Film film) {
-      //TODO load image and genres
+      //TODO load image
+      genres.setText(joinGenresWithACommaDelimiter(film.getGenres()));
       title.setText(film.getTitle());
-      popularity.setText(String.valueOf(film.getPopularity()));
+      popularity.setText(String.format(FORMATTER, MovieFanApplication.getContext().getString(R.string.popularity),
+          String.valueOf(film.getPopularity())));
       description.setText(film.getOverview());
+    }
+
+    private String joinGenresWithACommaDelimiter(List<Genre> genres){
+      return Stream.of(genres)
+          .map(Genre::getName)
+          .collect(Collectors.joining(DELIMITER));
     }
   }
 

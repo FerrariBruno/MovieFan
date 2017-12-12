@@ -1,6 +1,7 @@
 package com.xmartlabs.moviefan.ui.main;
 
 import android.os.Bundle;
+import android.support.annotation.CheckResult;
 import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -58,14 +59,15 @@ public abstract class MovieFanPageBaseFragment extends BaseFragment {
           public void onSuccess(@NonNull List<Film> films){
             Stream.of(films)
                 .forEach(film -> adapter.addFilm(film));
+            adapter.notifyDataSetChanged();
           }
         });
-    adapter.notifyDataSetChanged();
   }
 
   @NonNull
   protected abstract FilmsRecyclerViewAdapter createFilmsAdapter();
 
+  @CheckResult
   @NonNull
   protected abstract Single<List<Film>> requestFilms(int pageNumber);
 }
