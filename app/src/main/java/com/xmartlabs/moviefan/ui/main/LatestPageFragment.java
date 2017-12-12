@@ -1,5 +1,6 @@
 package com.xmartlabs.moviefan.ui.main;
 
+import android.support.annotation.CheckResult;
 import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
 
@@ -23,6 +24,7 @@ public class LatestPageFragment extends MovieFanPageBaseFragment {
     return new FilmsRecyclerViewAdapter();
   }
 
+  @CheckResult
   @MainThread
   @NonNull
   @Override
