@@ -16,6 +16,7 @@ import okhttp3.Response;
  * Created by bruno on 12/11/17.
  */
 public class QueryInterceptor implements Interceptor {
+  @NonNull
   @Override
   public Response intercept(@NonNull Chain chain) throws IOException {
     Request request = chain.request();

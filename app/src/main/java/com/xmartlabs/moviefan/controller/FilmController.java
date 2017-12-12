@@ -65,6 +65,7 @@ public class FilmController extends BaseController {
   @NonNull
   private Single<ListResponse<FilmResponse>> getLatestFilmsFromService(int pageNumber){
     FilmsService service = RestProvider.getInstance().provideFilmService();
+    //TODO replace null values with values from filter view
     return service.getLatestFilms(SORT_BY_QUERY_VALUE, getTodaysDate(),
         null, null, null, pageNumber)
         .compose(applySingleIoSchedulers());
@@ -73,6 +74,7 @@ public class FilmController extends BaseController {
   @NonNull
   private Single<ListResponse<FilmResponse>> getYearFilmsFromService(int year, int pageNumber){
     FilmsService service = RestProvider.getInstance().provideFilmService();
+    //TODO replace null values with values from filter view
     return service.getSpecificYearFilms(year, null, null, pageNumber)
         .compose(applySingleIoSchedulers());
   }
