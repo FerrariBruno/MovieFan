@@ -4,13 +4,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.annimon.stream.Collectors;
 import com.annimon.stream.Stream;
 import com.xmartlabs.moviefan.MovieFanApplication;
 import com.xmartlabs.moviefan.R;
+import com.xmartlabs.moviefan.ui.common.MovieFanCircleImageView;
+import com.xmartlabs.moviefan.ui.common.MovieFanImageView;
 import com.xmartlabs.moviefan.ui.models.Film;
 import com.xmartlabs.moviefan.ui.models.Genre;
 
@@ -94,18 +95,17 @@ public class FilmsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
 
   static class DetailedFilmViewHolder extends RecyclerView.ViewHolder {
     private final String DELIMITER = ", ";
-    private final String FORMATTER = "%s %s";
 
-    @BindView(R.id.title)
-    TextView title;
-    @BindView(R.id.genres)
-    TextView genres;
-    @BindView(R.id.popularity)
-    TextView popularity;
-    @BindView(R.id.description)
-    TextView description;
     @BindView(R.id.poster)
-    ImageView poster;
+    MovieFanImageView posterImageView;
+    @BindView(R.id.title)
+    TextView titleTextView;
+    @BindView(R.id.genres)
+    TextView genresTextView;
+    @BindView(R.id.popularity)
+    TextView popularityTextView;
+    @BindView(R.id.description)
+    TextView descriptionTextView;
 
     DetailedFilmViewHolder(@NonNull View view) {
       super(view);
@@ -113,15 +113,17 @@ public class FilmsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
     }
 
     void bind(@NonNull Film film) {
-      //TODO load image
-      genres.setText(joinGenresWithACommaDelimiter(film.getGenres()));
-      title.setText(film.getTitle());
-      popularity.setText(String.format(FORMATTER, MovieFanApplication.getContext().getString(R.string.popularity),
-          String.valueOf(film.getPopularity())));
-      description.setText(film.getOverview());
+      posterImageView.loadImageWithPicassoIncludingPlaceholder(film.getPosterPath());
+      genresTextView.setText(joinGenresWithACommaDelimiter(film.getGenres()));
+      titleTextView.setText(film.getTitle());
+      popularityTextView.setText(String.format(Locale.US, "%s %.2f",
+          MovieFanApplication.getContext().getString(R.string.popularity),
+          film.getPopularity()));
+      descriptionTextView.setText(film.getOverview());
     }
 
-    private String joinGenresWithACommaDelimiter(List<Genre> genres){
+    @NonNull
+    private String joinGenresWithACommaDelimiter(@NonNull List<Genre> genres){
       return Stream.of(genres)
           .map(Genre::getName)
           .collect(Collectors.joining(DELIMITER));
@@ -130,9 +132,9 @@ public class FilmsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
 
   static class CollapsedFilmViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.round_poster)
-    ImageView poster;
+    MovieFanCircleImageView posterImageView;
     @BindView(R.id.collapsed_title)
-    TextView title;
+    TextView titleTextView;
 
     CollapsedFilmViewHolder(@NonNull View view) {
       super(view);
@@ -140,8 +142,8 @@ public class FilmsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
     }
 
     void bind(@NonNull Film film) {
-      //TODO load image
-      title.setText(film.getTitle());
+      posterImageView.loadImageWithPicassoIncludingPlaceholder(film.getPosterPath());
+      titleTextView.setText(film.getTitle());
     }
   }
 }

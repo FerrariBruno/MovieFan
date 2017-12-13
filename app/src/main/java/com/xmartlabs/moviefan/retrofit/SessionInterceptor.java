@@ -14,12 +14,15 @@ import okhttp3.Response;
  * Created by bruno on 12/8/17.
  */
 public class SessionInterceptor implements Interceptor {
+  private final static String AUTHORIZATION_HEADER_NAME = "Authorization";
+  private final static String AUTHORIZATION_HEADER_VALUE = "Bearer ";
+
   @NonNull
   @Override
   public Response intercept(@NonNull Chain chain) throws IOException {
     Request request = chain.request();
     request = request.newBuilder()
-        .addHeader("Authorization", "Bearer " + SessionController.getAccessToken())
+        .addHeader(AUTHORIZATION_HEADER_NAME, AUTHORIZATION_HEADER_VALUE + SessionController.getAccessToken())
         .build();
     return chain.proceed(request);
   }

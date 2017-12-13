@@ -26,7 +26,10 @@ import timber.log.Timber;
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class RestProvider {
-  private static RestProvider instance = new RestProvider();
+  private final static Retrofit RETROFIT = provideRetrofit();
+  private final static FilmsService FILMS_SERVICE = RETROFIT.create(FilmsService.class);
+  private final static GenresService GENRES_SERVICE = RETROFIT.create(GenresService.class);
+  private final static RestProvider instance = new RestProvider();
 
   @NonNull
   public static RestProvider getInstance(){
@@ -35,39 +38,37 @@ public class RestProvider {
 
   @NonNull
   public FilmsService provideFilmService(){
-    Retrofit retrofit = provideRetrofit();
-    return retrofit.create(FilmsService.class);
+    return FILMS_SERVICE;
   }
 
   @NonNull
   public GenresService provideGenresService(){
-    Retrofit retrofit = provideRetrofit();
-    return retrofit.create(GenresService.class);
+    return GENRES_SERVICE;
   }
 
   @NonNull
-  private Retrofit provideRetrofit(){
+  private static Retrofit provideRetrofit(){
     //noinspection ConstantConditions
     return new Retrofit.Builder()
         .baseUrl(HttpUrl.parse(MovieFanApplication.getContext().getString(R.string.base_url)))
         .addConverterFactory(GsonConverterFactory.create(createGsonWithSerializationPolicy()))
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
         .client(createClientWithInterceptors(createCurlInterceptor(), createLoggingInterceptor(),
-            createQueryInterceptor()))
+            createApiKeyQueryInterceptor()))
         .build();
   }
 
   @NonNull
-  private Gson createGsonWithSerializationPolicy() {
+  private static Gson createGsonWithSerializationPolicy() {
     return new GsonBuilder()
         .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
         .create();
   }
 
   @NonNull
-  private OkHttpClient createClientWithInterceptors(@NonNull CurlInterceptor curlInterceptor,
+  private static OkHttpClient createClientWithInterceptors(@NonNull CurlInterceptor curlInterceptor,
                                                     @NonNull HttpLoggingInterceptor loggingInterceptor,
-                                                    @NonNull QueryInterceptor sessionInterceptor){
+                                                    @NonNull ApiKeyQueryInterceptor sessionInterceptor){
     return new OkHttpClient.Builder()
         .addInterceptor(sessionInterceptor)
         .addInterceptor(curlInterceptor)
@@ -76,17 +77,17 @@ public class RestProvider {
   }
 
   @NonNull
-  private CurlInterceptor createCurlInterceptor(){
+  private static CurlInterceptor createCurlInterceptor(){
     return new CurlInterceptor(message -> Timber.d(message));
   }
 
   @NonNull
-  private QueryInterceptor createQueryInterceptor(){
-    return new QueryInterceptor();
+  private static ApiKeyQueryInterceptor createApiKeyQueryInterceptor(){
+    return new ApiKeyQueryInterceptor();
   }
 
   @NonNull
-  private HttpLoggingInterceptor createLoggingInterceptor(){
+  private static HttpLoggingInterceptor createLoggingInterceptor(){
     HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
     loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
     return loggingInterceptor;

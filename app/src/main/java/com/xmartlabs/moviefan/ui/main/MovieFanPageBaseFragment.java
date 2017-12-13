@@ -54,6 +54,7 @@ public abstract class MovieFanPageBaseFragment extends BaseFragment {
   @MainThread
   protected void bindFilmsToRecyclerView() {
     requestFilms(FIRST_PAGE)
+        .compose(prepareSingleForSubscription())
         .subscribe(new GeneralSingleSubscriber<List<Film>>() {
           @Override
           public void onSuccess(@NonNull List<Film> films){

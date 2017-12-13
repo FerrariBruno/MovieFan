@@ -7,7 +7,7 @@
     android:orientation="horizontal"
     >
 
-    <ImageView
+    <com.xmartlabs.moviefan.ui.common.MovieFanImageView
         android:id="@+id/poster"
         android:layout_width="135dp"
         android:layout_height="163dp"

@@ -28,7 +28,8 @@ public class GenreController extends BaseController {
   private Map<Long, Genre> genres;
 
   @Nullable
-  private Single<Map<Long, Genre>> getGenresFromService = RestProvider.getInstance().provideGenresService().getGenres()
+  private Single<Map<Long, Genre>> getGenresFromService = RestProvider.getInstance()
+      .provideGenresService().getGenres()
       .map(GenreResponse::getGenres)
       .flatMapObservable(Observable::fromIterable)
       .toMap(Genre::getId)

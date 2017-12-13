@@ -15,7 +15,7 @@ import okhttp3.Response;
 /**
  * Created by bruno on 12/11/17.
  */
-public class QueryInterceptor implements Interceptor {
+public class ApiKeyQueryInterceptor implements Interceptor {
   @NonNull
   @Override
   public Response intercept(@NonNull Chain chain) throws IOException {

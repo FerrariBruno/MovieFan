@@ -28,12 +28,14 @@ final ANDROID_SUPPORT_TEST_RUNNER_VERSION = '1.0.1'
 final ANDROID_ESPRESSO_CORE_VERSION = '3.0.1'
 final ANNIMON_STREAM_VERSION = '1.1.9'
 final BUTTERKNIFE_VERSION = '8.8.1'
+final CIRCLE_IMAGEVIEW_VERSION= '2.2.0'
 final DART_VERSION = '2.0.2'
 final FRAGMENTARGS_VERSION = '3.0.2'
 final JUNIT_VERSION = '4.12'
 final LOGGING_INTERCEPTOR_VERSION = '3.9.0'
 final LOMBOK_VERSION = '1.16.18'
 final OK2CURL_VERSION = '0.3.1'
+final PICASSO_VERSION = '2.5.2'
 final RXANDROID_VERSION = '2.0.1'
 final RXJAVA_VERSION = '2.1.7'
 final RXLIFECYCLE_VERSION = '2.2.1'
@@ -53,25 +55,27 @@ dependencies {
 
     implementation "com.android.support.constraint:constraint-layout:${ANDROID_SUPPORT_CONSTRAINT_VERSION}"
     implementation "com.android.support:appcompat-v7:${ANDROID_SUPPORT_VERSION}"
-    implementation "com.android.support:recyclerview-v7:${ANDROID_SUPPORT_VERSION}"
     implementation "com.android.support:design:${ANDROID_SUPPORT_VERSION}"
+    implementation "com.android.support:recyclerview-v7:${ANDROID_SUPPORT_VERSION}"
     implementation "com.annimon:stream:${ANNIMON_STREAM_VERSION}"
-    implementation "com.jakewharton:butterknife:${BUTTERKNIFE_VERSION}"
     implementation "com.f2prateek.dart:dart:${DART_VERSION}"
     implementation "com.f2prateek.dart:henson:${DART_VERSION}"
-    implementation "com.hannesdorfmann.fragmentargs:annotation:${FRAGMENTARGS_VERSION}"
-    implementation "com.squareup.okhttp3:logging-interceptor:${LOGGING_INTERCEPTOR_VERSION}"
-    implementation "org.projectlombok:lombok:${LOMBOK_VERSION}"
     implementation "com.github.mrmike:Ok2Curl:${OK2CURL_VERSION}"
-    implementation "io.reactivex.rxjava2:rxandroid:${RXANDROID_VERSION}"
-    implementation "io.reactivex.rxjava2:rxjava:${RXJAVA_VERSION}"
-    implementation "com.trello.rxlifecycle2:rxlifecycle:${RXLIFECYCLE_VERSION}"
+    implementation "com.hannesdorfmann.fragmentargs:annotation:${FRAGMENTARGS_VERSION}"
+    implementation "com.jakewharton.timber:timber:${TIMBER_VERSION}"
+    implementation "com.jakewharton:butterknife:${BUTTERKNIFE_VERSION}"
+    implementation "com.squareup.okhttp3:logging-interceptor:${LOGGING_INTERCEPTOR_VERSION}"
+    implementation "com.squareup.picasso:picasso:${PICASSO_VERSION}"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:${RETROFIT_VERSION}"
+    implementation "com.squareup.retrofit2:converter-gson:${RETROFIT_VERSION}"
+    implementation "com.squareup.retrofit2:retrofit:${RETROFIT_VERSION}"
     implementation "com.trello.rxlifecycle2:rxlifecycle-android:${RXLIFECYCLE_VERSION}"
     implementation "com.trello.rxlifecycle2:rxlifecycle-components:${RXLIFECYCLE_VERSION}"
-    implementation "com.squareup.retrofit2:converter-gson:${RETROFIT_VERSION}"
-    implementation "com.squareup.retrofit2:adapter-rxjava2:${RETROFIT_VERSION}"
-    implementation "com.squareup.retrofit2:retrofit:${RETROFIT_VERSION}"
-    implementation "com.jakewharton.timber:timber:${TIMBER_VERSION}"
+    implementation "com.trello.rxlifecycle2:rxlifecycle:${RXLIFECYCLE_VERSION}"
+    implementation "de.hdodenhof:circleimageview:${CIRCLE_IMAGEVIEW_VERSION}"
+    implementation "io.reactivex.rxjava2:rxandroid:${RXANDROID_VERSION}"
+    implementation "io.reactivex.rxjava2:rxjava:${RXJAVA_VERSION}"
+    implementation "org.projectlombok:lombok:${LOMBOK_VERSION}"
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
     testImplementation "junit:junit:${JUNIT_VERSION}"
