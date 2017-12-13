@@ -5,4 +5,10 @@
     <string name="home_view.1985">1985</string>
     <string name="logo_content_description">MovieFan Logo</string>
     <string name="poster_description">Film Poster</string>
+    <string name="popularity">Popularity:</string>
+
+    <string name="access_token">eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjMGM5MDE1NmJjNDhiNjUzZDYwYmNjNTE0N2RlYWQ3NyIsInN1YiI6IjVhMjdmYWQ0OTI1MTQxMDMzNjEwMWM3OCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.d8VVy3YPl9lQ7sLA_6KZYRwUmIA-4Xs6jJaGt_QZAsg</string>
+    <string name="api_key">c0c90156bc48b653d60bcc5147dead77</string>
+    <string name="base_url">https://api.themoviedb.org/3/</string>
+    <string name="base_url_image">https://image.tmdb.org/t/p/w500</string>
 </resources>

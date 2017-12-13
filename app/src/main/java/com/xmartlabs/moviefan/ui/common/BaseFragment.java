@@ -2,26 +2,35 @@ package com.xmartlabs.moviefan.ui.common;
 
 import android.os.Bundle;
 import android.support.annotation.CallSuper;
+import android.support.annotation.CheckResult;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.annimon.stream.Optional;
 import com.hannesdorfmann.fragmentargs.FragmentArgs;
+import com.trello.rxlifecycle2.RxLifecycle;
+import com.trello.rxlifecycle2.android.FragmentEvent;
+import com.trello.rxlifecycle2.components.support.RxFragment;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import io.reactivex.SingleTransformer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 
-public abstract class BaseFragment extends Fragment {
+public abstract class BaseFragment extends RxFragment {
   private Unbinder unbinder;
 
   @LayoutRes
   protected abstract int getLayoutResId();
+
+  @NonNull
+  @SuppressWarnings("unchecked")
+  private final SingleTransformer singleTransformer = upstream -> upstream
+      .observeOn(AndroidSchedulers.mainThread())
+      .compose(RxLifecycle.bindUntilEvent(lifecycle(), FragmentEvent.DESTROY_VIEW));
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -44,23 +53,10 @@ public abstract class BaseFragment extends Fragment {
     unbinder.unbind();
   }
 
-  protected void showAlertError(int stringResId) {
-    new AlertDialog.Builder(getContext())
-        .setMessage(stringResId)
-        .setNeutralButton(android.R.string.ok, null)
-        .show();
-  }
-
-  protected void removeItselfFromActivity() {
-    ((BaseAppCompatActivity) getActivity()).removeFragment(this);
-  }
-
-  protected void removeItselfFromParentFragment() {
-    getParentFragment().getChildFragmentManager().beginTransaction().remove(this).commit();
-  }
-
-  protected void removeItselfFromParent() {
-    Optional.ofNullable(getParentFragment())
-        .ifPresentOrElse(parent -> removeItselfFromParentFragment(), this::removeItselfFromActivity);
+  @CheckResult
+  @NonNull
+  protected <T> SingleTransformer<T, T> prepareSingleForSubscription(){
+    //noinspection unchecked
+    return (SingleTransformer<T, T>) singleTransformer;
   }
 }

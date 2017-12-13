@@ -1,30 +1,32 @@
 package com.xmartlabs.moviefan.ui.models;
 
-import android.graphics.Bitmap;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import java.util.List;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NonNull;
+import lombok.NoArgsConstructor;
 
 /**
  * Created by bruno on 12/4/17.
  */
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder
 @Data
+@NoArgsConstructor
 public class Film {
   @Nullable
-  private Bitmap poster;
+  private String posterPath;
+  @NonNull
+  private List<Genre> genres;
+  @Nullable
+  private String overview;
   @NonNull
   private String title;
-  @NonNull
-  private String duration;
-  @NonNull
+
   private float popularity;
-  @NonNull
-  private String description;
-  @NonNull
-  private List<String> genres;
 }

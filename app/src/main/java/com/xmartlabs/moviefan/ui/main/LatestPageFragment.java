@@ -1,5 +1,6 @@
 package com.xmartlabs.moviefan.ui.main;
 
+import android.support.annotation.CheckResult;
 import android.support.annotation.NonNull;
 
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
@@ -8,6 +9,8 @@ import com.xmartlabs.moviefan.ui.models.Film;
 import com.xmartlabs.moviefan.ui.recyclerview.FilmsRecyclerViewAdapter;
 
 import java.util.List;
+
+import io.reactivex.Single;
 
 /**
  * Created by bruno on 12/1/17.
@@ -20,9 +23,10 @@ public class LatestPageFragment extends MovieFanPageBaseFragment {
     return new FilmsRecyclerViewAdapter();
   }
 
+  @CheckResult
   @NonNull
   @Override
-  protected List<Film> requestFilms(int pageNumber) {
+  protected Single<List<Film>> requestFilms(int pageNumber) {
     return FilmController.getInstance().getLatestFilms(pageNumber);
   }
 }
