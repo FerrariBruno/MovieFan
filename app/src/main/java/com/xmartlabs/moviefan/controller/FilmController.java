@@ -44,26 +44,29 @@ public class FilmController extends BaseController {
         .zip(
             GenreController.getInstance().getAllGenres(),
             getLatestFilmsFromService(pageNumber).map(ListResponse::getResults),
-            this::updateFilmsWithGenresAndImageUrl
-            )
+            this::updateFilmsWithGenresAndImageUrl)
         .compose(applySingleIoSchedulers());
   }
 
   @CheckResult
   @NonNull
   public Single<List<Film>> getThisYearsFilms(int pageNumber) {
-    return Single.zip(GenreController.getInstance().getAllGenres(),
-        getYearFilmsFromService(DateHelper.getCurrentYear(), pageNumber).map(ListResponse::getResults),
-        this::updateFilmsWithGenresAndImageUrl)
+    return Single
+        .zip(
+            GenreController.getInstance().getAllGenres(),
+            getYearFilmsFromService(DateHelper.getCurrentYear(), pageNumber).map(ListResponse::getResults),
+            this::updateFilmsWithGenresAndImageUrl)
         .compose(applySingleIoSchedulers());
   }
 
   @CheckResult
   @NonNull
   public Single<List<Film>> getSpecificYearFilms(int pageNumber) {
-    return Single.zip(GenreController.getInstance().getAllGenres(),
-        getYearFilmsFromService(YEAR_1985, pageNumber).map(ListResponse::getResults),
-        this::updateFilmsWithGenresAndImageUrl)
+    return Single
+        .zip(
+            GenreController.getInstance().getAllGenres(),
+            getYearFilmsFromService(YEAR_1985, pageNumber).map(ListResponse::getResults),
+            this::updateFilmsWithGenresAndImageUrl)
         .compose(applySingleIoSchedulers());
   }
 
