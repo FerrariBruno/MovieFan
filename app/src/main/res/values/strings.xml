@@ -3,6 +3,7 @@
     <string name="home_view.latest">LATEST</string>
     <string name="home_view.this_year">THIS YEAR</string>
     <string name="home_view.1985">1985</string>
+    <string name="filter_button_content_description">Filter Button</string>
     <string name="logo_content_description">MovieFan Logo</string>
     <string name="poster_description">Film Poster</string>
     <string name="popularity">Popularity:</string>

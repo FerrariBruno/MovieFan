@@ -16,6 +16,7 @@ import com.xmartlabs.moviefan.ui.common.BaseFragment;
 import com.xmartlabs.moviefan.ui.common.GeneralSingleSubscriber;
 import com.xmartlabs.moviefan.ui.models.Film;
 import com.xmartlabs.moviefan.ui.recyclerview.FilmsRecyclerViewAdapter;
+import com.xmartlabs.moviefan.ui.recyclerview.OnDemandRecyclerViewScrollListener;
 
 import java.util.List;
 
@@ -29,14 +30,13 @@ public abstract class MovieFanPageBaseFragment extends BaseFragment {
   @BindView(R.id.films)
   RecyclerView filmsRecyclerView;
 
-  private final int FIRST_PAGE = 1;
   @NonNull
   private FilmsRecyclerViewAdapter adapter = createFilmsAdapter();
+  private OnDemandRecyclerViewScrollListener scrollListener;
 
   @Override
   public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
     initRecyclerView(view);
-    bindFilmsToRecyclerView();
   }
 
   private void initRecyclerView(@NonNull View view) {
@@ -44,6 +44,17 @@ public abstract class MovieFanPageBaseFragment extends BaseFragment {
     filmsRecyclerView.setLayoutManager(layoutManager);
     filmsRecyclerView.setAdapter(adapter);
     filmsRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
+    initRecyclerViewOnScrollListener();
+  }
+
+  private void initRecyclerViewOnScrollListener(){
+    scrollListener = new OnDemandRecyclerViewScrollListener() {
+      @Override
+      protected void loadNextPage(int page) {
+        bindFilmsToRecyclerView(page);
+      }
+    };
+    filmsRecyclerView.addOnScrollListener(scrollListener);
   }
 
   @Override
@@ -52,8 +63,8 @@ public abstract class MovieFanPageBaseFragment extends BaseFragment {
   }
 
   @MainThread
-  protected void bindFilmsToRecyclerView() {
-    requestFilms(FIRST_PAGE)
+  protected void bindFilmsToRecyclerView(int pageNumber) {
+    requestFilms(pageNumber)
         .compose(prepareSingleForSubscription())
         .subscribe(new GeneralSingleSubscriber<List<Film>>() {
           @Override
