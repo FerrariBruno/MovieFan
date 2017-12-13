@@ -8,6 +8,8 @@ import com.xmartlabs.moviefan.R;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import lombok.NonNull;
+
 /**
  * Created by bruno on 12/13/17.
  */
@@ -24,7 +26,7 @@ public class MovieFanCircleImageView extends CircleImageView {
     super(context, attrs, defStyle);
   }
 
-  public void loadImageWithPicassoIncludingPlaceholder(String url){
+  public void loadImageWithPicassoIncludingPlaceholder(@NonNull String url){
     Picasso.with(getContext())
         .load(url)
         .error(R.drawable.ic_error_loading_film_image)
