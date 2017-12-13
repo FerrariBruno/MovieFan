@@ -28,7 +28,7 @@ import lombok.NoArgsConstructor;
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class FilmController extends BaseController {
-  private final int YEAR_1985 = 1985;
+  private final static int YEAR_1985 = 1985;
   private final static String SORT_BY_QUERY_VALUE = "release_date.desc";
   private static final FilmController FILM_CONTROLLER = new FilmController();
 
