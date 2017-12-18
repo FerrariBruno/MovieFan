@@ -26,7 +26,7 @@ public class SpecificYearPageFragment extends MovieFanPageBaseFragment {
   @CheckResult
   @NonNull
   @Override
-  protected Single<List<Film>> requestFilms(int pageNumber) {
-    return FilmController.getInstance().getSpecificYearFilms(pageNumber);
+  protected Single<List<Film>> requestFilms(int pageNumber, String genreId, String adultContent) {
+    return FilmController.getInstance().getSpecificYearFilms(pageNumber, genreId, adultContent);
   }
 }

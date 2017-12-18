@@ -5,15 +5,22 @@ import android.support.annotation.CheckResult;
 import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomSheetDialog;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.annimon.stream.Stream;
 import com.xmartlabs.moviefan.R;
 import com.xmartlabs.moviefan.ui.common.BaseFragment;
 import com.xmartlabs.moviefan.ui.common.GeneralSingleSubscriber;
+import com.xmartlabs.moviefan.ui.common.MovieFanFilterView;
+import com.xmartlabs.moviefan.ui.common.OnFilterAppliedListener;
 import com.xmartlabs.moviefan.ui.models.Film;
 import com.xmartlabs.moviefan.ui.recyclerview.FilmsRecyclerViewAdapter;
 import com.xmartlabs.moviefan.ui.recyclerview.OnDemandRecyclerViewScrollListener;
@@ -26,9 +33,14 @@ import io.reactivex.Single;
 /**
  * Created by bruno on 12/5/17.
  */
-public abstract class MovieFanPageBaseFragment extends BaseFragment {
+public abstract class MovieFanPageBaseFragment extends BaseFragment implements OnFilterAppliedListener {
   @BindView(R.id.films)
   RecyclerView filmsRecyclerView;
+
+  @Nullable
+  private String adultContent;
+  @Nullable
+  private String genreId;
 
   @NonNull
   private FilmsRecyclerViewAdapter adapter = createFilmsAdapter();
@@ -51,7 +63,7 @@ public abstract class MovieFanPageBaseFragment extends BaseFragment {
     scrollListener = new OnDemandRecyclerViewScrollListener() {
       @Override
       protected void loadNextPage(int page) {
-        bindFilmsToRecyclerView(page);
+        bindFilmsToRecyclerView(page, genreId, adultContent);
       }
     };
     filmsRecyclerView.addOnScrollListener(scrollListener);
@@ -59,12 +71,12 @@ public abstract class MovieFanPageBaseFragment extends BaseFragment {
 
   @Override
   protected int getLayoutResId() {
-    return R.layout.movie_page_fragment;
+    return R.layout.fragment_movie_page;
   }
 
   @MainThread
-  protected void bindFilmsToRecyclerView(int pageNumber) {
-    requestFilms(pageNumber)
+  protected void bindFilmsToRecyclerView(int pageNumber, String genreId, String adultContent) {
+    requestFilms(pageNumber, genreId, adultContent)
         .compose(prepareSingleForSubscription())
         .subscribe(new GeneralSingleSubscriber<List<Film>>() {
           @Override
@@ -81,5 +93,12 @@ public abstract class MovieFanPageBaseFragment extends BaseFragment {
 
   @CheckResult
   @NonNull
-  protected abstract Single<List<Film>> requestFilms(int pageNumber);
+  protected abstract Single<List<Film>> requestFilms(int pageNumber, String genreId, String adultContent);
+
+  @Override
+  public void onFilterApplied(@Nullable String genreId, @Nullable String adultContent) {
+    this.genreId = genreId;
+    this.adultContent = adultContent;
+    initRecyclerViewOnScrollListener();
+  }
 }

@@ -3,12 +3,13 @@
     <string name="app_name">MovieFan</string>
     <string name="apply">Apply</string>
     <string name="filter_button_content_description">Filter Button</string>
+    <string name="filter_title">Filters</string>
     <string name="filter_view.adult_content">Display adult content</string>
     <string name="filter_view.clear_filters">Clear filters</string>
     <string name="filter_view.genre">Genre</string>
     <string name="filter_view.title">Filter results</string>
     <string name="filter_view.year">Year</string>
-    <string name="home_view.1985">1985</string>
+    <string name="home_view.1991">1991</string>
     <string name="home_view.latest">LATEST</string>
     <string name="home_view.this_year">THIS YEAR</string>
     <string name="logo_content_description">MovieFan Logo</string>
