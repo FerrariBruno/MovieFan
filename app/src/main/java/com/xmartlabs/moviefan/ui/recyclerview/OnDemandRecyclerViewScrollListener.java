@@ -10,7 +10,6 @@ import lombok.Setter;
  * Created by bruno on 12/13/17.
  */
 public abstract class OnDemandRecyclerViewScrollListener extends RecyclerView.OnScrollListener {
-  @Setter
   private static final int FIRST_PAGE = 1;
   private static final int VISIBLE_THRESHOLD_DEFAULT = 5;
 
