@@ -69,7 +69,7 @@ public abstract class MovieFanPageBaseFragment extends BaseFragment implements O
   }
 
   @MainThread
-  protected void bindFilmsToRecyclerView(int pageNumber, String genreId, String adultContent) {
+  protected void bindFilmsToRecyclerView(int pageNumber, @Nullable String genreId, @Nullable String adultContent) {
     requestFilms(pageNumber, genreId, adultContent)
         .compose(prepareSingleForSubscription())
         .subscribe(new GeneralSingleSubscriber<List<Film>>() {

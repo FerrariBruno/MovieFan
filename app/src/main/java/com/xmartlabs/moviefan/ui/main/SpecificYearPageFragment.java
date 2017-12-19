@@ -2,6 +2,7 @@ package com.xmartlabs.moviefan.ui.main;
 
 import android.support.annotation.CheckResult;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
 import com.xmartlabs.moviefan.controller.FilmController;
@@ -26,7 +27,7 @@ public class SpecificYearPageFragment extends MovieFanPageBaseFragment {
   @CheckResult
   @NonNull
   @Override
-  protected Single<List<Film>> requestFilms(int pageNumber, String genreId, String adultContent) {
+  protected Single<List<Film>> requestFilms(int pageNumber, @Nullable String genreId, @Nullable String adultContent) {
     return FilmController.getInstance().getSpecificYearFilms(pageNumber, genreId, adultContent);
   }
 }

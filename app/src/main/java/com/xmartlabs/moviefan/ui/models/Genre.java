@@ -14,6 +14,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor(access = AccessLevel.PUBLIC)
 public class Genre {
+  @NonNull
   private Long id;
   @NonNull
   private String name;
