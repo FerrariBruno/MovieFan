@@ -39,7 +39,7 @@ public class GenreController extends BaseController {
       .firstOrError();
 
   @NonNull
-  static GenreController getInstance() {
+  public static GenreController getInstance() {
     return GENRE_CONTROLLER;
   }
 

@@ -32,7 +32,7 @@ public class FilmsViewPagerAdapter extends FragmentPagerAdapter {
   @RequiredArgsConstructor
   private enum Page {
     LATEST(R.string.home_view_latest),
-    SPECIFIC_YEAR(R.string.home_view_1985),
+    SPECIFIC_YEAR(R.string.home_view_1991),
     THIS_YEAR(R.string.home_view_this_year),
     ;
 
@@ -77,5 +77,9 @@ public class FilmsViewPagerAdapter extends FragmentPagerAdapter {
   @Override
   public CharSequence getPageTitle(int position) {
     return context.getString(Page.values()[position].titleResourceId);
+  }
+
+  public int getLastFragmentsNumber() {
+    return getCount() - 1;
   }
 }

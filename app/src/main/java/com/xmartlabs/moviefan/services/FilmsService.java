@@ -1,6 +1,5 @@
 package com.xmartlabs.moviefan.services;
 
-import com.xmartlabs.moviefan.ui.models.Film;
 import com.xmartlabs.moviefan.ui.models.FilmResponse;
 import com.xmartlabs.moviefan.ui.models.ListResponse;
 
@@ -24,14 +23,13 @@ public interface FilmsService {
   @GET(GET_MOVIES)
   Single<ListResponse<FilmResponse>> getLatestFilms(@Query(QUERY_SORT_BY) String sortBy,
                                                     @Query(QUERY_RELEASE_DATE_LTE) String fromDate,
-                                                    @Query(QUERY_ADULT_CONTENT) String include_adult,
-                                                    @Query(QUERY_YEAR) String year,
-                                                    @Query(QUERY_GENRES) String genres,
+                                                    @Query(QUERY_ADULT_CONTENT) boolean include_adult,
+                                                    @Query(QUERY_GENRES) String genreId,
                                                     @Query(QUERY_PAGE) int page);
 
   @GET(GET_MOVIES)
   Single<ListResponse<FilmResponse>> getSpecificYearFilms(@Query(QUERY_YEAR) int year,
-                                                  @Query(QUERY_ADULT_CONTENT) String include_adult,
-                                                  @Query(QUERY_GENRES) String genres,
-                                                  @Query(QUERY_PAGE) int page);
+                                                          @Query(QUERY_ADULT_CONTENT) boolean include_adult,
+                                                          @Query(QUERY_GENRES) String genreId,
+                                                          @Query(QUERY_PAGE) int page);
 }

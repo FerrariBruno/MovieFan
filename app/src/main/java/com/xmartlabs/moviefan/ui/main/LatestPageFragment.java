@@ -3,9 +3,11 @@ package com.xmartlabs.moviefan.ui.main;
 import android.support.annotation.CheckResult;
 import android.support.annotation.NonNull;
 
+import com.annimon.stream.Optional;
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
 import com.xmartlabs.moviefan.controller.FilmController;
 import com.xmartlabs.moviefan.ui.models.Film;
+import com.xmartlabs.moviefan.ui.models.Genre;
 import com.xmartlabs.moviefan.ui.recyclerview.FilmsRecyclerViewAdapter;
 
 import java.util.List;
@@ -26,7 +28,7 @@ public class LatestPageFragment extends MovieFanPageBaseFragment {
   @CheckResult
   @NonNull
   @Override
-  protected Single<List<Film>> requestFilms(int pageNumber) {
-    return FilmController.getInstance().getLatestFilms(pageNumber);
+  protected Single<List<Film>> requestFilms(int pageNumber, @NonNull Optional<Genre> genre, boolean adultContent) {
+    return FilmController.getInstance().getLatestFilms(pageNumber, genre, adultContent);
   }
 }

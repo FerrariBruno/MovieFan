@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.WorkerThread;
 
 import com.annimon.stream.Collectors;
+import com.annimon.stream.Optional;
 import com.annimon.stream.Stream;
 import com.xmartlabs.moviefan.MovieFanApplication;
 import com.xmartlabs.moviefan.R;
@@ -28,8 +29,8 @@ import lombok.NoArgsConstructor;
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class FilmController extends BaseController {
-  private final int YEAR_1985 = 1985;
-  private final static String SORT_BY_QUERY_VALUE = "release_date.desc";
+  private static final int YEAR_1991 = 1991;
+  private static final  String SORT_BY_QUERY_VALUE = "release_date.desc";
   private static final FilmController FILM_CONTROLLER = new FilmController();
 
   @NonNull
@@ -39,53 +40,60 @@ public class FilmController extends BaseController {
 
   @CheckResult
   @NonNull
-  public Single<List<Film>> getLatestFilms(int pageNumber) {
+  public Single<List<Film>> getLatestFilms(int pageNumber, @NonNull Optional<Genre> genre, boolean adultContent) {
     return Single
         .zip(
             GenreController.getInstance().getAllGenres(),
-            getLatestFilmsFromService(pageNumber).map(ListResponse::getResults),
+            getLatestFilmsFromService(pageNumber, getIdFromGenreOptional(genre), adultContent).map(ListResponse::getResults),
             this::updateFilmsWithGenresAndImageUrl)
         .compose(applySingleIoSchedulers());
   }
 
   @CheckResult
   @NonNull
-  public Single<List<Film>> getThisYearsFilms(int pageNumber) {
+  public Single<List<Film>> getThisYearsFilms(int pageNumber, @NonNull Optional<Genre> genre, boolean adultContent) {
     return Single
         .zip(
             GenreController.getInstance().getAllGenres(),
-            getYearFilmsFromService(DateHelper.getCurrentYear(), pageNumber).map(ListResponse::getResults),
+            getYearFilmsFromService(DateHelper.getCurrentYear(), pageNumber, getIdFromGenreOptional(genre), adultContent)
+                .map(ListResponse::getResults),
             this::updateFilmsWithGenresAndImageUrl)
         .compose(applySingleIoSchedulers());
   }
 
   @CheckResult
   @NonNull
-  public Single<List<Film>> getSpecificYearFilms(int pageNumber) {
+  public Single<List<Film>> getSpecificYearFilms(int pageNumber, @NonNull Optional<Genre> genre, boolean adultContent) {
     return Single
         .zip(
             GenreController.getInstance().getAllGenres(),
-            getYearFilmsFromService(YEAR_1985, pageNumber).map(ListResponse::getResults),
+            getYearFilmsFromService(YEAR_1991, pageNumber, getIdFromGenreOptional(genre), adultContent)
+                .map(ListResponse::getResults),
             this::updateFilmsWithGenresAndImageUrl)
-        .compose(applySingleIoSchedulers());
-  }
-
-  @NonNull
-  private Single<ListResponse<FilmResponse>> getLatestFilmsFromService(int pageNumber){
-    FilmsService service = RestProvider.getInstance().provideFilmService();
-    //TODO replace null values with values from filter view
-    return service.getLatestFilms(SORT_BY_QUERY_VALUE, DateHelper.getTodaysDate(),
-        null, null, null, pageNumber)
         .compose(applySingleIoSchedulers());
   }
 
   @CheckResult
   @NonNull
   @WorkerThread
-  private Single<ListResponse<FilmResponse>> getYearFilmsFromService(int year, int pageNumber){
+  private Single<ListResponse<FilmResponse>> getLatestFilmsFromService(int pageNumber,
+                                                                       @NonNull String genreId,
+                                                                       boolean adultContent){
     FilmsService service = RestProvider.getInstance().provideFilmService();
-    //TODO replace null values with values from filter view
-    return service.getSpecificYearFilms(year, null, null, pageNumber)
+    return service.getLatestFilms(SORT_BY_QUERY_VALUE, DateHelper.getTodaysDate(),
+        adultContent, genreId, pageNumber)
+        .compose(applySingleIoSchedulers());
+  }
+
+  @CheckResult
+  @NonNull
+  @WorkerThread
+  private Single<ListResponse<FilmResponse>> getYearFilmsFromService(int year,
+                                                                     int pageNumber,
+                                                                     @NonNull String genreId,
+                                                                     boolean adultContent){
+    FilmsService service = RestProvider.getInstance().provideFilmService();
+    return service.getSpecificYearFilms(year, adultContent, genreId, pageNumber)
         .compose(applySingleIoSchedulers());
   }
 
@@ -102,5 +110,12 @@ public class FilmController extends BaseController {
           return response;
         })
         .collect(Collectors.<Film>toList());
+  }
+
+  @NonNull
+  private String getIdFromGenreOptional(@NonNull Optional<Genre> genre) {
+    return genre.map(Genre::getId)
+        .map(String::valueOf)
+        .orElse("");
   }
 }

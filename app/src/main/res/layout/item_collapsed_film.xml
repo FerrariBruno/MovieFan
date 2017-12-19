@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
         tools:text="Spartacus"
-        style="@style/FilmTitle"
+        style="@style/MovieFanTitleText"
         />
 
 </LinearLayout>

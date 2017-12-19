@@ -93,6 +93,10 @@ public class FilmsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
     this.films.add(film);
   }
 
+  public void clearData() {
+    films.clear();
+  }
+
   static class DetailedFilmViewHolder extends RecyclerView.ViewHolder {
     private final String DELIMITER = ", ";
 

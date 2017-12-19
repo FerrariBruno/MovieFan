@@ -39,7 +39,9 @@ public abstract class SingleFragmentActivity extends BaseAppCompatActivity {
           .commit();
     }
 
-    setSupportActionBar(toolbar);
+    setSupportActionBar(findViewById(R.id.toolbar));
+    //noinspection ConstantConditions
+    getSupportActionBar().setDisplayShowTitleEnabled(false);
   }
 
   @Nullable

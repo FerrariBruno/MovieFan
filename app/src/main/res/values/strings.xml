@@ -1,11 +1,21 @@
 <resources>
+    <string name="any">Any</string>
     <string name="app_name">MovieFan</string>
+    <string name="apply">Apply</string>
+    <string name="filter_button_content_description">Filter Button</string>
+    <string name="filter_title">Filters</string>
+    <string name="filter_view.adult_content">Display adult content</string>
+    <string name="filter_view.clear_filters">Clear filters</string>
+    <string name="filter_view.genre">Genre</string>
+    <string name="filter_view.title">Filter results</string>
+    <string name="filter_view.year">Year</string>
+    <string name="genre_spinner.hint">Any</string>
+    <string name="home_view.1991">1991</string>
     <string name="home_view.latest">LATEST</string>
     <string name="home_view.this_year">THIS YEAR</string>
-    <string name="home_view.1985">1985</string>
     <string name="logo_content_description">MovieFan Logo</string>
-    <string name="poster_description">Film Poster</string>
     <string name="popularity">Popularity:</string>
+    <string name="poster_description">Film Poster</string>
 
     <string name="access_token">eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjMGM5MDE1NmJjNDhiNjUzZDYwYmNjNTE0N2RlYWQ3NyIsInN1YiI6IjVhMjdmYWQ0OTI1MTQxMDMzNjEwMWM3OCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.d8VVy3YPl9lQ7sLA_6KZYRwUmIA-4Xs6jJaGt_QZAsg</string>
     <string name="api_key">c0c90156bc48b653d60bcc5147dead77</string>
