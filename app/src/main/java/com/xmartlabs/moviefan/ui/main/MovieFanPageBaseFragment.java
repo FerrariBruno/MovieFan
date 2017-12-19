@@ -90,8 +90,8 @@ public abstract class MovieFanPageBaseFragment extends BaseFragment implements O
   protected abstract Single<List<Film>> requestFilms(int pageNumber, String genreId, String adultContent);
 
   @Override
-  public void onFilterApplied(@Nullable String genreId, @Nullable String adultContent) {
-    this.genreId = genreId;
+  public void onFilterApplied(@NonNull String genreId, @NonNull String adultContent) {
+    this.genreId = genreId.equals("null") ? "" : genreId;
     this.adultContent = adultContent;
     updateRecyclerView();
   }

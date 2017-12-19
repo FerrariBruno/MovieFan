@@ -37,7 +37,7 @@
         android:layout_width="wrap_content"
         android:layout_height="23dp"
         android:background="@null"
-        android:layout_marginStart="280dp"
+        android:layout_marginStart="320dp"
         android:layout_marginTop="83dp"
         android:spinnerMode="dialog"
         />
@@ -46,7 +46,7 @@
         android:id="@+id/adult_content_switch"
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:layout_marginEnd="81dp"
+        android:layout_marginEnd="35dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="141dp"
         android:text="@string/filter_view.adult_content"

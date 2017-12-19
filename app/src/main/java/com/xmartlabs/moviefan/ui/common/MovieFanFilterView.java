@@ -11,6 +11,7 @@ import android.widget.Spinner;
 
 import com.annimon.stream.Optional;
 import com.annimon.stream.Stream;
+import com.xmartlabs.moviefan.MovieFanApplication;
 import com.xmartlabs.moviefan.R;
 import com.xmartlabs.moviefan.controller.GenreController;
 import com.xmartlabs.moviefan.ui.models.Genre;
@@ -33,8 +34,6 @@ public class MovieFanFilterView extends FrameLayout {
   Spinner genreSpinnerView;
   @BindView(R.id.adult_content_switch)
   SwitchCompat adultContentSwitchView;
-
-  private Map<Long, Genre> genres;
 
   @Setter
   private OnFilterAppliedListener onFilterAppliedListener;
@@ -63,16 +62,28 @@ public class MovieFanFilterView extends FrameLayout {
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new GeneralSingleSubscriber<Map<Long, Genre>>() {
           @Override
-          public void onSuccess(@NonNull Map<Long, Genre> genres){
-            List<String> genreNames = new ArrayList<>();
-            Stream.of(genres)
-                    .forEach(genre -> genreNames.add(genre.getValue().getName()));
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                    getContext(), android.R.layout.simple_spinner_item, genreNames);
-            adapter.setDropDownViewResource(R.layout.custom_spinner_item);
-            genreSpinnerView.setAdapter(adapter);
+          public void onSuccess(@NonNull Map<Long, Genre> genres) {
+            initGenresSpinner(genres);
           }
         });
+  }
+
+  private void initGenresSpinner(@NonNull Map<Long, Genre> genres) {
+    List<Genre> genresFromService = loadGenresFromService(genres);
+    ArrayAdapter<Genre> adapter = new ArrayAdapter<>(
+            getContext(), android.R.layout.simple_spinner_item, genresFromService);
+    adapter.setDropDownViewResource(R.layout.custom_spinner_item);
+    genreSpinnerView.setAdapter(adapter);
+  }
+
+  @NonNull
+  private List<Genre> loadGenresFromService(@NonNull Map<Long, Genre> genres) {
+    List<Genre> genresFromService = new ArrayList<>();
+    genresFromService.add(new Genre(null,
+        MovieFanApplication.getContext().getString(R.string.genre_spinner_hint))); //Empty Genre for Spinner hint
+    Stream.of(genres)
+            .forEach(genre -> genresFromService.add(genre.getValue()));
+    return genresFromService;
   }
 
   @OnClick(R.id.apply_filters)
@@ -83,9 +94,8 @@ public class MovieFanFilterView extends FrameLayout {
 
   @NonNull
   private String getGenreIdFromSpinner() {
-    //TODO add correct genre spinner selection
-    //return genreSpinnerView.getSelectedItem().toString();
-    return "28";
+    Genre selectedGenre = (Genre) genreSpinnerView.getSelectedItem();
+    return String.valueOf(selectedGenre.getId());
   }
 
   @NonNull

@@ -2,6 +2,8 @@ package com.xmartlabs.moviefan.ui.models;
 
 import android.support.annotation.NonNull;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
@@ -10,9 +12,14 @@ import lombok.Data;
  */
 @Builder
 @Data
+@AllArgsConstructor(access = AccessLevel.PUBLIC)
 public class Genre {
-  @NonNull
-  private long id;
+  private Long id;
   @NonNull
   private String name;
+
+  @Override
+  public String toString() {
+    return name;
+  }
 }
