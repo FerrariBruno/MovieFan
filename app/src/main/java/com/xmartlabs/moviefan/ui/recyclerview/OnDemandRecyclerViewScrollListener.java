@@ -12,20 +12,20 @@ import lombok.Setter;
 public abstract class OnDemandRecyclerViewScrollListener extends RecyclerView.OnScrollListener {
   @Setter
   private static final int FIRST_PAGE = 1;
-  public static final int VISIBLE_THRESHOLD_DEFAULT = 5;
+  private static final int VISIBLE_THRESHOLD_DEFAULT = 5;
 
-  private int previousTotal;
   private boolean loading = true;
   private int firstVisibleItem;
-  private int visibleItemCount;
-  private int totalItemCount;
   private int page = FIRST_PAGE;
+  private int previousTotal;
+  private int totalItemCount;
+  private int visibleItemCount;
   @Setter
   private boolean enabled = true;
   @Setter
   private int visibleThreshold = VISIBLE_THRESHOLD_DEFAULT;
 
-  public OnDemandRecyclerViewScrollListener() {
+  private OnDemandRecyclerViewScrollListener() {
     loadNextPage(page);
   }
 
