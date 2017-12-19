@@ -40,6 +40,8 @@ public abstract class SingleFragmentActivity extends BaseAppCompatActivity {
     }
 
     setSupportActionBar(findViewById(R.id.toolbar));
+    //noinspection ConstantConditions
+    getSupportActionBar().setDisplayShowTitleEnabled(false);
   }
 
   @Nullable

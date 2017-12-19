@@ -5,14 +5,11 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.SwitchCompat;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Spinner;
 
 import com.annimon.stream.Stream;
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
@@ -30,7 +27,8 @@ import butterknife.BindView;
 @FragmentWithArgs
 public class TabsFragment extends BaseFragment {
   private FilmsViewPagerAdapter filmsViewPagerAdapter;
-  private static final int FIRST_FRAGMENT = 1;
+  private static final int FIRST_FRAGMENT = 0;
+  private int LAST_FRAGMENT;
   private static final int OFFSCREEN_PAGE_LIMIT = 3;
 
   @BindView(R.id.viewpager)
@@ -47,6 +45,7 @@ public class TabsFragment extends BaseFragment {
 
   private void initViewPagerAdapter() {
     filmsViewPagerAdapter = new FilmsViewPagerAdapter(getFragmentManager(), getContext());
+    LAST_FRAGMENT = filmsViewPagerAdapter.getCount() - 1;
     viewPager.setAdapter(filmsViewPagerAdapter);
     viewPager.setOffscreenPageLimit(OFFSCREEN_PAGE_LIMIT);
     tabLayout.setupWithViewPager(viewPager);
@@ -78,15 +77,13 @@ public class TabsFragment extends BaseFragment {
   private void initFilterDialog() {
     BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getActivity());
     MovieFanFilterView filterView = new MovieFanFilterView(getContext());
-    filterView.setFilterApplyListener(new OnFilterAppliedListener() {
-      @Override
-      public void onFilterApplied(String genreId, String adultContent) {
-        Stream.range(FIRST_FRAGMENT, filmsViewPagerAdapter.getCount())
-            .map(integer -> filmsViewPagerAdapter.getItem(integer))
-            .filter(fragment -> fragment instanceof OnFilterAppliedListener)
-            .map(fragment -> (OnFilterAppliedListener) fragment)
-            .forEach(listener -> listener.onFilterApplied(genreId, adultContent));
-      }
+    filterView.setOnFilterAppliedListener((genreId, adultContent) -> {
+      Stream.rangeClosed(FIRST_FRAGMENT, LAST_FRAGMENT)
+          .map(integer -> filmsViewPagerAdapter.getItem(integer))
+          .filter(fragment -> fragment instanceof OnFilterAppliedListener)
+          .map(fragment -> (OnFilterAppliedListener) fragment)
+          .forEach(listener -> listener.onFilterApplied(genreId, adultContent));
+      bottomSheetDialog.dismiss();
     });
     bottomSheetDialog.setContentView(filterView);
     bottomSheetDialog.show();

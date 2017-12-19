@@ -5,21 +5,15 @@ import android.support.annotation.CheckResult;
 import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.BottomSheetDialog;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.annimon.stream.Stream;
 import com.xmartlabs.moviefan.R;
 import com.xmartlabs.moviefan.ui.common.BaseFragment;
 import com.xmartlabs.moviefan.ui.common.GeneralSingleSubscriber;
-import com.xmartlabs.moviefan.ui.common.MovieFanFilterView;
 import com.xmartlabs.moviefan.ui.common.OnFilterAppliedListener;
 import com.xmartlabs.moviefan.ui.models.Film;
 import com.xmartlabs.moviefan.ui.recyclerview.FilmsRecyclerViewAdapter;
@@ -99,6 +93,13 @@ public abstract class MovieFanPageBaseFragment extends BaseFragment implements O
   public void onFilterApplied(@Nullable String genreId, @Nullable String adultContent) {
     this.genreId = genreId;
     this.adultContent = adultContent;
+    updateRecyclerView();
+  }
+
+  private void updateRecyclerView() {
+    adapter.clearData();
+    adapter.notifyDataSetChanged();
+    filmsRecyclerView.removeOnScrollListener(scrollListener);
     initRecyclerViewOnScrollListener();
   }
 }

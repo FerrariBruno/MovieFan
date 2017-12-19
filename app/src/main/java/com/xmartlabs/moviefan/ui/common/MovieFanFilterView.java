@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.SwitchCompat;
 import android.util.AttributeSet;
+import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.Spinner;
 
@@ -12,9 +13,9 @@ import com.annimon.stream.Optional;
 import com.annimon.stream.Stream;
 import com.xmartlabs.moviefan.R;
 import com.xmartlabs.moviefan.controller.GenreController;
-import com.xmartlabs.moviefan.ui.models.Film;
 import com.xmartlabs.moviefan.ui.models.Genre;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -33,8 +34,10 @@ public class MovieFanFilterView extends FrameLayout {
   @BindView(R.id.adult_content_switch)
   SwitchCompat adultContentSwitchView;
 
+  private Map<Long, Genre> genres;
+
   @Setter
-  private OnFilterAppliedListener filterApplyListener;
+  private OnFilterAppliedListener onFilterAppliedListener;
 
   public MovieFanFilterView(@NonNull Context context) {
     this(context, null);
@@ -52,32 +55,37 @@ public class MovieFanFilterView extends FrameLayout {
   private void init() {
     inflate(getContext(), R.layout.view_movie_filters, this);
     ButterKnife.bind(this);
-    //populateGenresSpinner();
+    populateGenresSpinner();
   }
 
-  /*private void populateGenresSpinner(){
+  private void populateGenresSpinner(){
     GenreController.getInstance().getAllGenres()
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new GeneralSingleSubscriber<Map<Long, Genre>>() {
           @Override
           public void onSuccess(@NonNull Map<Long, Genre> genres){
-            List<String>
+            List<String> genreNames = new ArrayList<>();
             Stream.of(genres)
-                .forEach(genre -> genreSpinnerView.);
+                    .forEach(genre -> genreNames.add(genre.getValue().getName()));
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                    getContext(), android.R.layout.simple_spinner_item, genreNames);
+            adapter.setDropDownViewResource(R.layout.custom_spinner_item);
+            genreSpinnerView.setAdapter(adapter);
           }
         });
-  }*/
+  }
 
   @OnClick(R.id.apply_filters)
   public void onApplyButtonClicked() {
-    Optional.ofNullable(filterApplyListener)
+    Optional.ofNullable(onFilterAppliedListener)
         .ifPresent(listener -> listener.onFilterApplied(getGenreIdFromSpinner(), getAdultContentPreferenceFromSwitch()));
   }
 
   @NonNull
   private String getGenreIdFromSpinner() {
+    //TODO add correct genre spinner selection
     //return genreSpinnerView.getSelectedItem().toString();
-    return "25";
+    return "28";
   }
 
   @NonNull

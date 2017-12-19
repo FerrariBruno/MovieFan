@@ -90,7 +90,7 @@ public class FilmController extends BaseController {
                                                                      String genreId,
                                                                      String adultContent){
     FilmsService service = RestProvider.getInstance().provideFilmService();
-    return service.getSpecificYearFilms(year, null, null, pageNumber)
+    return service.getSpecificYearFilms(year, adultContent, genreId, pageNumber)
         .compose(applySingleIoSchedulers());
   }
 
