@@ -1,6 +1,7 @@
 package com.xmartlabs.moviefan.ui.models;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -14,7 +15,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor(access = AccessLevel.PUBLIC)
 public class Genre {
-  @NonNull
+  @Nullable
   private Long id;
   @NonNull
   private String name;
