@@ -24,7 +24,7 @@ public abstract class OnDemandRecyclerViewScrollListener extends RecyclerView.On
   @Setter
   private int visibleThreshold = VISIBLE_THRESHOLD_DEFAULT;
 
-  private OnDemandRecyclerViewScrollListener() {
+  protected OnDemandRecyclerViewScrollListener() {
     loadNextPage(page);
   }
 
