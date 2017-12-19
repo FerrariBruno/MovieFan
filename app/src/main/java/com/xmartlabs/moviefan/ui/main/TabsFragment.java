@@ -14,22 +14,30 @@ import android.view.View;
 import com.annimon.stream.Stream;
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
 import com.xmartlabs.moviefan.R;
+import com.xmartlabs.moviefan.controller.GenreController;
 import com.xmartlabs.moviefan.ui.common.BaseFragment;
+import com.xmartlabs.moviefan.ui.common.GeneralSingleSubscriber;
 import com.xmartlabs.moviefan.ui.common.MovieFanFilterView;
 import com.xmartlabs.moviefan.ui.common.OnFilterAppliedListener;
+import com.xmartlabs.moviefan.ui.models.Genre;
 import com.xmartlabs.moviefan.ui.slidingtabs.FilmsViewPagerAdapter;
 
+import java.util.Map;
+
 import butterknife.BindView;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 
 /**
  * Created by bruno on 11/30/17.
  */
 @FragmentWithArgs
 public class TabsFragment extends BaseFragment {
-  private FilmsViewPagerAdapter filmsViewPagerAdapter;
   private static final int FIRST_FRAGMENT = 0;
-  private int LAST_FRAGMENT;
   private static final int OFFSCREEN_PAGE_LIMIT = 3;
+
+  @Nullable
+  private FilmsViewPagerAdapter filmsViewPagerAdapter;
+  private int lastFragment;
 
   @BindView(R.id.viewpager)
   ViewPager viewPager;
@@ -45,7 +53,7 @@ public class TabsFragment extends BaseFragment {
 
   private void initViewPagerAdapter() {
     filmsViewPagerAdapter = new FilmsViewPagerAdapter(getFragmentManager(), getContext());
-    LAST_FRAGMENT = filmsViewPagerAdapter.getCount() - 1;
+    lastFragment = filmsViewPagerAdapter.getLastFragmentsNumber();
     viewPager.setAdapter(filmsViewPagerAdapter);
     viewPager.setOffscreenPageLimit(OFFSCREEN_PAGE_LIMIT);
     tabLayout.setupWithViewPager(viewPager);
@@ -71,21 +79,35 @@ public class TabsFragment extends BaseFragment {
       default:
         break;
     }
-    return true;
+    return false;
   }
 
   private void initFilterDialog() {
     BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getActivity());
     MovieFanFilterView filterView = new MovieFanFilterView(getContext());
     filterView.setOnFilterAppliedListener((genreId, adultContent) -> {
-      Stream.rangeClosed(FIRST_FRAGMENT, LAST_FRAGMENT)
-          .map(integer -> filmsViewPagerAdapter.getItem(integer))
+      //noinspection ConstantConditions
+      Stream.rangeClosed(FIRST_FRAGMENT, lastFragment)
+          .map(filmsViewPagerAdapter::getItem)
           .filter(fragment -> fragment instanceof OnFilterAppliedListener)
           .map(fragment -> (OnFilterAppliedListener) fragment)
           .forEach(listener -> listener.onFilterApplied(genreId, adultContent));
       bottomSheetDialog.dismiss();
     });
+    getGenresFromService(filterView);
     bottomSheetDialog.setContentView(filterView);
     bottomSheetDialog.show();
+  }
+
+  private void getGenresFromService(@NonNull MovieFanFilterView filterView) {
+    GenreController.getInstance()
+        .getAllGenres()
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new GeneralSingleSubscriber<Map<Long, Genre>>() {
+          @Override
+          public void onSuccess(@NonNull Map<Long, Genre> genres) {
+            filterView.initGenresSpinner(genres);
+          }
+        });
   }
 }

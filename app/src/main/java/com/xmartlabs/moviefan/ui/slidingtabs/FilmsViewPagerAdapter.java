@@ -78,4 +78,8 @@ public class FilmsViewPagerAdapter extends FragmentPagerAdapter {
   public CharSequence getPageTitle(int position) {
     return context.getString(Page.values()[position].titleResourceId);
   }
+
+  public int getLastFragmentsNumber() {
+    return getCount() - 1;
+  }
 }

@@ -2,10 +2,10 @@ package com.xmartlabs.moviefan.controller;
 
 import android.support.annotation.CheckResult;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.annotation.WorkerThread;
 
 import com.annimon.stream.Collectors;
+import com.annimon.stream.Optional;
 import com.annimon.stream.Stream;
 import com.xmartlabs.moviefan.MovieFanApplication;
 import com.xmartlabs.moviefan.R;
@@ -40,22 +40,22 @@ public class FilmController extends BaseController {
 
   @CheckResult
   @NonNull
-  public Single<List<Film>> getLatestFilms(int pageNumber, @Nullable String genreId, @Nullable String adultContent) {
+  public Single<List<Film>> getLatestFilms(int pageNumber, @NonNull Optional<Genre> genre, boolean adultContent) {
     return Single
         .zip(
             GenreController.getInstance().getAllGenres(),
-            getLatestFilmsFromService(pageNumber, genreId, adultContent).map(ListResponse::getResults),
+            getLatestFilmsFromService(pageNumber, getIdFromGenreOptional(genre), adultContent).map(ListResponse::getResults),
             this::updateFilmsWithGenresAndImageUrl)
         .compose(applySingleIoSchedulers());
   }
 
   @CheckResult
   @NonNull
-  public Single<List<Film>> getThisYearsFilms(int pageNumber, @Nullable String genreId, @Nullable String adultContent) {
+  public Single<List<Film>> getThisYearsFilms(int pageNumber, @NonNull Optional<Genre> genre, boolean adultContent) {
     return Single
         .zip(
             GenreController.getInstance().getAllGenres(),
-            getYearFilmsFromService(DateHelper.getCurrentYear(), pageNumber, genreId, adultContent)
+            getYearFilmsFromService(DateHelper.getCurrentYear(), pageNumber, getIdFromGenreOptional(genre), adultContent)
                 .map(ListResponse::getResults),
             this::updateFilmsWithGenresAndImageUrl)
         .compose(applySingleIoSchedulers());
@@ -63,20 +63,22 @@ public class FilmController extends BaseController {
 
   @CheckResult
   @NonNull
-  public Single<List<Film>> getSpecificYearFilms(int pageNumber, @Nullable String genreId, @Nullable String adultContent) {
+  public Single<List<Film>> getSpecificYearFilms(int pageNumber, @NonNull Optional<Genre> genre, boolean adultContent) {
     return Single
         .zip(
             GenreController.getInstance().getAllGenres(),
-            getYearFilmsFromService(YEAR_1991, pageNumber, genreId, adultContent)
+            getYearFilmsFromService(YEAR_1991, pageNumber, getIdFromGenreOptional(genre), adultContent)
                 .map(ListResponse::getResults),
             this::updateFilmsWithGenresAndImageUrl)
         .compose(applySingleIoSchedulers());
   }
 
+  @CheckResult
   @NonNull
+  @WorkerThread
   private Single<ListResponse<FilmResponse>> getLatestFilmsFromService(int pageNumber,
-                                                                       @Nullable String genreId,
-                                                                       @Nullable String adultContent){
+                                                                       @NonNull String genreId,
+                                                                       boolean adultContent){
     FilmsService service = RestProvider.getInstance().provideFilmService();
     return service.getLatestFilms(SORT_BY_QUERY_VALUE, DateHelper.getTodaysDate(),
         adultContent, genreId, pageNumber)
@@ -88,8 +90,8 @@ public class FilmController extends BaseController {
   @WorkerThread
   private Single<ListResponse<FilmResponse>> getYearFilmsFromService(int year,
                                                                      int pageNumber,
-                                                                     @Nullable String genreId,
-                                                                     @Nullable String adultContent){
+                                                                     @NonNull String genreId,
+                                                                     boolean adultContent){
     FilmsService service = RestProvider.getInstance().provideFilmService();
     return service.getSpecificYearFilms(year, adultContent, genreId, pageNumber)
         .compose(applySingleIoSchedulers());
@@ -108,5 +110,12 @@ public class FilmController extends BaseController {
           return response;
         })
         .collect(Collectors.<Film>toList());
+  }
+
+  @NonNull
+  private String getIdFromGenreOptional(@NonNull Optional<Genre> genre) {
+    return genre.map(Genre::getId)
+        .map(String::valueOf)
+        .orElse("");
   }
 }

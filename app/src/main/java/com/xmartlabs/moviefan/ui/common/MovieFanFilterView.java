@@ -13,7 +13,6 @@ import com.annimon.stream.Optional;
 import com.annimon.stream.Stream;
 import com.xmartlabs.moviefan.MovieFanApplication;
 import com.xmartlabs.moviefan.R;
-import com.xmartlabs.moviefan.controller.GenreController;
 import com.xmartlabs.moviefan.ui.models.Genre;
 
 import java.util.ArrayList;
@@ -23,13 +22,16 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import lombok.Setter;
 
 /**
  * Created by bruno on 12/14/17.
  */
 public class MovieFanFilterView extends FrameLayout {
+  private static final long ANY_GENRE_IDENTIFIER = -1;
+  @NonNull
+  private static final Genre ANY_GENRE = new Genre(ANY_GENRE_IDENTIFIER,
+           MovieFanApplication.getContext().getString(R.string.genre_spinner_hint)); //Empty Genre for Spinner hint
   @BindView(R.id.genre_spinner)
   Spinner genreSpinnerView;
   @BindView(R.id.adult_content_switch)
@@ -54,21 +56,9 @@ public class MovieFanFilterView extends FrameLayout {
   private void init() {
     inflate(getContext(), R.layout.view_movie_filters, this);
     ButterKnife.bind(this);
-    populateGenresSpinner();
   }
 
-  private void populateGenresSpinner(){
-    GenreController.getInstance().getAllGenres()
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(new GeneralSingleSubscriber<Map<Long, Genre>>() {
-          @Override
-          public void onSuccess(@NonNull Map<Long, Genre> genres) {
-            initGenresSpinner(genres);
-          }
-        });
-  }
-
-  private void initGenresSpinner(@NonNull Map<Long, Genre> genres) {
+  public void initGenresSpinner(@NonNull Map<Long, Genre> genres) {
     List<Genre> genresFromService = loadGenresFromService(genres);
     ArrayAdapter<Genre> adapter = new ArrayAdapter<>(
             getContext(), android.R.layout.simple_spinner_item, genresFromService);
@@ -79,27 +69,27 @@ public class MovieFanFilterView extends FrameLayout {
   @NonNull
   private List<Genre> loadGenresFromService(@NonNull Map<Long, Genre> genres) {
     List<Genre> genresFromService = new ArrayList<>();
-    genresFromService.add(new Genre(null,
-        MovieFanApplication.getContext().getString(R.string.genre_spinner_hint))); //Empty Genre for Spinner hint
+    genresFromService.add(ANY_GENRE);
     Stream.of(genres)
-            .forEach(genre -> genresFromService.add(genre.getValue()));
+        .map(Map.Entry::getValue)
+        .forEach(genresFromService::add);
     return genresFromService;
   }
 
   @OnClick(R.id.apply_filters)
   public void onApplyButtonClicked() {
     Optional.ofNullable(onFilterAppliedListener)
-        .ifPresent(listener -> listener.onFilterApplied(getGenreIdFromSpinner(), getAdultContentPreferenceFromSwitch()));
+        .ifPresent(listener -> listener.onFilterApplied(getGenreFromSpinner(), getAdultContentPreferenceFromSwitch()));
   }
 
-  @NonNull
-  private String getGenreIdFromSpinner() {
-    Genre selectedGenre = (Genre) genreSpinnerView.getSelectedItem();
-    return String.valueOf(selectedGenre.getId());
+
+  private Optional<Genre> getGenreFromSpinner() {
+    return ANY_GENRE.equals(genreSpinnerView.getSelectedItem()) ?
+        Optional.empty() :
+        Optional.of((Genre) genreSpinnerView.getSelectedItem());
   }
 
-  @NonNull
-  private String getAdultContentPreferenceFromSwitch() {
-    return String.valueOf(adultContentSwitchView.isChecked());
+  private boolean getAdultContentPreferenceFromSwitch() {
+    return adultContentSwitchView.isChecked();
   }
 }

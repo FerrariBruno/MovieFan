@@ -10,12 +10,14 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.annimon.stream.Optional;
 import com.annimon.stream.Stream;
 import com.xmartlabs.moviefan.R;
 import com.xmartlabs.moviefan.ui.common.BaseFragment;
 import com.xmartlabs.moviefan.ui.common.GeneralSingleSubscriber;
 import com.xmartlabs.moviefan.ui.common.OnFilterAppliedListener;
 import com.xmartlabs.moviefan.ui.models.Film;
+import com.xmartlabs.moviefan.ui.models.Genre;
 import com.xmartlabs.moviefan.ui.recyclerview.FilmsRecyclerViewAdapter;
 import com.xmartlabs.moviefan.ui.recyclerview.OnDemandRecyclerViewScrollListener;
 
@@ -31,13 +33,13 @@ public abstract class MovieFanPageBaseFragment extends BaseFragment implements O
   @BindView(R.id.films)
   RecyclerView filmsRecyclerView;
 
-  @Nullable
-  private String adultContent;
-  @Nullable
-  private String genreId;
+  private boolean adultContent = false;
+  @NonNull
+  private Optional<Genre> genre = Optional.empty();
 
   @NonNull
   private FilmsRecyclerViewAdapter adapter = createFilmsAdapter();
+  @Nullable
   private OnDemandRecyclerViewScrollListener scrollListener;
 
   @Override
@@ -53,11 +55,11 @@ public abstract class MovieFanPageBaseFragment extends BaseFragment implements O
     initRecyclerViewOnScrollListener();
   }
 
-  private void initRecyclerViewOnScrollListener(){
+  private void initRecyclerViewOnScrollListener() {
     scrollListener = new OnDemandRecyclerViewScrollListener() {
       @Override
       protected void loadNextPage(int page) {
-        bindFilmsToRecyclerView(page, genreId, adultContent);
+        bindFilmsToRecyclerView(page, genre, adultContent);
       }
     };
     filmsRecyclerView.addOnScrollListener(scrollListener);
@@ -68,9 +70,16 @@ public abstract class MovieFanPageBaseFragment extends BaseFragment implements O
     return R.layout.fragment_movie_page;
   }
 
+  @Override
+  public void onFilterApplied(@NonNull Optional<Genre> genre, boolean adultContent) {
+    this.genre = genre;
+    this.adultContent = adultContent;
+    updateRecyclerView();
+  }
+
   @MainThread
-  protected void bindFilmsToRecyclerView(int pageNumber, @Nullable String genreId, @Nullable String adultContent) {
-    requestFilms(pageNumber, genreId, adultContent)
+  protected void bindFilmsToRecyclerView(int pageNumber, @NonNull Optional<Genre> genre, boolean adultContent) {
+    requestFilms(pageNumber, genre, adultContent)
         .compose(prepareSingleForSubscription())
         .subscribe(new GeneralSingleSubscriber<List<Film>>() {
           @Override
@@ -82,24 +91,27 @@ public abstract class MovieFanPageBaseFragment extends BaseFragment implements O
         });
   }
 
+  private void updateRecyclerView() {
+    adapter.clearData();
+    adapter.notifyDataSetChanged();
+    filmsRecyclerView.removeOnScrollListener(scrollListener);
+    updateRecyclerViewOnScrollListener();
+  }
+
+  private void updateRecyclerViewOnScrollListener() {
+    scrollListener = new OnDemandRecyclerViewScrollListener() {
+      @Override
+      protected void loadNextPage(int page) {
+        bindFilmsToRecyclerView(page, genre, adultContent);
+      }
+    };
+    filmsRecyclerView.addOnScrollListener(scrollListener);
+  }
+
   @NonNull
   protected abstract FilmsRecyclerViewAdapter createFilmsAdapter();
 
   @CheckResult
   @NonNull
-  protected abstract Single<List<Film>> requestFilms(int pageNumber, String genreId, String adultContent);
-
-  @Override
-  public void onFilterApplied(@NonNull String genreId, @NonNull String adultContent) {
-    this.genreId = genreId.equals("null") ? "" : genreId;
-    this.adultContent = adultContent;
-    updateRecyclerView();
-  }
-
-  private void updateRecyclerView() {
-    adapter.clearData();
-    adapter.notifyDataSetChanged();
-    filmsRecyclerView.removeOnScrollListener(scrollListener);
-    initRecyclerViewOnScrollListener();
-  }
+  protected abstract Single<List<Film>> requestFilms(int pageNumber, Optional<Genre> genre, boolean adultContent);
 }

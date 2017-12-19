@@ -94,7 +94,7 @@ public class FilmsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
   }
 
   public void clearData() {
-    this.films.clear();
+    films.clear();
   }
 
   static class DetailedFilmViewHolder extends RecyclerView.ViewHolder {
