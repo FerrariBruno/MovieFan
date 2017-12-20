@@ -1,97 +1,29 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light">
-        <item name="colorPrimary">@color/black</item>
-        <item name="colorPrimaryDark">@color/black</item>
-        <item name="colorAccent">@color/red</item>
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="AppTheme.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
+    <style name="AppTheme.TranslucentStatusBar" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 
-    <style name="ClearFilterText">
-        <item name="android:fontFamily">"@font/lato_regular"</item>
-        <item name="android:textColor">@color/brownish_grey</item>
+    <style name="AppTheme.TextView">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:lineSpacingExtra">15sp</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="Button.Default" parent="Base.TextAppearance.AppCompat.Button">
+        <item name="android:background">@drawable/primary_btn_background</item>
+        <item name="android:gravity">center</item>
+        <item name="android:lineSpacingExtra">2sp</item>
         <item name="android:textSize">17sp</item>
-        <item name="android:textStyle">normal</item>
-    </style>
-
-    <style name="FilmDescription">
-        <item name="android:textColor">@color/black</item>
-        <item name="android:fontFamily">"@font/lato_regular"</item>
-        <item name="android:textSize">14sp</item>
-        <item name="android:textStyle">normal</item>
-    </style>
-
-    <style name="FilmsTabLayout" parent="Widget.Design.TabLayout">
-        <item name="tabIndicatorColor">@color/red</item>
-        <item name="tabIndicatorHeight">2dp</item>
-        <item name="tabPaddingStart">33dp</item>
-        <item name="tabPaddingEnd">40dp</item>
-        <item name="tabBackground">@color/black</item>
-        <item name="tabTextAppearance">@style/FilmsTabLayoutTextAppearance</item>
-        <item name="tabSelectedTextColor">@color/white</item>
-    </style>
-
-    <style name="FilmsTabLayoutTextAppearance" parent="TextAppearance.Design.Tab">
-        <item name="android:fontFamily">sans-serif</item>
-        <item name="android:textColor">@color/grey_warm</item>
-        <item name="android:textSize">16sp</item>
-        <item name="android:textStyle">normal</item>
-        <item name="textAllCaps">true</item>
-    </style>
-
-    <style name="FilterButton">
-        <item name="android:background">@drawable/rounded_button</item>
-        <item name="android:fontFamily">@font/kavoon_regular</item>
-        <item name="android:textColor">@color/white</item>
-        <item name="android:textSize">21sp</item>
-        <item name="android:textStyle">normal</item>
-    </style>
-
-    <style name="FilterSpinner">
-        <item name="android:fontFamily">@font/lato_regular</item>
-        <item name="android:textColor">@color/black_light</item>
-        <item name="android:textSize">19sp</item>
-        <item name="android:textStyle">normal</item>
-        <item name="android:textAllCaps">false</item>
-    </style>
-
-    <style name="FilterTitleText">
-        <item name="android:fontFamily">"@font/lato_regular"</item>
-        <item name="android:textColor">@color/black_light</item>
-        <item name="android:textSize">19sp</item>
-        <item name="android:textStyle">normal</item>
-    </style>
-
-    <style name="MovieFanTitleText">
-        <item name="android:fontFamily">"@font/lato_bold"</item>
-        <item name="android:textColor">@color/black</item>
-        <item name="android:textSize">19sp</item>
-        <item name="android:textStyle">bold</item>
-    </style>
-
-    <style name="GreyedFilmData">
-        <item name="android:fontFamily">sans-serif</item>
-        <item name="android:textColor">@color/grey_warm</item>
-        <item name="android:textSize">12sp</item>
-        <item name="android:textStyle">normal</item>
-    </style>
-
-    <style name="Toolbar" parent="Widget.AppCompat.Toolbar" />
-
-    <style name="Toolbar.Transparent" parent="Toolbar">
-        <item name="android:background">@android:color/transparent</item>
-        <item name="android:theme">@style/Toolbar.Transparent.Theme</item>
-        <item name="popupTheme">@style/Toolbar.Transparent.Theme</item>
-    </style>
-
-    <style name="Toolbar.Transparent.Theme" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
-        <item name="android:windowActionBarOverlay">true</item>
-        <item name="windowActionBarOverlay">true</item>
     </style>
 
 </resources>
