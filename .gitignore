@@ -26,3 +26,6 @@ build.properties
 
 # OSX files
 .DS_Store
+
+# other files
+app/fabric.properties
