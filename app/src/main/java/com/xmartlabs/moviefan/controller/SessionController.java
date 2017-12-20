@@ -1,20 +1,20 @@
 package com.xmartlabs.moviefan.controller;
 
-import com.xmartlabs.moviefan.ui.models.Session;
+import android.support.annotation.NonNull;
 
-import lombok.Getter;
-import lombok.NonNull;
+import com.annimon.stream.Optional;
+import com.xmartlabs.bigbang.core.controller.CoreSessionController;
+import com.xmartlabs.bigbang.core.model.SessionType;
+import com.xmartlabs.moviefan.model.Session;
 
-/**
- * Created by bruno on 12/8/17.
- */
-public class SessionController extends BaseController {
-  @Getter
+public class SessionController extends CoreSessionController {
+  public SessionController(Class<? extends SessionType> concreteSessionType) {
+    super(concreteSessionType);
+  }
+
   @NonNull
-  private static Session currentSession = new Session();
-
-  @NonNull
-  public static String getAccessToken() {
-    return getCurrentSession().getAccessToken();
+  public Optional<Session> getSession() {
+    return super.getSession()
+        .map(session -> (Session) session);
   }
 }

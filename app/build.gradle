@@ -1,100 +1,203 @@
 buildscript {
     repositories {
+        jcenter()
         maven { url 'https://maven.fabric.io/public' }
     }
-
     dependencies {
-        classpath 'io.fabric.tools:gradle:1.21.7'
+        classpath 'com.github.ben-manes:gradle-versions-plugin:0.15.0'
+        classpath 'com.google.gms:google-services:3.1.0'
+        classpath 'com.jakewharton.hugo:hugo-plugin:1.2.1'
+        classpath 'io.fabric.tools:gradle:1.23.0'
+        classpath 'me.tatarka:gradle-retrolambda:3.7.0'
     }
 }
-apply plugin: 'com.android.application'
-apply plugin: 'io.fabric'
 
-repositories {
-    maven { url 'https://maven.fabric.io/public' }
+apply plugin: 'com.android.application'
+apply plugin: 'com.github.ben-manes.versions'
+apply plugin: 'com.jakewharton.hugo'
+
+def getSignInformation = { keystorePath, keystorePropertyPath ->
+    def keyStore = file(keystorePath)
+    if (!keyStore.exists()) {
+        logger.error("Keystore file not found, path=${keyStore.absolutePath}")
+        return
+    }
+    def propertiesFile = file(keystorePropertyPath)
+    if (!propertiesFile.exists()) {
+        logger.error("Keystore properties file not found, path=${propertiesFile.absolutePath}")
+        return
+    }
+    def Properties properties = new Properties()
+    properties.load(new FileInputStream(propertiesFile))
+    return [
+            storeFile    : keyStore,
+            storePassword: properties["store_password"],
+            keyAlias     : properties["key_alias"],
+            keyPassword  : properties["key_password"]
+    ]
 }
 
 android {
     compileSdkVersion 26
+    buildToolsVersion '26.0.2'
     defaultConfig {
         applicationId "com.xmartlabs.moviefan"
-        minSdkVersion 21
+        minSdkVersion 19
+        multiDexEnabled true
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+    dexOptions {
+        javaMaxHeapSize '4g'
+    }
+    signingConfigs {
+        //noinspection GroovyMissingReturnStatement
+        debug {
+            def signInformation = getSignInformation("debug.keystore", "keystore.properties")
+            if (signInformation != null) {
+                storeFile signInformation.storeFile
+                storePassword signInformation.storePassword
+                keyAlias signInformation.keyAlias
+                keyPassword signInformation.keyPassword
+            }
+        }
+        //noinspection GroovyMissingReturnStatement
+        release {
+            def signInformation = getSignInformation("release.keystore", "keystore.properties")
+            if (signInformation != null) {
+                storeFile signInformation.storeFile
+                storePassword signInformation.storePassword
+                keyAlias signInformation.keyAlias
+                keyPassword signInformation.keyPassword
+            }
+        }
+    }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+    }
+    flavorDimensions 'version', 'env'
+    productFlavors {
+        //noinspection GroovyMissingReturnStatement
+        production {
+            dimension 'env'
+        }
+
+        staging {
+            dimension 'env'
+            applicationIdSuffix '.staging'
+        }
+
+        lollipopAndAbove {
+            dimension 'version'
+            minSdkVersion 21 // For faster multidex compilation
+        }
+
+        allVersions {
+            dimension 'version'
         }
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    //noinspection GroovyMissingReturnStatement
+    lintOptions {
+        warning 'InvalidPackage'
+    }
+    packagingOptions {
+        exclude '.readme'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/services/javax.annotation.processing.Processor'
+    }
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
 }
 
 final ANDROID_SUPPORT_VERSION = '26.1.0'
-final ANDROID_SUPPORT_CONSTRAINT_VERSION = '1.0.2'
-final ANDROID_SUPPORT_TEST_RUNNER_VERSION = '1.0.1'
-final ANDROID_ESPRESSO_CORE_VERSION = '3.0.1'
-final ANNIMON_STREAM_VERSION = '1.1.9'
+final BULLET_VERSION = 'e5044b53df'
 final BUTTERKNIFE_VERSION = '8.8.1'
-final CIRCLE_IMAGEVIEW_VERSION= '2.2.0'
-final CRASHLYTICS_VERSION = '2.8.0'
+final BIGBANG_VERSION = '0.1.54'
+final DAGGER_VERSION = '2.11'
 final DART_VERSION = '2.0.2'
+final DBFLOW_VERSION = '4.0.5'
+final DRAG_LIST_VIEW_VERSION = 'b49f21d'
 final FRAGMENTARGS_VERSION = '3.0.2'
-final JUNIT_VERSION = '4.12'
-final LOGGING_INTERCEPTOR_VERSION = '3.9.0'
+final LOCALDATE_BACKPORT_VERSION = '1.0.5'
 final LOMBOK_VERSION = '1.16.18'
-final OK2CURL_VERSION = '0.3.1'
-final PICASSO_VERSION = '2.5.2'
-final RXANDROID_VERSION = '2.0.1'
-final RXJAVA_VERSION = '2.1.7'
-final RXLIFECYCLE_VERSION = '2.2.1'
+final MATERIAL_DIALOGS_VERSION = '0.9.4.5'
+final MULTIDEX_VERSION = '1.0.1'
+final PARCELER_VERSION = '1.1.9'
 final RETROFIT_VERSION = '2.3.0'
-final TIMBER_VERSION = '4.6.0'
-
+final RXANDROID_VERSION = '2.0.1'
+final RXJAVA_VERSION = '2.1.2'
+final RXLIFECYCLE_VERSION = '2.2.1'
+final STREAM_VERSION = '1.1.8'
+final TIMBER_VERSION = '4.5.1'
+final TRACEUR_VERSION = '273cc7d582'
 
 dependencies {
-    androidTestImplementation "com.android.support.test.espresso:espresso-core:${ANDROID_ESPRESSO_CORE_VERSION}"
-    androidTestImplementation "com.android.support.test:runner:${ANDROID_SUPPORT_TEST_RUNNER_VERSION}"
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    androidTestImplementation 'com.google.code.findbugs:jsr305:3.0.1'
 
     annotationProcessor "com.f2prateek.dart:dart-processor:${DART_VERSION}"
     annotationProcessor "com.f2prateek.dart:henson-processor:${DART_VERSION}"
+    annotationProcessor "com.github.tbroyer.bullet:bullet-compiler:${BULLET_VERSION}"
+    annotationProcessor "com.github.Raizlabs.DBFlow:dbflow-processor:${DBFLOW_VERSION}"
     annotationProcessor "com.hannesdorfmann.fragmentargs:processor:${FRAGMENTARGS_VERSION}"
     annotationProcessor "com.jakewharton:butterknife-compiler:${BUTTERKNIFE_VERSION}"
+    annotationProcessor "org.parceler:parceler:${PARCELER_VERSION}"
     annotationProcessor "org.projectlombok:lombok:${LOMBOK_VERSION}"
+    annotationProcessor "com.google.dagger:dagger-compiler:${DAGGER_VERSION}"
 
-    implementation "com.android.support.constraint:constraint-layout:${ANDROID_SUPPORT_CONSTRAINT_VERSION}"
+    implementation "com.afollestad.material-dialogs:core:${MATERIAL_DIALOGS_VERSION}"
     implementation "com.android.support:appcompat-v7:${ANDROID_SUPPORT_VERSION}"
     implementation "com.android.support:design:${ANDROID_SUPPORT_VERSION}"
-    implementation "com.android.support:recyclerview-v7:${ANDROID_SUPPORT_VERSION}"
-    implementation "com.annimon:stream:${ANNIMON_STREAM_VERSION}"
-    implementation("com.crashlytics.sdk.android:crashlytics:${CRASHLYTICS_VERSION}@aar") {
+    implementation "com.android.support:customtabs:${ANDROID_SUPPORT_VERSION}"
+    implementation "com.android.support:support-v13:${ANDROID_SUPPORT_VERSION}"
+    implementation "com.android.support:multidex:${MULTIDEX_VERSION}"
+    implementation "com.annimon:stream:${STREAM_VERSION}"
+    implementation('com.crashlytics.sdk.android:crashlytics:2.6.8@aar') {
         transitive = true
     }
     implementation "com.f2prateek.dart:dart:${DART_VERSION}"
     implementation "com.f2prateek.dart:henson:${DART_VERSION}"
-    implementation "com.github.mrmike:Ok2Curl:${OK2CURL_VERSION}"
+    implementation "com.github.Raizlabs.DBFlow:dbflow:${DBFLOW_VERSION}"
+    implementation "com.github.Raizlabs.DBFlow:dbflow-core:${DBFLOW_VERSION}"
+    implementation "com.github.tbroyer.bullet:bullet:${BULLET_VERSION}"
+    implementation "com.github.xmartlabs:Traceur:${TRACEUR_VERSION}"
+    implementation "com.github.xmartlabs:draglistview:${DRAG_LIST_VIEW_VERSION}"
+    implementation "com.google.dagger:dagger:${DAGGER_VERSION}"
     implementation "com.hannesdorfmann.fragmentargs:annotation:${FRAGMENTARGS_VERSION}"
-    implementation "com.jakewharton.timber:timber:${TIMBER_VERSION}"
+    implementation "com.hannesdorfmann.fragmentargs:bundler-parceler:${FRAGMENTARGS_VERSION}"
     implementation "com.jakewharton:butterknife:${BUTTERKNIFE_VERSION}"
-    implementation "com.squareup.okhttp3:logging-interceptor:${LOGGING_INTERCEPTOR_VERSION}"
-    implementation "com.squareup.picasso:picasso:${PICASSO_VERSION}"
+    implementation "com.jakewharton.threetenabp:threetenabp:${LOCALDATE_BACKPORT_VERSION}"
+    implementation "com.jakewharton.timber:timber:${TIMBER_VERSION}"
     implementation "com.squareup.retrofit2:adapter-rxjava2:${RETROFIT_VERSION}"
-    implementation "com.squareup.retrofit2:converter-gson:${RETROFIT_VERSION}"
     implementation "com.squareup.retrofit2:retrofit:${RETROFIT_VERSION}"
-    implementation "com.trello.rxlifecycle2:rxlifecycle-android:${RXLIFECYCLE_VERSION}"
-    implementation "com.trello.rxlifecycle2:rxlifecycle-components:${RXLIFECYCLE_VERSION}"
     implementation "com.trello.rxlifecycle2:rxlifecycle:${RXLIFECYCLE_VERSION}"
-    implementation "de.hdodenhof:circleimageview:${CIRCLE_IMAGEVIEW_VERSION}"
+    implementation "com.trello.rxlifecycle2:rxlifecycle-components:${RXLIFECYCLE_VERSION}"
+    implementation "com.xmartlabs.bigbang:core:${BIGBANG_VERSION}"
+    implementation "com.xmartlabs.bigbang:dbflow:${BIGBANG_VERSION}"
+    implementation "com.xmartlabs.bigbang:log-crashlytics:${BIGBANG_VERSION}"
+    implementation "com.xmartlabs.bigbang:retrofit:${BIGBANG_VERSION}"
+    implementation "com.xmartlabs.bigbang:ui:${BIGBANG_VERSION}"
     implementation "io.reactivex.rxjava2:rxandroid:${RXANDROID_VERSION}"
     implementation "io.reactivex.rxjava2:rxjava:${RXJAVA_VERSION}"
-    implementation "org.projectlombok:lombok:${LOMBOK_VERSION}"
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation "org.parceler:parceler:${PARCELER_VERSION}"
 
-    testImplementation "junit:junit:${JUNIT_VERSION}"
+    provided "com.google.dagger:dagger-compiler:${DAGGER_VERSION}"
+    provided "org.projectlombok:lombok:${LOMBOK_VERSION}"
+
+    testImplementation 'junit:junit:4.12'
 }

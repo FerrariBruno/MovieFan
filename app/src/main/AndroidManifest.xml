@@ -4,36 +4,46 @@
     package="com.xmartlabs.moviefan"
     >
 
-    <uses-permission android:name="android.permission.INTERNET" />
-
     <application
-        android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:name=".MovieFanApplication"
+        android:name="com.xmartlabs.moviefan.MovieFanApplication"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme.NoActionBar"
+        android:theme="@style/AppTheme"
         >
 
-        <activity android:name=".ui.StartActivity">
+        <activity
+            android:name="com.xmartlabs.moviefan.ui.login.LoginActivity"
+            android:label="@string/login"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.TranslucentStatusBar"
+            />
+
+        <activity
+            android:name="com.xmartlabs.moviefan.ui.onboarding.OnboardingActivity"
+            android:label="@string/onboarding"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.TranslucentStatusBar"
+            />
+
+        <activity
+            android:name="com.xmartlabs.moviefan.ui.recyclerfragmentexample.RecyclerExampleActivity"
+            android:label="@string/recycler_fragment_example"
+            android:screenOrientation="portrait"
+            />
+
+        <activity
+            android:name="com.xmartlabs.moviefan.ui.StartActivity"
+            >
 
             <intent-filter>
-
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-
             </intent-filter>
 
         </activity>
-
-        <activity android:name=".ui.main.HomeActivity"/>
-
-        <meta-data
-            android:name="io.fabric.ApiKey"
-            android:value="20ccd65079777d25ff56823ffba2b60dad804feb"
-            />
 
     </application>
 
