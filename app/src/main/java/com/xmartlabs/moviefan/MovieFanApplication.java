@@ -41,7 +41,7 @@ public class MovieFanApplication extends Application {
   @Inject
   ServiceErrorHandler serviceErrorHandler;
 
-  private MovieFanApplication() {
+  public MovieFanApplication() {
     instance = this;
   }
 
