@@ -3,6 +3,8 @@ package com.xmartlabs.moviefan;
 import android.app.Application;
 import android.content.Context;
 import android.os.Build;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.multidex.MultiDex;
 
 import com.jakewharton.threetenabp.AndroidThreeTen;
@@ -27,6 +29,7 @@ import bullet.ObjectGraph;
 import timber.log.Timber;
 
 public class MovieFanApplication extends Application {
+  @Nullable
   private static MovieFanApplication instance;
 
   @Inject
@@ -38,16 +41,17 @@ public class MovieFanApplication extends Application {
   @Inject
   ServiceErrorHandler serviceErrorHandler;
 
-  public MovieFanApplication() {
+  private MovieFanApplication() {
     instance = this;
   }
 
+  @Nullable
   public static MovieFanApplication getContext() {
     return instance;
   }
 
   @Override
-  protected void attachBaseContext(Context base) {
+  protected void attachBaseContext(@NonNull Context base) {
     super.attachBaseContext(base);
 
     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP || !BuildConfig.DEBUG) {
@@ -72,6 +76,7 @@ public class MovieFanApplication extends Application {
     Injector.inject(this);
   }
 
+  @NonNull
   protected ApplicationComponent createComponent() {
     return DaggerApplicationComponent.builder()
         .coreAndroidModule(new AndroidModule(this))
@@ -81,6 +86,7 @@ public class MovieFanApplication extends Application {
         .build();
   }
 
+  @NonNull
   protected ObjectGraph createBullet(ApplicationComponent component) {
     return new BulletApplicationComponent(component);
   }
