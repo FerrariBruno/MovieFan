@@ -27,5 +27,5 @@ build.properties
 # OSX files
 .DS_Store
 
-# other files
+# Secrets
 app/fabric.properties
