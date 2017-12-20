@@ -1,12 +1,12 @@
-# Android Template project
+# MovieFan
 
-This is [Xmartlabs](https://xmartlabs.com) Android Template project.
-Please read through this README before start working.
+This is my training project for [Xmartlabs](https://xmartlabs.com) Android team.
 
 ## Style guide
 
-Please, remember to always use and follow our [style guide](https://github.com/xmartlabs/Android-Style-Guide)
-when making contributions to this project.
+The app follows the [style guide](https://github.com/xmartlabs/Android-Style-Guide)
+used in all the Android apps. If you're going to make a contribution please follow
+it too.
 
 ## Code review process
 
