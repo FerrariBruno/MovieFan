@@ -6,4 +6,4 @@ import com.xmartlabs.bigbang.retrofit.controller.ServiceController;
 /**
  * Created by bruno on 12/21/17.
  */
-public class BaseServiceController<Id, E extends EntityWithId<Id>> extends ServiceController<Id, E> { }
+public abstract class BaseServiceController<Id, E extends EntityWithId<Id>> extends ServiceController<Id, E> { }

@@ -60,10 +60,10 @@ public class FilmServiceController extends BaseServiceController<Long, Film> {
   @NonNull
   @WorkerThread
   protected Single<List<Film>> getYearFilms(int year,
-                                                            int pageNumber,
-                                                            @NonNull Optional<Genre> genre,
-                                                            @NonNull Single<Map<Long, Genre>> genres,
-                                                            boolean adultContent) {
+                                            int pageNumber,
+                                            @NonNull Optional<Genre> genre,
+                                            @NonNull Single<Map<Long, Genre>> genres,
+                                            boolean adultContent) {
     return Single
         .zip(
             genres,

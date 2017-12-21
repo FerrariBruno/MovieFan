@@ -22,7 +22,8 @@ public class GenreController extends BaseController<Long, Genre, Void, GenreServ
   @Nullable
   private Map<Long, Genre> genres;
 
-  public GenreController(EntityDao<Long, Genre, Void> entityDao, GenreServiceController serviceController) {
+  //TODO change nullability after DB integration
+  public GenreController(@Nullable EntityDao<Long, Genre, Void> entityDao, @NonNull GenreServiceController serviceController) {
     super(entityDao, serviceController);
   }
 
