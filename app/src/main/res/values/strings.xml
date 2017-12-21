@@ -1,24 +1,42 @@
 <resources>
+    <string name="android_mipmap_image">android_mipmap_image</string>
+    <string name="any">Any</string>
     <string name="app_name" translatable="false">MovieFan</string>
-    <!--TODO: Replace base url with the correct url-->
-    <string name="base_url" translatable="false">https://xmartlabs.com/</string>
-
+    <string name="apply">Apply</string>
+    <string name="check_your_internet_connection">Check your internet connection and try again</string>
+    <string name="error">Error</string>
+    <string name="error_service_call_generic">Could not connect to the server. Please try again.</string>
+    <string name="example_empty_view">Empty View Example</string>
+    <string name="filter_button_content_description">Filter Button</string>
+    <string name="filter_title">Filters</string>
+    <string name="filter_view.adult_content">Display adult content</string>
+    <string name="filter_view.clear_filters">Clear filters</string>
+    <string name="filter_view.genre">Genre</string>
+    <string name="filter_view.title">Filter results</string>
+    <string name="filter_view.year">Year</string>
+    <string name="genre_spinner.hint">Any</string>
+    <string name="home_view.1991">1991</string>
+    <string name="home_view.latest">LATEST</string>
+    <string name="home_view.this_year">THIS YEAR</string>
+    <string name="login">Login</string>
+    <string name="logo_content_description">MovieFan Logo</string>
+    <string name="next">Next</string>
+    <string name="no_internet_connection">No internet connection</string>
+    <string name="onboarding">Onboarding</string>
+    <string name="onboarding_description_1">Onboarding description 1!</string>
+    <string name="onboarding_description_2">Onboarding Description 2!</string>
+    <string name="onboarding_description_3">Onboarding Description 3!</string>
+    <string name="onboarding_title_1">Welcome to MovieFan!</string>
+    <string name="onboarding_title_2">Onboarding Title 2!</string>
+    <string name="onboarding_title_3">Onboarding Title 3!</string>
+    <string name="popularity">Popularity:</string>
+    <string name="poster_description">Film Poster</string>
+    <string name="recycler_fragment_example">Recycler fragment example</string>
     <string name="skip">Skip</string>
     <string name="start">Start</string>
-    <string name="next">Next</string>
-    <string name="onboarding_title_1">Welcome to MovieFan!</string>
-    <string name="onboarding_description_1">Onboarding description 1!</string>
-    <string name="onboarding_title_2">Onboarding Title 2!</string>
-    <string name="onboarding_description_2">Onboarding Description 2!</string>
-    <string name="onboarding_title_3">Onboarding Title 3!</string>
-    <string name="onboarding_description_3">Onboarding Description 3!</string>
-    <string name="login">Login</string>
-    <string name="onboarding">Onboarding</string>
-    <string name="recycler_fragment_example">Recycler fragment example</string>
-    <string name="error">Error</string>
-    <string name="check_your_internet_connection">Check your internet connection and try again</string>
-    <string name="no_internet_connection">No internet connection</string>
-    <string name="error_service_call_generic">Could not connect to the server. Please try again.</string>
-    <string name="android_mipmap_image">android_mipmap_image</string>
-    <string name="example_empty_view">Empty View Example</string>
+
+    <string name="access_token">eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjMGM5MDE1NmJjNDhiNjUzZDYwYmNjNTE0N2RlYWQ3NyIsInN1YiI6IjVhMjdmYWQ0OTI1MTQxMDMzNjEwMWM3OCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.d8VVy3YPl9lQ7sLA_6KZYRwUmIA-4Xs6jJaGt_QZAsg</string>
+    <string name="api_key">c0c90156bc48b653d60bcc5147dead77</string>
+    <string name="base_url" translatable="false">https://api.themoviedb.org/3/</string>
+    <string name="base_url_image">https://image.tmdb.org/t/p/w500</string>
 </resources>
