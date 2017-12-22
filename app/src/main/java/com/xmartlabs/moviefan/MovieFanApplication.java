@@ -8,7 +8,6 @@ import android.support.annotation.Nullable;
 import android.support.multidex.MultiDex;
 
 import com.annimon.stream.Optional;
-import com.crashlytics.android.Crashlytics;
 import com.jakewharton.threetenabp.AndroidThreeTen;
 import com.raizlabs.android.dbflow.config.FlowConfig;
 import com.raizlabs.android.dbflow.config.FlowManager;
@@ -28,7 +27,6 @@ import com.xmartlabs.moviefan.module.ServiceGsonModule;
 import javax.inject.Inject;
 
 import bullet.ObjectGraph;
-import io.fabric.sdk.android.Fabric;
 import timber.log.Timber;
 
 public class MovieFanApplication extends Application {
@@ -105,7 +103,6 @@ public class MovieFanApplication extends Application {
   private void initializeLogging() {
     loggerTree.addLogger(new CrashlyticsLogger().initialize(buildInfo, this));
     Timber.plant(loggerTree);
-    Fabric.with(this, new Crashlytics());
   }
 
   @SuppressWarnings("unchecked")

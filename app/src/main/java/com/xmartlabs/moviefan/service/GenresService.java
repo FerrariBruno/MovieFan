@@ -1,6 +1,6 @@
 package com.xmartlabs.moviefan.service;
 
-import com.xmartlabs.moviefan.model.GenreResponse;
+import com.xmartlabs.moviefan.model.service.response.GenreResponse;
 
 import io.reactivex.Single;
 import retrofit2.http.GET;

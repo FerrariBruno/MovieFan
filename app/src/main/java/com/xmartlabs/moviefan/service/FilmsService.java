@@ -1,7 +1,10 @@
 package com.xmartlabs.moviefan.service;
 
-import com.xmartlabs.moviefan.model.FilmResponse;
-import com.xmartlabs.moviefan.model.ListResponse;
+import com.xmartlabs.moviefan.model.service.response.FilmResponse;
+import com.xmartlabs.moviefan.model.service.response.ListResponse;
+
+import org.threeten.bp.LocalDate;
+import org.threeten.bp.Year;
 
 import io.reactivex.Single;
 import retrofit2.http.GET;
@@ -22,13 +25,13 @@ public interface FilmsService {
 
   @GET(GET_MOVIES)
   Single<ListResponse<FilmResponse>> getLatestFilms(@Query(QUERY_SORT_BY) String sortBy,
-                                                    @Query(QUERY_RELEASE_DATE_LTE) String fromDate,
+                                                    @Query(QUERY_RELEASE_DATE_LTE) LocalDate fromDate,
                                                     @Query(QUERY_ADULT_CONTENT) boolean include_adult,
                                                     @Query(QUERY_GENRES) String genreId,
                                                     @Query(QUERY_PAGE) int page);
 
   @GET(GET_MOVIES)
-  Single<ListResponse<FilmResponse>> getSpecificYearFilms(@Query(QUERY_YEAR) int year,
+  Single<ListResponse<FilmResponse>> getSpecificYearFilms(@Query(QUERY_YEAR) Year year,
                                                           @Query(QUERY_ADULT_CONTENT) boolean include_adult,
                                                           @Query(QUERY_GENRES) String genreId,
                                                           @Query(QUERY_PAGE) int page);

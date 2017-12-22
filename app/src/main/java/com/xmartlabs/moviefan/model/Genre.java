@@ -15,15 +15,10 @@ import lombok.Data;
 @Builder
 @Data
 @AllArgsConstructor(access = AccessLevel.PUBLIC)
-public class Genre implements EntityWithId<Long>{
-  private long id;
+public class Genre implements EntityWithId<Long> {
+  private Long id;
   @NonNull
   private String name;
-
-  @Override
-  public Long getId() {
-    return id;
-  }
 
   @Override
   public String toString() {

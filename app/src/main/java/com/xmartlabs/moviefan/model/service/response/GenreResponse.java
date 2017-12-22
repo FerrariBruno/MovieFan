@@ -1,6 +1,8 @@
-package com.xmartlabs.moviefan.model;
+package com.xmartlabs.moviefan.model.service.response;
 
 import android.support.annotation.NonNull;
+
+import com.xmartlabs.moviefan.model.Genre;
 
 import java.util.List;
 

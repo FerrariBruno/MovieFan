@@ -1,4 +1,4 @@
-package com.xmartlabs.moviefan.model;
+package com.xmartlabs.moviefan.model.service.response;
 
 import android.support.annotation.NonNull;
 

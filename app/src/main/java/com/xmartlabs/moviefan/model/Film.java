@@ -20,21 +20,16 @@ import lombok.NoArgsConstructor;
 @Builder
 @Data
 @NoArgsConstructor
-public class Film implements EntityWithId<Long>{
-  @Nullable
-  private String posterPath;
+public class Film implements EntityWithId<Long> {
+  private Long id;
+  private float popularity;
+
   @NonNull
   private List<Genre> genres;
   @Nullable
   private String overview;
+  @Nullable
+  private String posterPath;
   @NonNull
   private String title;
-
-  private long id;
-  private float popularity;
-
-  @Override
-  public Long getId() {
-    return id;
-  }
 }

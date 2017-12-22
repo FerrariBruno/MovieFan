@@ -1,8 +1,5 @@
 package com.xmartlabs.moviefan.helper;
 
-import android.support.annotation.NonNull;
-
-import org.threeten.bp.LocalDate;
 import org.threeten.bp.format.DateTimeFormatter;
 
 import java.util.Locale;
@@ -13,13 +10,4 @@ import java.util.Locale;
 public class DateHelper extends com.xmartlabs.bigbang.core.helper.DateHelper {
   public static final DateTimeFormatter SHORT_DATE_FORMATTER_DASH_SEPARATED = DateTimeFormatter.ofPattern("yyyy-MM-dd",
       Locale.getDefault());
-
-  @NonNull
-  public static String getTodaysDate(){
-    return SHORT_DATE_FORMATTER_DASH_SEPARATED.format(LocalDate.now());
-  }
-
-  public static int getCurrentYear(){
-    return LocalDate.now().getYear();
-  }
 }

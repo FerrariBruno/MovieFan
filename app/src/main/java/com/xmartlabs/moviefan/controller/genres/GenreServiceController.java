@@ -1,10 +1,10 @@
 package com.xmartlabs.moviefan.controller.genres;
 
-import android.support.annotation.Nullable;
+import android.support.annotation.NonNull;
 
 import com.xmartlabs.moviefan.controller.BaseServiceController;
 import com.xmartlabs.moviefan.model.Genre;
-import com.xmartlabs.moviefan.model.GenreResponse;
+import com.xmartlabs.moviefan.model.service.response.GenreResponse;
 import com.xmartlabs.moviefan.service.GenresService;
 
 import java.util.Map;
@@ -21,7 +21,7 @@ public class GenreServiceController extends BaseServiceController<Long, Genre> {
   @Inject
   GenresService genresService;
 
-  @Nullable
+  @NonNull
   public Single<Map<Long, Genre>> getGenresFromService() {
     return genresService
         .getGenres()

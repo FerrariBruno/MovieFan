@@ -8,9 +8,10 @@ import com.annimon.stream.Optional;
 import com.xmartlabs.bigbang.core.controller.EntityDao;
 import com.xmartlabs.moviefan.controller.BaseController;
 import com.xmartlabs.moviefan.controller.genres.GenreController;
-import com.xmartlabs.moviefan.helper.DateHelper;
 import com.xmartlabs.moviefan.model.Film;
 import com.xmartlabs.moviefan.model.Genre;
+
+import org.threeten.bp.Year;
 
 import java.util.List;
 import java.util.Map;
@@ -24,7 +25,7 @@ import io.reactivex.Single;
  */
 //TODO change conditions with DB integration
 public class FilmController extends BaseController<Long, Film, Void, FilmServiceController> {
-  private static final int YEAR_1991 = 1991;
+  private static final Year YEAR_1991 = Year.of(1991);
 
   @Inject
   GenreController genreController;
@@ -48,7 +49,7 @@ public class FilmController extends BaseController<Long, Film, Void, FilmService
                                               @NonNull Optional<Genre> genre,
                                               boolean adultContent) {
     return getEntityServiceProvider().getYearFilms
-        (DateHelper.getCurrentYear(), pageNumber, genre, genreController.getAllGenres(), adultContent);
+        (Year.now(), pageNumber, genre, genreController.getAllGenres(), adultContent);
   }
 
   @CheckResult

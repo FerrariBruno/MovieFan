@@ -1,6 +1,7 @@
-package com.xmartlabs.moviefan.model;
+package com.xmartlabs.moviefan.model.service.response;
 
 import com.google.gson.annotations.SerializedName;
+import com.xmartlabs.moviefan.model.Film;
 
 import java.util.List;
 

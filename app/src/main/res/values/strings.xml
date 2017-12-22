@@ -1,4 +1,9 @@
 <resources>
+    <string name="access_token">eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjMGM5MDE1NmJjNDhiNjUzZDYwYmNjNTE0N2RlYWQ3NyIsInN1YiI6IjVhMjdmYWQ0OTI1MTQxMDMzNjEwMWM3OCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.d8VVy3YPl9lQ7sLA_6KZYRwUmIA-4Xs6jJaGt_QZAsg</string>
+    <string name="api_key">c0c90156bc48b653d60bcc5147dead77</string>
+    <string name="base_url" translatable="false">https://api.themoviedb.org/3/</string>
+    <string name="base_url_image">https://image.tmdb.org/t/p/w500</string>
+
     <string name="android_mipmap_image">android_mipmap_image</string>
     <string name="any">Any</string>
     <string name="app_name" translatable="false">MovieFan</string>
@@ -34,9 +39,4 @@
     <string name="recycler_fragment_example">Recycler fragment example</string>
     <string name="skip">Skip</string>
     <string name="start">Start</string>
-
-    <string name="access_token">eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjMGM5MDE1NmJjNDhiNjUzZDYwYmNjNTE0N2RlYWQ3NyIsInN1YiI6IjVhMjdmYWQ0OTI1MTQxMDMzNjEwMWM3OCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.d8VVy3YPl9lQ7sLA_6KZYRwUmIA-4Xs6jJaGt_QZAsg</string>
-    <string name="api_key">c0c90156bc48b653d60bcc5147dead77</string>
-    <string name="base_url" translatable="false">https://api.themoviedb.org/3/</string>
-    <string name="base_url_image">https://image.tmdb.org/t/p/w500</string>
 </resources>

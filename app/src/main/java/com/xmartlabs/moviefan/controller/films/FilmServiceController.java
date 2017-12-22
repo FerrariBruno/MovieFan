@@ -10,12 +10,14 @@ import com.annimon.stream.Stream;
 import com.xmartlabs.moviefan.MovieFanApplication;
 import com.xmartlabs.moviefan.R;
 import com.xmartlabs.moviefan.controller.BaseServiceController;
-import com.xmartlabs.moviefan.helper.DateHelper;
 import com.xmartlabs.moviefan.model.Film;
-import com.xmartlabs.moviefan.model.FilmResponse;
 import com.xmartlabs.moviefan.model.Genre;
-import com.xmartlabs.moviefan.model.ListResponse;
+import com.xmartlabs.moviefan.model.service.response.FilmResponse;
+import com.xmartlabs.moviefan.model.service.response.ListResponse;
 import com.xmartlabs.moviefan.service.FilmsService;
+
+import org.threeten.bp.LocalDate;
+import org.threeten.bp.Year;
 
 import java.util.List;
 import java.util.Map;
@@ -51,7 +53,7 @@ public class FilmServiceController extends BaseServiceController<Long, Film> {
   private Single<ListResponse<FilmResponse>> getLatestFilmsFromService(int pageNumber,
                                                                        @NonNull String genreId,
                                                                        boolean adultContent) {
-    return filmsService.getLatestFilms(SORT_BY_QUERY_VALUE, DateHelper.getTodaysDate(),
+    return filmsService.getLatestFilms(SORT_BY_QUERY_VALUE, LocalDate.now(),
         adultContent, genreId, pageNumber)
         .compose(applySingleIoSchedulers());
   }
@@ -59,7 +61,7 @@ public class FilmServiceController extends BaseServiceController<Long, Film> {
   @CheckResult
   @NonNull
   @WorkerThread
-  protected Single<List<Film>> getYearFilms(int year,
+  protected Single<List<Film>> getYearFilms(Year year,
                                             int pageNumber,
                                             @NonNull Optional<Genre> genre,
                                             @NonNull Single<Map<Long, Genre>> genres,
@@ -74,7 +76,7 @@ public class FilmServiceController extends BaseServiceController<Long, Film> {
   }
 
   @NonNull
-  private Single<ListResponse<FilmResponse>> getYearFilmsFromService(int year,
+  private Single<ListResponse<FilmResponse>> getYearFilmsFromService(Year year,
                                                                      int pageNumber,
                                                                      @NonNull String genreId,
                                                                      boolean adultContent) {
