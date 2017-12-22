@@ -5,7 +5,6 @@ import com.xmartlabs.bigbang.core.Injector;
 import com.xmartlabs.bigbang.core.controller.SharedPreferencesController;
 import com.xmartlabs.bigbang.core.helper.ObjectHelper;
 import com.xmartlabs.bigbang.ui.mvp.BaseMvpPresenter;
-import com.xmartlabs.moviefan.controller.AuthController;
 
 import javax.inject.Inject;
 
@@ -13,8 +12,6 @@ import lombok.Builder;
 
 @Builder
 public class LoginPresenter extends BaseMvpPresenter<LoginView> {
-  @Inject
-  AuthController authController;
   @Inject
   ObjectHelper objectHelper;
   @Inject

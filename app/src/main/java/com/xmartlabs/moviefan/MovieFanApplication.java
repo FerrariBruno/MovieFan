@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.multidex.MultiDex;
 
+import com.annimon.stream.Optional;
 import com.jakewharton.threetenabp.AndroidThreeTen;
 import com.raizlabs.android.dbflow.config.FlowConfig;
 import com.raizlabs.android.dbflow.config.FlowManager;
@@ -45,9 +46,9 @@ public class MovieFanApplication extends Application {
     instance = this;
   }
 
-  @Nullable
+  @NonNull
   public static MovieFanApplication getContext() {
-    return instance;
+    return Optional.ofNullable(instance).get();
   }
 
   @Override
@@ -100,7 +101,6 @@ public class MovieFanApplication extends Application {
   }
 
   private void initializeLogging() {
-    //TODO: Configure Fabric and add Fabric apiSecret and apiKey properties file in the root folder
     loggerTree.addLogger(new CrashlyticsLogger().initialize(buildInfo, this));
     Timber.plant(loggerTree);
   }
