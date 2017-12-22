@@ -61,7 +61,7 @@ public class FilmServiceController extends BaseServiceController<Long, Film> {
   @CheckResult
   @NonNull
   @WorkerThread
-  protected Single<List<Film>> getYearFilms(Year year,
+  protected Single<List<Film>> getYearFilms(@NonNull Year year,
                                             int pageNumber,
                                             @NonNull Optional<Genre> genre,
                                             @NonNull Single<Map<Long, Genre>> genres,
@@ -76,7 +76,7 @@ public class FilmServiceController extends BaseServiceController<Long, Film> {
   }
 
   @NonNull
-  private Single<ListResponse<FilmResponse>> getYearFilmsFromService(Year year,
+  private Single<ListResponse<FilmResponse>> getYearFilmsFromService(@NonNull Year year,
                                                                      int pageNumber,
                                                                      @NonNull String genreId,
                                                                      boolean adultContent) {
