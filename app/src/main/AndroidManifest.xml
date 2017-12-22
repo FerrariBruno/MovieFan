@@ -17,14 +17,12 @@
             android:name="com.xmartlabs.moviefan.ui.login.LoginActivity"
             android:label="@string/login"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.TranslucentStatusBar"
             />
 
         <activity
             android:name="com.xmartlabs.moviefan.ui.onboarding.OnboardingActivity"
             android:label="@string/onboarding"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.TranslucentStatusBar"
             />
 
         <activity

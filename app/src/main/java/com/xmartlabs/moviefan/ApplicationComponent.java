@@ -48,19 +48,7 @@ import dagger.Component;
 public interface ApplicationComponent {
   void inject(MovieFanApplication movieFanApplication);
 
-  void inject(LoginActivity loginActivity);
-  void inject(OnboardingActivity onboardingActivity);
-  void inject(RecyclerExampleActivity recyclerExampleActivity);
   void inject(StartActivity startActivity);
-
-  void inject(LoginFragment loginFragment);
-  void inject(OnboardingFragment onboardingFragment);
-  void inject(OnboardingPageFragment onboardingPageFragment);
-  void inject(RecyclerExampleFragment recyclerExampleFragment);
-
-  void inject(LoginPresenter loginPresenter);
-  void inject(OnboardingPresenter onboardingPresenter);
-  void inject(RecyclerExamplePresenter recyclerExamplePresenter);
 
   void inject(FilmController filmController);
   void inject(FilmServiceController filmServiceController);

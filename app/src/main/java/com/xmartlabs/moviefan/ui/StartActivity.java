@@ -2,6 +2,7 @@ package com.xmartlabs.moviefan.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 
 import com.f2prateek.dart.HensonNavigable;
 import com.xmartlabs.bigbang.ui.BaseAppCompatActivity;
@@ -11,24 +12,14 @@ import javax.inject.Inject;
 
 @HensonNavigable
 public class StartActivity extends BaseAppCompatActivity {
-  @Inject
-  SessionController sessionController;
-
+  //TODO add the onboarding check
   @Override
-  protected void onCreate(Bundle savedInstanceState) {
+  protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-
-    sessionController.getSession()
-        .executeIfPresent(session -> {
-          //TODO: handle on start activity with session
-        })
-        .executeIfAbsent(() -> {
-          //TODO: handle on start activity no session
-          Intent intent = Henson.with(getContext())
-              .gotoOnboardingActivity()
-              .build()
-              .setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-          startActivity(intent);
-        });
+    Intent startSingleFragmentActivity = Henson.with(this)
+        .gotoHomeActivity()
+        .build()
+        .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+    startActivity(startSingleFragmentActivity);
   }
 }

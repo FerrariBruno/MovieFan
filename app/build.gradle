@@ -125,6 +125,7 @@ final ANDROID_SUPPORT_VERSION = '26.1.0'
 final BULLET_VERSION = 'e5044b53df'
 final BUTTERKNIFE_VERSION = '8.8.1'
 final BIGBANG_VERSION = '0.1.54'
+final CIRCLE_IMAGEVIEW_VERSION= '2.2.0'
 final DAGGER_VERSION = '2.11'
 final DART_VERSION = '2.0.2'
 final DBFLOW_VERSION = '4.0.5'
@@ -172,26 +173,27 @@ dependencies {
     }
     implementation "com.f2prateek.dart:dart:${DART_VERSION}"
     implementation "com.f2prateek.dart:henson:${DART_VERSION}"
-    implementation "com.github.Raizlabs.DBFlow:dbflow:${DBFLOW_VERSION}"
     implementation "com.github.Raizlabs.DBFlow:dbflow-core:${DBFLOW_VERSION}"
+    implementation "com.github.Raizlabs.DBFlow:dbflow:${DBFLOW_VERSION}"
     implementation "com.github.tbroyer.bullet:bullet:${BULLET_VERSION}"
-    implementation "com.github.xmartlabs:Traceur:${TRACEUR_VERSION}"
     implementation "com.github.xmartlabs:draglistview:${DRAG_LIST_VIEW_VERSION}"
+    implementation "com.github.xmartlabs:Traceur:${TRACEUR_VERSION}"
     implementation "com.google.dagger:dagger:${DAGGER_VERSION}"
     implementation "com.hannesdorfmann.fragmentargs:annotation:${FRAGMENTARGS_VERSION}"
     implementation "com.hannesdorfmann.fragmentargs:bundler-parceler:${FRAGMENTARGS_VERSION}"
-    implementation "com.jakewharton:butterknife:${BUTTERKNIFE_VERSION}"
     implementation "com.jakewharton.threetenabp:threetenabp:${LOCALDATE_BACKPORT_VERSION}"
     implementation "com.jakewharton.timber:timber:${TIMBER_VERSION}"
+    implementation "com.jakewharton:butterknife:${BUTTERKNIFE_VERSION}"
     implementation "com.squareup.retrofit2:adapter-rxjava2:${RETROFIT_VERSION}"
     implementation "com.squareup.retrofit2:retrofit:${RETROFIT_VERSION}"
-    implementation "com.trello.rxlifecycle2:rxlifecycle:${RXLIFECYCLE_VERSION}"
     implementation "com.trello.rxlifecycle2:rxlifecycle-components:${RXLIFECYCLE_VERSION}"
+    implementation "com.trello.rxlifecycle2:rxlifecycle:${RXLIFECYCLE_VERSION}"
     implementation "com.xmartlabs.bigbang:core:${BIGBANG_VERSION}"
     implementation "com.xmartlabs.bigbang:dbflow:${BIGBANG_VERSION}"
     implementation "com.xmartlabs.bigbang:log-crashlytics:${BIGBANG_VERSION}"
     implementation "com.xmartlabs.bigbang:retrofit:${BIGBANG_VERSION}"
     implementation "com.xmartlabs.bigbang:ui:${BIGBANG_VERSION}"
+    implementation "de.hdodenhof:circleimageview:${CIRCLE_IMAGEVIEW_VERSION}"
     implementation "io.reactivex.rxjava2:rxandroid:${RXANDROID_VERSION}"
     implementation "io.reactivex.rxjava2:rxjava:${RXJAVA_VERSION}"
     implementation "org.parceler:parceler:${PARCELER_VERSION}"
