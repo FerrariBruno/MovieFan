@@ -41,9 +41,9 @@ import dagger.Component;
     ServiceGsonModule.class,
     OkHttpModule.class,
     PicassoModule.class,
+    RestServiceApiModule.class,
     RestServiceModule.class,
-    RestServiceModuleAdditions.class,
-    RestServiceApiModule.class
+    RestServiceModuleAdditions.class
 })
 public interface ApplicationComponent {
   void inject(MovieFanApplication movieFanApplication);
