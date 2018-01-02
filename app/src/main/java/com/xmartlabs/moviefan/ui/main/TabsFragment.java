@@ -20,7 +20,7 @@ import butterknife.BindView;
  * Created by bruno on 12/22/17.
  */
 @FragmentWithArgs
-public class TabsFragment extends MovieFanFragment<TabsView, TabsPresenter> {
+public class TabsFragment extends MovieFanFragment<TabsView, TabsPresenter> implements TabsView {
   @BindView(R.id.viewpager)
   ViewPager viewPager;
   @BindView(R.id.sliding_tabs)

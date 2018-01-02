@@ -9,7 +9,8 @@ import com.xmartlabs.moviefan.ui.main.MovieFanPageBaseFragment;
  * Created by bruno on 12/22/17.
  */
 @FragmentWithArgs
-public class ThisYearPageFragment extends MovieFanPageBaseFragment<ThisYearPageView, ThisYearPagePresenter> {
+public class ThisYearPageFragment extends MovieFanPageBaseFragment<ThisYearPageView, ThisYearPagePresenter>
+    implements ThisYearPageView {
   @NonNull
   @Override
   protected ThisYearPagePresenter createPresenter() {

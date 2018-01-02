@@ -10,7 +10,7 @@ import com.xmartlabs.bigbang.ui.SingleFragmentActivity;
  * Created by bruno on 12/22/17.
  */
 @HensonNavigable
-public class HomeActivity extends SingleFragmentActivity{
+public class HomeActivity extends SingleFragmentActivity {
   @NonNull
   @Override
   protected BaseFragment createFragment() {
