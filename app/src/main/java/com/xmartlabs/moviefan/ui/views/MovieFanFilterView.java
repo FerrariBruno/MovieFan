@@ -1,4 +1,4 @@
-package com.xmartlabs.moviefan.ui.common;
+package com.xmartlabs.moviefan.ui.views;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -14,6 +14,7 @@ import com.annimon.stream.Stream;
 import com.xmartlabs.moviefan.MovieFanApplication;
 import com.xmartlabs.moviefan.R;
 import com.xmartlabs.moviefan.model.Genre;
+import com.xmartlabs.moviefan.ui.common.OnFilterAppliedListener;
 
 import java.util.ArrayList;
 import java.util.List;

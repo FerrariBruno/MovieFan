@@ -4,7 +4,6 @@ import android.support.annotation.StringRes;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.xmartlabs.bigbang.ui.mvp.BaseMvpFragment;
-import com.xmartlabs.bigbang.ui.mvp.MvpPresenter;
 import com.xmartlabs.moviefan.R;
 
 import java.io.IOException;
@@ -13,8 +12,13 @@ import java.util.concurrent.CancellationException;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.exceptions.CompositeException;
 
-public abstract class MovieFanFragment<V extends MovieFanView, P extends MvpPresenter<V>>
+public abstract class MovieFanFragment<V extends MovieFanView, P extends MovieFanPresenter<V>>
     extends BaseMvpFragment<V, P> implements MovieFanView {
+  @Override
+  public boolean isViewAlive() {
+    return isAdded() && getActivity() != null;
+  }
+
   @Override
   public void showError(@StringRes int message) {
     showError(message, R.string.error);
@@ -52,10 +56,5 @@ public abstract class MovieFanFragment<V extends MovieFanView, P extends MvpPres
     } else {
       showError(message);
     }
-  }
-
-  @Override
-  public boolean isViewAlive() {
-    return isAdded() && getActivity() != null;
   }
 }

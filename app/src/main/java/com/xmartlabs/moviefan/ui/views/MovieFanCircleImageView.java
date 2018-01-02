@@ -1,4 +1,4 @@
-package com.xmartlabs.moviefan.ui.common;
+package com.xmartlabs.moviefan.ui.views;
 
 import android.content.Context;
 import android.util.AttributeSet;

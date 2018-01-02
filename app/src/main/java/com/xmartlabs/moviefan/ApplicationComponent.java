@@ -18,16 +18,15 @@ import com.xmartlabs.moviefan.module.ControllerModule;
 import com.xmartlabs.moviefan.module.RestServiceApiModule;
 import com.xmartlabs.moviefan.module.RestServiceModuleAdditions;
 import com.xmartlabs.moviefan.ui.StartActivity;
-import com.xmartlabs.moviefan.ui.login.LoginActivity;
-import com.xmartlabs.moviefan.ui.login.LoginFragment;
-import com.xmartlabs.moviefan.ui.login.LoginPresenter;
-import com.xmartlabs.moviefan.ui.onboarding.OnboardingActivity;
-import com.xmartlabs.moviefan.ui.onboarding.OnboardingFragment;
-import com.xmartlabs.moviefan.ui.onboarding.OnboardingPresenter;
-import com.xmartlabs.moviefan.ui.onboarding.page.OnboardingPageFragment;
-import com.xmartlabs.moviefan.ui.recyclerfragmentexample.RecyclerExampleActivity;
-import com.xmartlabs.moviefan.ui.recyclerfragmentexample.RecyclerExampleFragment;
-import com.xmartlabs.moviefan.ui.recyclerfragmentexample.RecyclerExamplePresenter;
+import com.xmartlabs.moviefan.ui.latest.LatestPageFragment;
+import com.xmartlabs.moviefan.ui.latest.LatestPagePresenter;
+import com.xmartlabs.moviefan.ui.main.HomeActivity;
+import com.xmartlabs.moviefan.ui.main.TabsFragment;
+import com.xmartlabs.moviefan.ui.main.TabsPresenter;
+import com.xmartlabs.moviefan.ui.specificYear.SpecificYearPageFragment;
+import com.xmartlabs.moviefan.ui.specificYear.SpecificYearPagePresenter;
+import com.xmartlabs.moviefan.ui.thisYear.ThisYearPageFragment;
+import com.xmartlabs.moviefan.ui.thisYear.ThisYearPagePresenter;
 
 import javax.inject.Singleton;
 
@@ -49,6 +48,17 @@ public interface ApplicationComponent {
   void inject(MovieFanApplication movieFanApplication);
 
   void inject(StartActivity startActivity);
+  void inject(HomeActivity homeActivity);
+
+  void inject(LatestPageFragment latestPageFragment);
+  void inject(SpecificYearPageFragment specificYearPageFragment);
+  void inject(TabsFragment tabsFragment);
+  void inject(ThisYearPageFragment thisYearPageFragment);
+
+  void inject(LatestPagePresenter latestPagePresenter);
+  void inject(SpecificYearPagePresenter specificYearPagePresenter);
+  void inject(TabsPresenter tabsPresenter);
+  void inject(ThisYearPagePresenter thisYearPagePresenter);
 
   void inject(FilmController filmController);
   void inject(FilmServiceController filmServiceController);
