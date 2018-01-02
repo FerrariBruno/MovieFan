@@ -14,7 +14,6 @@
         android:contentDescription="@string/poster_description"
         android:layout_gravity="center_vertical"
         android:layout_marginStart="33dp"
-        tools:src="@drawable/ic_launcher_background"
         />
 
     <TextView

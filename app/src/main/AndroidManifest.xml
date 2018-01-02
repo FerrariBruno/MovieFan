@@ -27,6 +27,7 @@
 
         <activity
             android:name=".ui.main.HomeActivity"
+            android:launchMode="singleInstance"
             />
 
         <meta-data

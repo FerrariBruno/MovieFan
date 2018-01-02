@@ -29,7 +29,7 @@ import lombok.Setter;
  * Created by bruno on 12/22/17.
  */
 public class MovieFanFilterView extends FrameLayout {
-  private static final long ANY_GENRE_IDENTIFIER = -1;
+  private static final Long ANY_GENRE_IDENTIFIER = null;
   @NonNull
   private static final Genre ANY_GENRE = new Genre(ANY_GENRE_IDENTIFIER,
       MovieFanApplication.getContext().getString(R.string.genre_spinner_hint)); //Empty Genre for Spinner hint
@@ -38,6 +38,7 @@ public class MovieFanFilterView extends FrameLayout {
   @BindView(R.id.adult_content_switch)
   SwitchCompat adultContentSwitchView;
 
+  @Nullable
   @Setter
   private OnFilterAppliedListener onFilterAppliedListener;
 

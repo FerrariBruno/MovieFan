@@ -10,7 +10,7 @@ import com.xmartlabs.moviefan.ui.main.MovieFanPageBaseFragment;
  */
 @FragmentWithArgs
 public class LatestPageFragment extends MovieFanPageBaseFragment<LatestPageView, LatestPagePresenter>
-    implements LatestPageView{
+    implements LatestPageView {
   @NonNull
   @Override
   protected LatestPagePresenter createPresenter() {

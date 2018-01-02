@@ -5,5 +5,4 @@ import com.xmartlabs.moviefan.ui.common.MovieFanView;
 /**
  * Created by bruno on 1/2/18.
  */
-public interface MovieFanPageBaseView extends MovieFanView {
-}
+public interface MovieFanPageBaseView extends MovieFanView { }
