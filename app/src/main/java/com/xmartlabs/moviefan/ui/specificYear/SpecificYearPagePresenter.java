@@ -9,14 +9,17 @@ import com.xmartlabs.moviefan.ui.main.MovieFanPageBasePresenter;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import io.reactivex.Single;
-import lombok.Builder;
 
 /**
  * Created by bruno on 1/2/18.
  */
-@Builder
 public class SpecificYearPagePresenter extends MovieFanPageBasePresenter<SpecificYearPageView> {
+  @Inject
+  SpecificYearPagePresenter() { }
+
   @NonNull
   @Override
   protected Single<List<Film>> requestFilms(int pageNumber, @NonNull Optional<Genre> genre, boolean adultContent) {

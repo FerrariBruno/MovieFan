@@ -14,6 +14,8 @@ import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
 import com.xmartlabs.moviefan.R;
 import com.xmartlabs.moviefan.ui.common.MovieFanFragment;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 
 /**
@@ -26,10 +28,13 @@ public class TabsFragment extends MovieFanFragment<TabsView, TabsPresenter> impl
   @BindView(R.id.sliding_tabs)
   TabLayout tabLayout;
 
+  @Inject
+  TabsPresenter tabsPresenter;
+
   @NonNull
   @Override
   protected TabsPresenter createPresenter() {
-    return TabsPresenter.builder().build();
+    return tabsPresenter;
   }
 
   @Override
@@ -49,12 +54,11 @@ public class TabsFragment extends MovieFanFragment<TabsView, TabsPresenter> impl
     inflater.inflate(R.menu.menu_main, menu);
   }
 
-  //FIXME I need this method here, but I should probably put the logic in the presenter, right?
   @Override
   public boolean onOptionsItemSelected(@NonNull MenuItem item) {
     switch (item.getItemId()) {
       case R.id.filter_button:
-        //TODO integrate filter button behaviour
+        tabsPresenter.onFilterButtonPressed();
         break;
       default:
         break;

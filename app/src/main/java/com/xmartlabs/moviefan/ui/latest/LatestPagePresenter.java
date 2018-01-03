@@ -9,14 +9,17 @@ import com.xmartlabs.moviefan.ui.main.MovieFanPageBasePresenter;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import io.reactivex.Single;
-import lombok.Builder;
 
 /**
  * Created by bruno on 1/2/18.
  */
-@Builder
 public class LatestPagePresenter extends MovieFanPageBasePresenter<LatestPageView> {
+  @Inject
+  LatestPagePresenter() { }
+
   @NonNull
   @Override
   protected Single<List<Film>> requestFilms(int pageNumber, @NonNull Optional<Genre> genre, boolean adultContent) {

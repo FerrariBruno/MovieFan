@@ -12,13 +12,9 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import lombok.Builder;
-
 /**
  * Created by bruno on 1/2/18.
  */
-@Builder
 public class TabsPresenter extends MovieFanPresenter<TabsView> {
   private static final int FIRST_FRAGMENT = 0;
   private static final int OFFSCREEN_PAGE_LIMIT = 3;
@@ -27,17 +23,21 @@ public class TabsPresenter extends MovieFanPresenter<TabsView> {
 
   @Inject
   GenreController genreController;
+  @Inject
+  TabsPresenter() { }
 
   //TODO integrate with filter dialog init
   private void getGenresFromService(@NonNull MovieFanFilterView filterView) {
-    genreController
-        .getAllGenres()
-        .observeOn(AndroidSchedulers.mainThread())
+    executeOnViewIfPresent(view -> view
+        .keepAliveWhileVisible(genreController.getAllGenres())
         .subscribe(new GeneralSingleSubscriber<Map<Long, Genre>>() {
           @Override
           public void onSuccess(@NonNull Map<Long, Genre> genres) {
             filterView.initGenresSpinner(genres);
           }
-        });
+        }));
   }
+
+  //TODO integrate filter button behaviour
+  protected void onFilterButtonPressed() { }
 }

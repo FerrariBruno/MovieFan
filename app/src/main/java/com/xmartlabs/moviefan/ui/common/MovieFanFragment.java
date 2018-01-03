@@ -3,12 +3,20 @@ package com.xmartlabs.moviefan.ui.common;
 import android.support.annotation.StringRes;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.trello.rxlifecycle2.RxLifecycle;
+import com.trello.rxlifecycle2.android.FragmentEvent;
 import com.xmartlabs.bigbang.ui.mvp.BaseMvpFragment;
 import com.xmartlabs.moviefan.R;
 
 import java.io.IOException;
 import java.util.concurrent.CancellationException;
 
+import io.reactivex.Completable;
+import io.reactivex.Flowable;
+import io.reactivex.Maybe;
+import io.reactivex.Observable;
+import io.reactivex.Single;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.exceptions.CompositeException;
 
@@ -17,6 +25,41 @@ public abstract class MovieFanFragment<V extends MovieFanView, P extends MovieFa
   @Override
   public boolean isViewAlive() {
     return isAdded() && getActivity() != null;
+  }
+
+  @NonNull
+  @Override
+  public Completable keepAliveWhileVisible(@NonNull Completable source) {
+    return source.compose(RxLifecycle.bindUntilEvent(lifecycle(), FragmentEvent.DESTROY_VIEW))
+        .observeOn(AndroidSchedulers.mainThread());
+  }
+
+  @NonNull
+  @Override
+  public <T> Flowable<T> keepAliveWhileVisible(@NonNull Flowable<T> source) {
+    return source.compose(RxLifecycle.bindUntilEvent(lifecycle(), FragmentEvent.DESTROY_VIEW))
+        .observeOn(AndroidSchedulers.mainThread());
+  }
+
+  @NonNull
+  @Override
+  public <T> Maybe<T> keepAliveWhileVisible(@NonNull Maybe<T> source) {
+    return source.compose(RxLifecycle.bindUntilEvent(lifecycle(), FragmentEvent.DESTROY_VIEW))
+        .observeOn(AndroidSchedulers.mainThread());
+  }
+
+  @NonNull
+  @Override
+  public <T> Observable<T> keepAliveWhileVisible(@NonNull Observable<T> source) {
+    return source.compose(RxLifecycle.bindUntilEvent(lifecycle(), FragmentEvent.DESTROY_VIEW))
+        .observeOn(AndroidSchedulers.mainThread());
+  }
+
+  @NonNull
+  @Override
+  public <T> Single<T> keepAliveWhileVisible(@NonNull Single<T> source) {
+    return source.compose(RxLifecycle.bindUntilEvent(lifecycle(), FragmentEvent.DESTROY_VIEW))
+        .observeOn(AndroidSchedulers.mainThread());
   }
 
   @Override
