@@ -14,7 +14,6 @@ import com.xmartlabs.moviefan.model.Genre;
 import org.threeten.bp.Year;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -55,7 +54,6 @@ public class FilmController extends BaseController<Long, Film, Void, FilmService
   @CheckResult
   @NonNull
   public Single<List<Film>> getSpecificYearFilms(int pageNumber,
-                                                 @NonNull Single<Map<Long, Genre>> genres,
                                                  @NonNull Optional<Genre> genre,
                                                  boolean adultContent) {
     return getEntityServiceProvider().getYearFilms
