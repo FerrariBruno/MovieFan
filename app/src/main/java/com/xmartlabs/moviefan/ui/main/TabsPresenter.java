@@ -28,8 +28,9 @@ public class TabsPresenter extends MovieFanPresenter<TabsView> {
 
   //TODO integrate with filter dialog init
   private void getGenresFromService(@NonNull MovieFanFilterView filterView) {
-    executeOnViewIfPresent(view -> view
-        .keepAliveWhileVisible(genreController.getAllGenres())
+    executeOnViewIfPresent(view ->
+        genreController.getAllGenres()
+        .compose(view.keepAliveWhileVisible())
         .subscribe(new GeneralSingleSubscriber<Map<Long, Genre>>() {
           @Override
           public void onSuccess(@NonNull Map<Long, Genre> genres) {

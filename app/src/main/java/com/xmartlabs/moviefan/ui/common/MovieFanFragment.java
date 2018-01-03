@@ -12,16 +12,41 @@ import java.io.IOException;
 import java.util.concurrent.CancellationException;
 
 import io.reactivex.Completable;
+import io.reactivex.CompletableTransformer;
 import io.reactivex.Flowable;
+import io.reactivex.FlowableTransformer;
 import io.reactivex.Maybe;
+import io.reactivex.MaybeTransformer;
 import io.reactivex.Observable;
-import io.reactivex.Single;
+import io.reactivex.ObservableTransformer;
+import io.reactivex.SingleTransformer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.exceptions.CompositeException;
 
 public abstract class MovieFanFragment<V extends MovieFanView, P extends MovieFanPresenter<V>>
     extends BaseMvpFragment<V, P> implements MovieFanView {
+  @NonNull
+  private final CompletableTransformer completableTransformer = upstream -> upstream
+      .compose(RxLifecycle.bindUntilEvent(lifecycle(), FragmentEvent.DESTROY_VIEW))
+      .observeOn(AndroidSchedulers.mainThread());
+  @NonNull
+  private final FlowableTransformer flowableTransformer = upstream -> upstream
+      .compose(RxLifecycle.bindUntilEvent(lifecycle(), FragmentEvent.DESTROY_VIEW))
+      .observeOn(AndroidSchedulers.mainThread());
+  @NonNull
+  private final MaybeTransformer maybeTransformer = upstream -> upstream
+      .compose(RxLifecycle.bindUntilEvent(lifecycle(), FragmentEvent.DESTROY_VIEW))
+      .observeOn(AndroidSchedulers.mainThread());
+  @NonNull
+  private final ObservableTransformer observableTransformer = upstream -> upstream
+      .compose(RxLifecycle.bindUntilEvent(lifecycle(), FragmentEvent.DESTROY_VIEW))
+      .observeOn(AndroidSchedulers.mainThread());
+  @NonNull
+  private final SingleTransformer singleTransformer = upstream -> upstream
+      .compose(RxLifecycle.bindUntilEvent(lifecycle(), FragmentEvent.DESTROY_VIEW))
+      .observeOn(AndroidSchedulers.mainThread());
+
   @Override
   public boolean isViewAlive() {
     return isAdded() && getActivity() != null;
@@ -57,9 +82,9 @@ public abstract class MovieFanFragment<V extends MovieFanView, P extends MovieFa
 
   @NonNull
   @Override
-  public <T> Single<T> keepAliveWhileVisible(@NonNull Single<T> source) {
-    return source.compose(RxLifecycle.bindUntilEvent(lifecycle(), FragmentEvent.DESTROY_VIEW))
-        .observeOn(AndroidSchedulers.mainThread());
+  public <T> SingleTransformer<T, T> keepAliveWhileVisible() {
+    //noinspection unchecked
+    return (SingleTransformer<T, T>) singleTransformer;
   }
 
   @Override

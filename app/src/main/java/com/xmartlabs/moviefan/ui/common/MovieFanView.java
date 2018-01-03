@@ -8,7 +8,7 @@ import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import io.reactivex.Maybe;
 import io.reactivex.Observable;
-import io.reactivex.Single;
+import io.reactivex.SingleTransformer;
 import io.reactivex.annotations.NonNull;
 
 public interface MovieFanView extends MvpView {
@@ -22,7 +22,7 @@ public interface MovieFanView extends MvpView {
   @NonNull
   <T> Observable<T> keepAliveWhileVisible(@NonNull Observable<T> source);
   @NonNull
-  <T> Single<T> keepAliveWhileVisible(@NonNull Single<T> source);
+  <T> SingleTransformer<T, T> keepAliveWhileVisible();
   void showError(@StringRes int message);
   void showError(@StringRes int message, @StringRes int title);
   void showError(@StringRes int message, @StringRes int title, @StringRes int buttonTitle);
