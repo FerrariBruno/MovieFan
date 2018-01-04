@@ -13,6 +13,7 @@ import com.xmartlabs.moviefan.ui.thisYear.ThisYearPageFragmentBuilder;
 
 import java.util.Locale;
 
+import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
@@ -27,6 +28,10 @@ public class FilmsViewPagerAdapter extends FragmentPagerAdapter {
   @NonNull
   private final MovieFanPageBaseFragment THIS_YEAR_PAGE_FRAGMENT = new ThisYearPageFragmentBuilder().build();
 
+  FilmsViewPagerAdapter(FragmentManager fragmentManager) {
+    super(fragmentManager);
+  }
+
   @RequiredArgsConstructor
   private enum Page {
     LATEST(R.string.home_view_latest),
@@ -36,6 +41,7 @@ public class FilmsViewPagerAdapter extends FragmentPagerAdapter {
 
     private static final int SIZE = Page.values().length;
 
+    @Getter
     @StringRes
     private final int titleResourceId;
   }
@@ -69,15 +75,12 @@ public class FilmsViewPagerAdapter extends FragmentPagerAdapter {
   @NonNull
   @Override
   public CharSequence getPageTitle(int position) {
-    return MovieFanApplication.getContext().getString(Page.values()[position].titleResourceId);
+    return MovieFanApplication.getContext()
+        .getString(Page.values()[position].getTitleResourceId());
   }
 
   int getLastFragmentsNumber() {
     return getCount() - 1;
-  }
-
-  FilmsViewPagerAdapter(FragmentManager fragmentManager) {
-    super(fragmentManager);
   }
 }
 

@@ -68,7 +68,5 @@ public interface ApplicationComponent {
   void inject(SessionController sessionController);
   void inject(SharedPreferencesController sharedPreferencesController);
 
-  void inject(AccessTokenProvider accessTokenProvider);
   void inject(ApiKeyQueryInterceptor apiKeyQueryInterceptor);
-  void inject(SessionInterceptor sessionInterceptor);
 }

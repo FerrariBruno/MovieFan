@@ -17,15 +17,18 @@ public class HomeActivity extends SingleFragmentActivity {
   @Override
   protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-
-    setSupportActionBar(findViewById(R.id.toolbar));
-    //noinspection ConstantConditions
-    getSupportActionBar().setDisplayShowTitleEnabled(false);
+    setupToolbar();
   }
 
   @NonNull
   @Override
   protected BaseFragment createFragment() {
     return new TabsFragmentBuilder().build();
+  }
+
+  private void setupToolbar() {
+    setSupportActionBar(findViewById(R.id.toolbar));
+    //noinspection ConstantConditions
+    getSupportActionBar().setDisplayShowTitleEnabled(false);
   }
 }

@@ -17,14 +17,16 @@ import okhttp3.Response;
  */
 public class ApiKeyQueryInterceptor implements Interceptor {
   private static final String API_KEY_QUERY_NAME = "api_key";
+  private static final String API_KEY_VALUE = MovieFanApplication.getContext().getString(R.string.api_key);
 
   @NonNull
   @Override
   public Response intercept(@NonNull Chain chain) throws IOException {
     Request request = chain.request();
-    HttpUrl url = request.url().newBuilder().addQueryParameter(API_KEY_QUERY_NAME,
-        MovieFanApplication.getContext()
-            .getString(R.string.api_key)).build();
+
+    HttpUrl url = request.url().newBuilder()
+        .addQueryParameter(API_KEY_QUERY_NAME, API_KEY_VALUE)
+        .build();
     request = request.newBuilder()
         .url(url)
         .build();
