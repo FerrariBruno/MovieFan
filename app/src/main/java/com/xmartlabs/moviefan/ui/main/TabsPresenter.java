@@ -16,18 +16,12 @@ import javax.inject.Inject;
  * Created by bruno on 1/2/18.
  */
 public class TabsPresenter extends MovieFanPresenter<TabsView> {
-  private static final int FIRST_FRAGMENT = 0;
-  private static final int OFFSCREEN_PAGE_LIMIT = 3;
-  //TODO integrate ViewPagerAdapter
-  private int lastFragment;
-
   @Inject
   GenreController genreController;
   @Inject
   TabsPresenter() { }
 
-  //TODO integrate with filter dialog init
-  private void getGenresFromService(@NonNull MovieFanFilterView filterView) {
+  void getGenresFromService(@NonNull MovieFanFilterView filterView) {
     executeOnViewIfPresent(view ->
         genreController.getAllGenres()
         .compose(view.keepAliveWhileVisibleSingle())

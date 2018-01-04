@@ -14,6 +14,7 @@ import com.xmartlabs.moviefan.controller.films.FilmController;
 import com.xmartlabs.moviefan.controller.films.FilmServiceController;
 import com.xmartlabs.moviefan.controller.genres.GenreController;
 import com.xmartlabs.moviefan.controller.genres.GenreServiceController;
+import com.xmartlabs.moviefan.module.ApiKeyQueryInterceptor;
 import com.xmartlabs.moviefan.module.ControllerModule;
 import com.xmartlabs.moviefan.module.RestServiceApiModule;
 import com.xmartlabs.moviefan.module.RestServiceModuleAdditions;
@@ -68,5 +69,6 @@ public interface ApplicationComponent {
   void inject(SharedPreferencesController sharedPreferencesController);
 
   void inject(AccessTokenProvider accessTokenProvider);
+  void inject(ApiKeyQueryInterceptor apiKeyQueryInterceptor);
   void inject(SessionInterceptor sessionInterceptor);
 }
