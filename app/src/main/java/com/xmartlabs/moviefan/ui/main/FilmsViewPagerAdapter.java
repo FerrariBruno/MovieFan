@@ -20,8 +20,11 @@ import lombok.RequiredArgsConstructor;
  * Created by bruno on 01/04/18.
  */
 public class FilmsViewPagerAdapter extends FragmentPagerAdapter {
+  @NonNull
   private final MovieFanPageBaseFragment LATEST_PAGE_FRAGMENT = new LatestPageFragmentBuilder().build();
+  @NonNull
   private final MovieFanPageBaseFragment SPECIFIC_YEAR_PAGE_FRAGMENT = new SpecificYearPageFragmentBuilder().build();
+  @NonNull
   private final MovieFanPageBaseFragment THIS_YEAR_PAGE_FRAGMENT = new ThisYearPageFragmentBuilder().build();
 
   @RequiredArgsConstructor
@@ -73,8 +76,8 @@ public class FilmsViewPagerAdapter extends FragmentPagerAdapter {
     return getCount() - 1;
   }
 
-  FilmsViewPagerAdapter(FragmentManager fm) {
-    super(fm);
+  FilmsViewPagerAdapter(FragmentManager fragmentManager) {
+    super(fragmentManager);
   }
 }
 
