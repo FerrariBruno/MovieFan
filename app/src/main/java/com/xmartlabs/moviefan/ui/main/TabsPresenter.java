@@ -30,7 +30,7 @@ public class TabsPresenter extends MovieFanPresenter<TabsView> {
   private void getGenresFromService(@NonNull MovieFanFilterView filterView) {
     executeOnViewIfPresent(view ->
         genreController.getAllGenres()
-        .compose(view.keepAliveWhileVisible())
+        .compose(view.keepAliveWhileVisibleSingle())
         .subscribe(new GeneralSingleSubscriber<Map<Long, Genre>>() {
           @Override
           public void onSuccess(@NonNull Map<Long, Genre> genres) {

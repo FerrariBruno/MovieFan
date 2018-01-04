@@ -4,25 +4,25 @@ import android.support.annotation.StringRes;
 
 import com.xmartlabs.bigbang.ui.mvp.MvpView;
 
-import io.reactivex.Completable;
-import io.reactivex.Flowable;
-import io.reactivex.Maybe;
-import io.reactivex.Observable;
+import io.reactivex.CompletableTransformer;
+import io.reactivex.FlowableTransformer;
+import io.reactivex.MaybeTransformer;
+import io.reactivex.ObservableTransformer;
 import io.reactivex.SingleTransformer;
 import io.reactivex.annotations.NonNull;
 
 public interface MovieFanView extends MvpView {
   boolean isViewAlive();
   @NonNull
-  Completable keepAliveWhileVisible(@NonNull Completable source);
+  CompletableTransformer keepAliveWhileVisibleCompletable();
   @NonNull
-  <T> Flowable<T> keepAliveWhileVisible(@NonNull Flowable<T> source);
+  <T> FlowableTransformer<T, T> keepAliveWhileVisibleFlowable();
   @NonNull
-  <T> Maybe<T> keepAliveWhileVisible(@NonNull Maybe<T> source);
+  <T> MaybeTransformer<T, T> keepAliveWhileVisibleMaybe();
   @NonNull
-  <T> Observable<T> keepAliveWhileVisible(@NonNull Observable<T> source);
+  <T> ObservableTransformer<T, T> keepAliveWhileVisibleObservable();
   @NonNull
-  <T> SingleTransformer<T, T> keepAliveWhileVisible();
+  <T> SingleTransformer<T, T> keepAliveWhileVisibleSingle();
   void showError(@StringRes int message);
   void showError(@StringRes int message, @StringRes int title);
   void showError(@StringRes int message, @StringRes int title, @StringRes int buttonTitle);
