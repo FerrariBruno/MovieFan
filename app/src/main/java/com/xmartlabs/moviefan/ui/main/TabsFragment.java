@@ -74,7 +74,7 @@ public class TabsFragment extends MovieFanFragment<TabsView, TabsPresenter> impl
   public boolean onOptionsItemSelected(@NonNull MenuItem item) {
     switch (item.getItemId()) {
       case R.id.filter_button:
-        onFilterApplied();
+        showFilterView();
         break;
       default:
         break;
@@ -83,15 +83,22 @@ public class TabsFragment extends MovieFanFragment<TabsView, TabsPresenter> impl
   }
 
   @Override
-  public void onFilterApplied() {
+  public void showFilterView() {
     BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getActivity());
     MovieFanFilterView filterView = new MovieFanFilterView(getContext());
-    filterView
-        .setOnFilterAppliedListener((genreId, adultContent) -> tabsPresenter.
-            onFilterSelected(genreId, adultContent, filmsViewPagerAdapter));
-    bottomSheetDialog.dismiss();
+    onFilterApplied(filterView, bottomSheetDialog);
     tabsPresenter.getGenresFromService(filterView);
     bottomSheetDialog.setContentView(filterView);
     bottomSheetDialog.show();
+  }
+
+  @Override
+  public void onFilterApplied(MovieFanFilterView filterView, BottomSheetDialog bottomSheetDialog) {
+    filterView
+        .setOnFilterAppliedListener((genreId, adultContent) -> {
+          tabsPresenter.
+              onFilterSelected(genreId, adultContent, filmsViewPagerAdapter);
+          bottomSheetDialog.dismiss();
+        });
   }
 }
