@@ -43,4 +43,8 @@ public class TabsPresenter extends MovieFanPresenter<TabsView> {
         .map(fragment -> (OnFilterAppliedListener) fragment)
         .forEach(listener -> listener.onFilterApplied(genre, adultContent));
   }
+
+  void showFilterViewIfRequired() {
+    executeOnViewIfPresent(TabsView::showFilterView);
+  }
 }
