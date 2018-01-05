@@ -89,6 +89,7 @@ public class TabsFragment extends MovieFanFragment<TabsView, TabsPresenter> impl
     filterView
         .setOnFilterAppliedListener((genreId, adultContent) -> tabsPresenter.
             onFilterSelected(genreId, adultContent, filmsViewPagerAdapter));
+    bottomSheetDialog.dismiss();
     tabsPresenter.getGenresFromService(filterView);
     bottomSheetDialog.setContentView(filterView);
     bottomSheetDialog.show();
