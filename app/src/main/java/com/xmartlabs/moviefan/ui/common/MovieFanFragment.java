@@ -11,11 +11,11 @@ import com.xmartlabs.moviefan.R;
 import java.io.IOException;
 import java.util.concurrent.CancellationException;
 
-import io.reactivex.Completable;
-import io.reactivex.Flowable;
-import io.reactivex.Maybe;
-import io.reactivex.Observable;
-import io.reactivex.Single;
+import io.reactivex.CompletableTransformer;
+import io.reactivex.FlowableTransformer;
+import io.reactivex.MaybeTransformer;
+import io.reactivex.ObservableTransformer;
+import io.reactivex.SingleTransformer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.exceptions.CompositeException;
@@ -29,36 +29,41 @@ public abstract class MovieFanFragment<V extends MovieFanView, P extends MovieFa
 
   @NonNull
   @Override
-  public Completable keepAliveWhileVisible(@NonNull Completable source) {
-    return source.compose(RxLifecycle.bindUntilEvent(lifecycle(), FragmentEvent.DESTROY_VIEW))
+  public CompletableTransformer keepAliveWhileVisibleCompletable() {
+    return upstream -> upstream
+        .compose(RxLifecycle.bindUntilEvent(lifecycle(), FragmentEvent.DESTROY_VIEW))
         .observeOn(AndroidSchedulers.mainThread());
   }
 
   @NonNull
   @Override
-  public <T> Flowable<T> keepAliveWhileVisible(@NonNull Flowable<T> source) {
-    return source.compose(RxLifecycle.bindUntilEvent(lifecycle(), FragmentEvent.DESTROY_VIEW))
+  public <T> FlowableTransformer<T, T> keepAliveWhileVisibleFlowable() {
+    return upstream -> upstream
+        .compose(RxLifecycle.bindUntilEvent(lifecycle(), FragmentEvent.DESTROY_VIEW))
         .observeOn(AndroidSchedulers.mainThread());
   }
 
   @NonNull
   @Override
-  public <T> Maybe<T> keepAliveWhileVisible(@NonNull Maybe<T> source) {
-    return source.compose(RxLifecycle.bindUntilEvent(lifecycle(), FragmentEvent.DESTROY_VIEW))
+  public <T> MaybeTransformer<T, T> keepAliveWhileVisibleMaybe() {
+    return upstream -> upstream
+        .compose(RxLifecycle.bindUntilEvent(lifecycle(), FragmentEvent.DESTROY_VIEW))
         .observeOn(AndroidSchedulers.mainThread());
   }
 
   @NonNull
   @Override
-  public <T> Observable<T> keepAliveWhileVisible(@NonNull Observable<T> source) {
-    return source.compose(RxLifecycle.bindUntilEvent(lifecycle(), FragmentEvent.DESTROY_VIEW))
+  public <T> ObservableTransformer<T, T> keepAliveWhileVisibleObservable() {
+    return upstream -> upstream
+        .compose(RxLifecycle.bindUntilEvent(lifecycle(), FragmentEvent.DESTROY_VIEW))
         .observeOn(AndroidSchedulers.mainThread());
   }
 
   @NonNull
   @Override
-  public <T> Single<T> keepAliveWhileVisible(@NonNull Single<T> source) {
-    return source.compose(RxLifecycle.bindUntilEvent(lifecycle(), FragmentEvent.DESTROY_VIEW))
+  public <T> SingleTransformer<T, T> keepAliveWhileVisibleSingle() {
+    return upstream -> upstream
+        .compose(RxLifecycle.bindUntilEvent(lifecycle(), FragmentEvent.DESTROY_VIEW))
         .observeOn(AndroidSchedulers.mainThread());
   }
 

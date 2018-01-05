@@ -10,7 +10,7 @@
         android:name="com.xmartlabs.moviefan.MovieFanApplication"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
+        android:theme="@style/AppTheme.NoActionBar"
         >
 
         <activity

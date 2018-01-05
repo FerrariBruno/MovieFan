@@ -8,7 +8,8 @@ import okhttp3.OkHttpClient;
 public class OkHttpModule extends com.xmartlabs.bigbang.core.module.OkHttpModule {
   @Override
   public OkHttpClient provideServiceOkHttpClient(OkHttpClient.Builder clientBuilder, BuildInfo buildInfo) {
-    clientBuilder.addInterceptor(new SessionInterceptor());
+    clientBuilder
+        .addInterceptor(new ApiKeyQueryInterceptor());
     return super.provideServiceOkHttpClient(clientBuilder, buildInfo);
   }
 }
