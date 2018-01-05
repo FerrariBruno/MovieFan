@@ -11,11 +11,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.annimon.stream.Stream;
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
 import com.xmartlabs.moviefan.R;
 import com.xmartlabs.moviefan.ui.common.MovieFanFragment;
-import com.xmartlabs.moviefan.ui.common.OnFilterAppliedListener;
 import com.xmartlabs.moviefan.ui.views.MovieFanFilterView;
 
 import javax.inject.Inject;
@@ -27,7 +25,6 @@ import butterknife.BindView;
  */
 @FragmentWithArgs
 public class TabsFragment extends MovieFanFragment<TabsView, TabsPresenter> implements TabsView {
-  private static final int FIRST_FRAGMENT = 0;
   private static final int OFFSCREEN_PAGE_LIMIT = 3;
 
   @BindView(R.id.viewpager)
@@ -37,7 +34,6 @@ public class TabsFragment extends MovieFanFragment<TabsView, TabsPresenter> impl
 
   @Nullable
   private FilmsViewPagerAdapter filmsViewPagerAdapter;
-  private int lastFragment;
 
   @Inject
   TabsPresenter tabsPresenter;
@@ -63,7 +59,6 @@ public class TabsFragment extends MovieFanFragment<TabsView, TabsPresenter> impl
   @Override
   public void setupViewPagerAdapter() {
     filmsViewPagerAdapter = new FilmsViewPagerAdapter(getFragmentManager());
-    lastFragment = filmsViewPagerAdapter.getLastFragmentsNumber();
     viewPager.setAdapter(filmsViewPagerAdapter);
     viewPager.setOffscreenPageLimit(OFFSCREEN_PAGE_LIMIT);
     tabLayout.setupWithViewPager(viewPager);
@@ -79,7 +74,7 @@ public class TabsFragment extends MovieFanFragment<TabsView, TabsPresenter> impl
   public boolean onOptionsItemSelected(@NonNull MenuItem item) {
     switch (item.getItemId()) {
       case R.id.filter_button:
-        showFilterView();
+        onFilterApplied();
         break;
       default:
         break;
@@ -88,21 +83,12 @@ public class TabsFragment extends MovieFanFragment<TabsView, TabsPresenter> impl
   }
 
   @Override
-  public void showFilterView() {
+  public void onFilterApplied() {
     BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getActivity());
     MovieFanFilterView filterView = new MovieFanFilterView(getContext());
-    filterView.setOnFilterAppliedListener((genreId, adultContent) -> {
-      //noinspection ConstantConditions
-      Stream.rangeClosed(FIRST_FRAGMENT, lastFragment)
-          .map(filmsViewPagerAdapter::getItem)
-          //****************
-          //FIXME unless I put the adapter on the presenter, this has to go here in the view, is this okay?
-          //****************
-          .filter(fragment -> fragment instanceof OnFilterAppliedListener)
-          .map(fragment -> (OnFilterAppliedListener) fragment)
-          .forEach(listener -> listener.onFilterApplied(genreId, adultContent));
-      bottomSheetDialog.dismiss();
-    });
+    filterView
+        .setOnFilterAppliedListener((genreId, adultContent) -> tabsPresenter.
+            onFilterSelected(genreId, adultContent, filmsViewPagerAdapter));
     tabsPresenter.getGenresFromService(filterView);
     bottomSheetDialog.setContentView(filterView);
     bottomSheetDialog.show();

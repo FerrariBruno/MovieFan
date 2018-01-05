@@ -21,6 +21,7 @@ import lombok.RequiredArgsConstructor;
  * Created by bruno on 01/04/18.
  */
 public class FilmsViewPagerAdapter extends FragmentPagerAdapter {
+  static final int FIRST_FRAGMENT = 0;
   @NonNull
   private final MovieFanPageBaseFragment LATEST_PAGE_FRAGMENT = new LatestPageFragmentBuilder().build();
   @NonNull

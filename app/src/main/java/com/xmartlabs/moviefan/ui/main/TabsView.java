@@ -7,5 +7,5 @@ import com.xmartlabs.moviefan.ui.common.MovieFanView;
  */
 public interface TabsView extends MovieFanView {
   void setupViewPagerAdapter();
-  void showFilterView();
+  void onFilterApplied();
 }

@@ -2,10 +2,13 @@ package com.xmartlabs.moviefan.ui.main;
 
 import android.support.annotation.NonNull;
 
+import com.annimon.stream.Optional;
+import com.annimon.stream.Stream;
 import com.xmartlabs.moviefan.controller.genres.GenreController;
 import com.xmartlabs.moviefan.helper.GeneralSingleSubscriber;
 import com.xmartlabs.moviefan.model.Genre;
 import com.xmartlabs.moviefan.ui.common.MovieFanPresenter;
+import com.xmartlabs.moviefan.ui.common.OnFilterAppliedListener;
 import com.xmartlabs.moviefan.ui.views.MovieFanFilterView;
 
 import java.util.Map;
@@ -33,6 +36,11 @@ public class TabsPresenter extends MovieFanPresenter<TabsView> {
         }));
   }
 
-  //TODO integrate filter button behaviour
-  protected void onFilterButtonPressed() { }
+  void onFilterSelected(Optional<Genre> genre, boolean adultContent, FilmsViewPagerAdapter filmsViewPagerAdapter) {
+    Stream.rangeClosed(FilmsViewPagerAdapter.FIRST_FRAGMENT, filmsViewPagerAdapter.getLastFragmentsNumber())
+        .map(filmsViewPagerAdapter::getItem)
+        .filter(fragment -> fragment instanceof OnFilterAppliedListener)
+        .map(fragment -> (OnFilterAppliedListener) fragment)
+        .forEach(listener -> listener.onFilterApplied(genre, adultContent));
+  }
 }
