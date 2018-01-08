@@ -5,7 +5,6 @@ import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
 
 import com.annimon.stream.Optional;
-import com.annimon.stream.Stream;
 import com.xmartlabs.moviefan.controller.films.FilmController;
 import com.xmartlabs.moviefan.helper.GeneralSingleSubscriber;
 import com.xmartlabs.moviefan.model.Film;
@@ -33,7 +32,7 @@ public abstract class MovieFanPageBasePresenter<T extends MovieFanPageBaseView> 
   protected abstract Single<List<Film>> requestFilms(int pageNumber, @NonNull Optional<Genre> genre, boolean adultContent);
 
   @NonNull
-  OnDemandRecyclerViewScrollListener createRecyclerViewOnScrollListener() {
+  OnDemandRecyclerViewScrollListener createRecyclerViewOnScrollListener(Optional<Genre> genre, boolean adultContent) {
     return new OnDemandRecyclerViewScrollListener() {
       @Override
       protected void loadNextPage(int page) {
@@ -44,15 +43,15 @@ public abstract class MovieFanPageBasePresenter<T extends MovieFanPageBaseView> 
 
   @MainThread
   private void bindFilmsToRecyclerView(int pageNumber, @NonNull Optional<Genre> genre, boolean adultContent) {
-    requestFilms(pageNumber, genre, adultContent)
-        .compose(prepareSingleForSubscription())
-        .subscribe(new GeneralSingleSubscriber<List<Film>>() {
-          @Override
-          public void onSuccess(@NonNull List<Film> films){
-            Stream.of(films)
-                .forEach(film -> adapter.addFilm(film));
-            adapter.notifyDataSetChanged();
-          }
-        });
+    executeOnViewIfPresent(view ->
+        requestFilms(pageNumber, genre, adultContent)
+            .compose(view.keepAliveWhileVisibleSingle())
+            .subscribe(new GeneralSingleSubscriber<List<Film>>() {
+              @Override
+              public void onSuccess(@NonNull List<Film> films){
+                view.addFilmsAndNotifyAdapter(films);
+              }
+            })
+    );
   }
 }

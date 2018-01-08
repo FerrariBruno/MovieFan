@@ -7,13 +7,12 @@
     android:orientation="horizontal"
     >
 
-    <com.xmartlabs.moviefan.ui.common.MovieFanImageView
+    <com.xmartlabs.moviefan.ui.views.MovieFanImageView
         android:id="@+id/poster"
         android:layout_width="135dp"
         android:layout_height="match_parent"
         android:contentDescription="@string/poster_description"
         android:scaleType="fitXY"
-        tools:src="@drawable/ic_launcher_background"
         />
 
     <LinearLayout

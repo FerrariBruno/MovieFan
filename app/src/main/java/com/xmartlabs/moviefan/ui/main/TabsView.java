@@ -11,6 +11,5 @@ import com.xmartlabs.moviefan.ui.views.MovieFanFilterView;
  */
 public interface TabsView extends MovieFanView {
   void onFilterApplied(@NonNull MovieFanFilterView filterView, @NonNull BottomSheetDialog bottomSheetDialog);
-  void setupViewPagerAdapter();
   void showFilterView();
 }

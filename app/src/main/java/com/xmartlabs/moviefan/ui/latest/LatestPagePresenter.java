@@ -19,13 +19,12 @@ import io.reactivex.Single;
  */
 public class LatestPagePresenter extends MovieFanPageBasePresenter<LatestPageView> {
   @Inject
-  LatestPagePresenter() { }
+  public LatestPagePresenter() { }
 
   @NonNull
   @Override
   protected FilmsRecyclerViewAdapter createFilmsAdapter() {
-    //TODO integrate with recyclerview
-    return null;
+    return new FilmsRecyclerViewAdapter();
   }
 
   @NonNull

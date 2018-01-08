@@ -19,13 +19,12 @@ import io.reactivex.Single;
  */
 public class SpecificYearPagePresenter extends MovieFanPageBasePresenter<SpecificYearPageView> {
   @Inject
-  SpecificYearPagePresenter() { }
+  public SpecificYearPagePresenter() { }
 
   @NonNull
   @Override
   protected FilmsRecyclerViewAdapter createFilmsAdapter() {
-    //TODO integrate with recyclerview
-    return null;
+    return new FilmsRecyclerViewAdapter();
   }
 
   @NonNull

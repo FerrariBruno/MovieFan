@@ -56,7 +56,6 @@ public class TabsFragment extends MovieFanFragment<TabsView, TabsPresenter> impl
     setHasOptionsMenu(true);
   }
 
-  @Override
   public void setupViewPagerAdapter() {
     filmsViewPagerAdapter = new FilmsViewPagerAdapter(getFragmentManager());
     viewPager.setAdapter(filmsViewPagerAdapter);
