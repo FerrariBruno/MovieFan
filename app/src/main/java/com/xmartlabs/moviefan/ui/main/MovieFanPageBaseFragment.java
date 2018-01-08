@@ -49,7 +49,7 @@ public abstract class MovieFanPageBaseFragment<V extends MovieFanPageBaseView, P
 
   @Override
   public void addFilmsAndNotifyAdapter(List<Film> films) {
-    adapter.addFilms(films);
+    adapter.setItems(films);
     adapter.notifyDataSetChanged();
   }
 
