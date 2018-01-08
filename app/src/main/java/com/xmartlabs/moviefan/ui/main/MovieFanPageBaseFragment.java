@@ -32,6 +32,7 @@ public abstract class MovieFanPageBaseFragment<V extends MovieFanPageBaseView, P
   @NonNull
   private Optional<Genre> genre = Optional.empty();
 
+  @Nullable
   private FilmsRecyclerViewAdapter adapter;
   @Nullable
   private OnDemandRecyclerViewScrollListener scrollListener;
@@ -49,6 +50,7 @@ public abstract class MovieFanPageBaseFragment<V extends MovieFanPageBaseView, P
 
   @Override
   public void addFilmsAndNotifyAdapter(List<Film> films) {
+    //noinspection ConstantConditions
     adapter.setItems(films);
     adapter.notifyDataSetChanged();
   }
@@ -80,6 +82,7 @@ public abstract class MovieFanPageBaseFragment<V extends MovieFanPageBaseView, P
 
   @UiThread
   private void updateRecyclerView() {
+    //noinspection ConstantConditions
     adapter.clearData();
     adapter.notifyDataSetChanged();
     filmsRecyclerView.removeOnScrollListener(scrollListener);
