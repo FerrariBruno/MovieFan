@@ -1,6 +1,7 @@
 package com.xmartlabs.moviefan.ui.views;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
@@ -12,15 +13,15 @@ import com.xmartlabs.moviefan.R;
  * Created by bruno on 1/5/18.
  */
 public class MovieFanImageView extends AppCompatImageView {
-  public MovieFanImageView(Context context, AttributeSet attrs) {
+  public MovieFanImageView(@NonNull Context context, @NonNull AttributeSet attrs) {
     super(context, attrs);
   }
 
-  public MovieFanImageView(Context context) {
+  public MovieFanImageView(@NonNull Context context) {
     super(context);
   }
 
-  public MovieFanImageView(Context context, AttributeSet attrs, int defStyle) {
+  public MovieFanImageView(@NonNull Context context, @NonNull AttributeSet attrs, int defStyle) {
     super(context, attrs, defStyle);
   }
 
