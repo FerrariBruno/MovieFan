@@ -30,6 +30,7 @@ import butterknife.ButterKnife;
 public class FilmsRecyclerViewAdapter extends BaseRecyclerViewAdapter {
   private static final int DETAILED_FILM_VIEWHOLDER_LIMIT = 3;
 
+  @NonNull
   private final SimpleItemRecycleItemType<Film, CollapsedFilmViewHolder> collapsedItemType =
       new SimpleItemRecycleItemType<Film, CollapsedFilmViewHolder>() {
         @NonNull
@@ -38,7 +39,7 @@ public class FilmsRecyclerViewAdapter extends BaseRecyclerViewAdapter {
           return new CollapsedFilmViewHolder(inflateView(parent, R.layout.item_collapsed_film));
         }
       };
-
+  @NonNull
   private final SimpleItemRecycleItemType<Film, DetailedFilmViewHolder> detailedItemType =
       new SimpleItemRecycleItemType<Film, DetailedFilmViewHolder>() {
         @NonNull
@@ -66,7 +67,8 @@ public class FilmsRecyclerViewAdapter extends BaseRecyclerViewAdapter {
   }
 
   static final class DetailedFilmViewHolder extends SingleItemBaseViewHolder<Film> {
-    private final String DELIMITER = ", ";
+    @NonNull
+    private static final String DELIMITER = ", ";
 
     @BindView(R.id.poster)
     MovieFanImageView posterImageView;
