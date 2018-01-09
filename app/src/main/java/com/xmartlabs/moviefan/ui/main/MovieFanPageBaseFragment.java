@@ -44,7 +44,6 @@ public abstract class MovieFanPageBaseFragment<V extends MovieFanPageBaseView, P
   @Override
   public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
     super.onViewCreated(view, savedInstanceState);
-    initRecyclerView(view);
   }
 
   @Override
@@ -53,8 +52,13 @@ public abstract class MovieFanPageBaseFragment<V extends MovieFanPageBaseView, P
     adapter.notifyDataSetChanged();
   }
 
-  private void initRecyclerView(@NonNull View view) {
-    RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(view.getContext());
+  @Override
+  public void setupView() {
+    initRecyclerView();
+  }
+
+  private void initRecyclerView() {
+    RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
     filmsRecyclerView.setLayoutManager(layoutManager);
     initRecyclerViewAdapter();
     filmsRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));

@@ -31,6 +31,12 @@ public abstract class MovieFanPageBasePresenter<T extends MovieFanPageBaseView> 
   @NonNull
   protected abstract Single<List<Film>> requestFilms(int pageNumber, @NonNull Optional<Genre> genre, boolean adultContent);
 
+  @Override
+  public void attachView(@NonNull T movieFanPageBaseView) {
+    super.attachView(movieFanPageBaseView);
+    movieFanPageBaseView.setupView();
+  }
+
   @NonNull
   OnDemandRecyclerViewScrollListener createRecyclerViewOnScrollListener(Optional<Genre> genre, boolean adultContent) {
     return new OnDemandRecyclerViewScrollListener() {

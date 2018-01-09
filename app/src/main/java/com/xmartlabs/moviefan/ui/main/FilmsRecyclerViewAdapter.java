@@ -22,7 +22,6 @@ import java.util.List;
 import java.util.Locale;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Created by bruno on 1/5/18.
@@ -58,7 +57,7 @@ public class FilmsRecyclerViewAdapter extends BaseRecyclerViewAdapter {
         .skip(DETAILED_FILM_VIEWHOLDER_LIMIT)
         .forEach(film -> addItem(collapsedItemType, film));
 
-    notifyDataSetChanged();
+    //notifyDataSetChanged();
   }
 
   void clearData() {
@@ -81,7 +80,6 @@ public class FilmsRecyclerViewAdapter extends BaseRecyclerViewAdapter {
 
     DetailedFilmViewHolder(@NonNull View view) {
       super(view);
-      ButterKnife.bind(this, view);
     }
 
     @Override
@@ -112,7 +110,6 @@ public class FilmsRecyclerViewAdapter extends BaseRecyclerViewAdapter {
 
     CollapsedFilmViewHolder(@NonNull View view) {
       super(view);
-      ButterKnife.bind(this, view);
     }
 
     @Override
