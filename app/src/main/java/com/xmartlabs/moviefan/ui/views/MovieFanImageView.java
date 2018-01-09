@@ -13,12 +13,12 @@ import com.xmartlabs.moviefan.R;
  * Created by bruno on 1/5/18.
  */
 public class MovieFanImageView extends AppCompatImageView {
-  public MovieFanImageView(@NonNull Context context, @NonNull AttributeSet attrs) {
-    super(context, attrs);
-  }
-
   public MovieFanImageView(@NonNull Context context) {
     super(context);
+  }
+
+  public MovieFanImageView(@NonNull Context context, @NonNull AttributeSet attrs) {
+    super(context, attrs);
   }
 
   public MovieFanImageView(@NonNull Context context, @NonNull AttributeSet attrs, int defStyle) {

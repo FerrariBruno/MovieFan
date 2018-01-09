@@ -62,9 +62,6 @@ public class FilmsRecyclerViewAdapter extends BaseRecyclerViewAdapter {
   }
 
   static final class DetailedFilmViewHolder extends SingleItemBaseViewHolder<Film> {
-    @NonNull
-    private static final String DELIMITER = ", ";
-
     @BindView(R.id.poster)
     MovieFanImageView posterImageView;
     @BindView(R.id.title)
@@ -96,7 +93,7 @@ public class FilmsRecyclerViewAdapter extends BaseRecyclerViewAdapter {
     private String joinGenresWithACommaDelimiter(@NonNull List<Genre> genres){
       return Stream.of(genres)
           .map(Genre::getName)
-          .collect(Collectors.joining(DELIMITER));
+          .collect(Collectors.joining(", "));
     }
   }
 

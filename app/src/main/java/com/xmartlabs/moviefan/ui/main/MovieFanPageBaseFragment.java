@@ -1,13 +1,11 @@
 package com.xmartlabs.moviefan.ui.main;
 
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.UiThread;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 
 import com.annimon.stream.Optional;
 import com.xmartlabs.moviefan.R;
@@ -40,11 +38,6 @@ public abstract class MovieFanPageBaseFragment<V extends MovieFanPageBaseView, P
   @Override
   protected int getLayoutResId() {
     return R.layout.fragment_movie_page;
-  }
-
-  @Override
-  public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
-    super.onViewCreated(view, savedInstanceState);
   }
 
   @Override
