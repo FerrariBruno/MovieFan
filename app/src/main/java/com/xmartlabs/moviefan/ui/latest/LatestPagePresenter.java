@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import com.annimon.stream.Optional;
 import com.xmartlabs.moviefan.model.Film;
 import com.xmartlabs.moviefan.model.Genre;
+import com.xmartlabs.moviefan.ui.main.FilmsRecyclerViewAdapter;
 import com.xmartlabs.moviefan.ui.main.MovieFanPageBasePresenter;
 
 import java.util.List;
@@ -18,7 +19,13 @@ import io.reactivex.Single;
  */
 public class LatestPagePresenter extends MovieFanPageBasePresenter<LatestPageView> {
   @Inject
-  LatestPagePresenter() { }
+  public LatestPagePresenter() { }
+
+  @NonNull
+  @Override
+  protected FilmsRecyclerViewAdapter createFilmsAdapter() {
+    return new FilmsRecyclerViewAdapter();
+  }
 
   @NonNull
   @Override

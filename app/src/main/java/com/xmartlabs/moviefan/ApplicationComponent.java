@@ -5,8 +5,6 @@ import com.xmartlabs.bigbang.core.module.CoreAndroidModule;
 import com.xmartlabs.bigbang.core.module.GsonModule;
 import com.xmartlabs.bigbang.core.module.OkHttpModule;
 import com.xmartlabs.bigbang.core.module.PicassoModule;
-import com.xmartlabs.bigbang.core.module.SessionInterceptor;
-import com.xmartlabs.bigbang.core.providers.AccessTokenProvider;
 import com.xmartlabs.bigbang.retrofit.module.RestServiceModule;
 import com.xmartlabs.bigbang.retrofit.module.ServiceGsonModule;
 import com.xmartlabs.moviefan.controller.SessionController;
@@ -38,12 +36,12 @@ import dagger.Component;
     CoreAndroidModule.class,
     ControllerModule.class,
     GsonModule.class,
-    ServiceGsonModule.class,
     OkHttpModule.class,
     PicassoModule.class,
     RestServiceApiModule.class,
     RestServiceModule.class,
-    RestServiceModuleAdditions.class
+    RestServiceModuleAdditions.class,
+    ServiceGsonModule.class,
 })
 public interface ApplicationComponent {
   void inject(MovieFanApplication movieFanApplication);
