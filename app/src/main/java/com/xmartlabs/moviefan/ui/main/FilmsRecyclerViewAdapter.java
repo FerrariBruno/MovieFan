@@ -52,13 +52,13 @@ public class FilmsRecyclerViewAdapter extends BaseRecyclerViewAdapter {
   void setItems(@NonNull List<Film> films) {
     Stream.of(films)
         .limit(DETAILED_FILM_VIEWHOLDER_LIMIT)
-        .forEach(film -> addItem(detailedItemType, film));
+        .forEach(film -> addItemWithoutNotifying(detailedItemType, film, true));
 
     Stream.of(films)
         .skip(DETAILED_FILM_VIEWHOLDER_LIMIT)
-        .forEach(film -> addItem(collapsedItemType, film));
+        .forEach(film -> addItemWithoutNotifying(collapsedItemType, film, true));
 
-    //notifyDataSetChanged();
+    notifyDataSetChanged();
   }
 
   void clearData() {

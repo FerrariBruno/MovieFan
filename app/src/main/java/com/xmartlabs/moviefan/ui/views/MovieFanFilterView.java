@@ -88,7 +88,7 @@ public class MovieFanFilterView extends FrameLayout {
   private Optional<Genre> getGenreFromSpinner() {
     Object selectedItem = genreSpinnerView.getSelectedItem();
     return Optional.ofNullable((Genre) selectedItem)
-        .filter(ANY_GENRE::equals);
+        .filterNot(ANY_GENRE::equals);
   }
 
   private boolean getAdultContentPreferenceFromSwitch() {
