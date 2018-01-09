@@ -4,7 +4,6 @@ import android.support.annotation.CheckResult;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.xmartlabs.bigbang.core.controller.EntityDao;
 import com.xmartlabs.moviefan.controller.BaseController;
 import com.xmartlabs.moviefan.model.Genre;
 
@@ -22,9 +21,9 @@ public class GenreController extends BaseController<Long, Genre, Void, GenreServ
   @Nullable
   private Map<Long, Genre> genres;
 
-  //TODO change nullability after DB integration
-  public GenreController(@Nullable EntityDao<Long, Genre, Void> entityDao, @NonNull GenreServiceController serviceController) {
-    super(entityDao, serviceController);
+  public GenreController(@NonNull GenreDatabaseController genreDatabaseController,
+                         @NonNull GenreServiceController serviceController) {
+    super(genreDatabaseController, serviceController);
   }
 
   @Nullable

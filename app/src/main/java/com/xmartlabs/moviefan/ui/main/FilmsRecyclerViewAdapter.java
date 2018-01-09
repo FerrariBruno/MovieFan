@@ -81,7 +81,7 @@ public class FilmsRecyclerViewAdapter extends BaseRecyclerViewAdapter {
     public void bindItem(@NonNull Film film) {
       super.bindItem(film);
       posterImageView.loadImageWithPicassoIncludingPlaceholder(film.getPosterPath());
-      genresTextView.setText(joinGenresWithACommaDelimiter(film.getGenres()));
+      genresTextView.setText(joinGenresWithACommaDelimiter(film.getGenresAsList()));
       titleTextView.setText(film.getTitle());
       popularityTextView.setText(String.format(Locale.US, "%s %.2f",
           MovieFanApplication.getContext().getString(R.string.popularity),

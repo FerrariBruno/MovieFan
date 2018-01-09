@@ -93,7 +93,7 @@ public class FilmServiceController extends BaseServiceController<Long, Film> {
           List<Genre> genres = Stream.of(response.getGenresIds())
               .map(genreMap::get)
               .toList();
-          response.setGenres(genres);
+          response.setGenresFromList(genres);
           return response;
         })
         .collect(Collectors.<Film>toList());

@@ -2,10 +2,8 @@ package com.xmartlabs.moviefan.controller.films;
 
 import android.support.annotation.CheckResult;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 import com.annimon.stream.Optional;
-import com.xmartlabs.bigbang.core.controller.EntityDao;
 import com.xmartlabs.moviefan.controller.BaseController;
 import com.xmartlabs.moviefan.controller.genres.GenreController;
 import com.xmartlabs.moviefan.model.Film;
@@ -29,9 +27,9 @@ public class FilmController extends BaseController<Long, Film, Void, FilmService
   @Inject
   GenreController genreController;
 
-  //TODO change nullability after DB integration
-  public FilmController(@Nullable EntityDao<Long, Film, Void> entityDao, @NonNull FilmServiceController serviceProvider) {
-    super(entityDao, serviceProvider);
+  public FilmController(@NonNull FilmDatabaseController filmDatabaseController,
+                        @NonNull FilmServiceController serviceProvider) {
+    super(filmDatabaseController, serviceProvider);
   }
 
   @CheckResult
