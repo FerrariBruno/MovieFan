@@ -87,7 +87,7 @@ public abstract class MovieFanPageBaseFragment<V extends MovieFanPageBaseView, P
   @UiThread
   private void updateRecyclerView() {
     //noinspection ConstantConditions
-    adapter.clearData();
+    adapter.clearAll();
     adapter.notifyDataSetChanged();
     filmsRecyclerView.removeOnScrollListener(scrollListener);
     setupRecyclerViewOnScrollListener();

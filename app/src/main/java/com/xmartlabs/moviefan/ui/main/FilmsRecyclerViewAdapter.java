@@ -61,10 +61,6 @@ public class FilmsRecyclerViewAdapter extends BaseRecyclerViewAdapter {
     notifyDataSetChanged();
   }
 
-  void clearData() {
-    setItems(collapsedItemType, null);
-  }
-
   static final class DetailedFilmViewHolder extends SingleItemBaseViewHolder<Film> {
     @NonNull
     private static final String DELIMITER = ", ";
