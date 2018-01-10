@@ -49,7 +49,7 @@ public class FilmsRecyclerViewAdapter extends BaseRecyclerViewAdapter {
       };
 
   @MainThread
-  void setItems(@NonNull List<Film> films) {
+  void addItems(@NonNull List<Film> films) {
     int detailedViewholdersToBeAdded = Math.max(0, DETAILED_FILM_VIEWHOLDER_LIMIT - getItems().size());
 
     Stream.of(films)
