@@ -7,11 +7,10 @@ import com.xmartlabs.moviefan.model.Genre;
 import com.xmartlabs.moviefan.model.service.response.GenreResponse;
 import com.xmartlabs.moviefan.service.GenresService;
 
-import java.util.Map;
+import java.util.List;
 
 import javax.inject.Inject;
 
-import io.reactivex.Observable;
 import io.reactivex.Single;
 
 /**
@@ -22,11 +21,8 @@ public class GenreServiceController extends BaseServiceController<Long, Genre> {
   GenresService genresService;
 
   @NonNull
-  public Single<Map<Long, Genre>> getGenresFromService() {
-    return genresService
-        .getGenres()
-        .map(GenreResponse::getGenres)
-        .flatMapObservable(Observable::fromIterable)
-        .toMap(Genre::getId);
+  public Single<List<Genre>> getGenresFromService() {
+    return genresService.getGenres()
+        .map(GenreResponse::getGenres);
   }
 }

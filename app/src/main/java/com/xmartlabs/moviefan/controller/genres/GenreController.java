@@ -4,19 +4,21 @@ import android.support.annotation.CheckResult;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.raizlabs.android.dbflow.sql.language.SQLOperator;
 import com.xmartlabs.moviefan.controller.BaseController;
 import com.xmartlabs.moviefan.model.Genre;
 
+import java.util.List;
 import java.util.Map;
 
+import io.reactivex.Flowable;
 import io.reactivex.Single;
 import lombok.Getter;
 
 /**
  * Created by bruno on 12/21/17.
  */
-//TODO change conditions with DB integration
-public class GenreController extends BaseController<Long, Genre, Void, GenreServiceController> {
+public class GenreController extends BaseController<Long, Genre, SQLOperator, GenreServiceController> {
   @Getter
   @Nullable
   private Map<Long, Genre> genres;
@@ -26,21 +28,22 @@ public class GenreController extends BaseController<Long, Genre, Void, GenreServ
     super(genreDatabaseController, serviceController);
   }
 
-  @Nullable
-  private Single<Map<Long, Genre>> getGenresFromService = getEntityServiceProvider()
-      .getGenresFromService()
-      .doOnSuccess(genres -> this.genres = genres)
-      .toObservable()
-      .share()
-      .firstOrError();
+  @NonNull
+  private Single<List<Genre>> getGenresFromService = getEntityServiceProvider()
+      .getGenresFromService();
 
   @CheckResult
   @NonNull
-  public Single<Map<Long, Genre>> getAllGenres() {
-    return Single
+  public Flowable<Map<Long, Genre>> getAllGenres() {
+    return Flowable
         .defer(() -> genres == null
-            ? getGenresFromService
-            : Single.just(genres))
+            ? getEntities(getGenresFromService)
+                .toMap()
+                .doOnSuccess(genres -> this.genres = genres)
+                .toFlowable()
+                .share()
+                .firstOrError()
+            : Flowable.just(genres))
         .compose(applySingleIoSchedulers());
   }
 }

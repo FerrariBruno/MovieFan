@@ -4,6 +4,7 @@ import android.support.annotation.CheckResult;
 import android.support.annotation.NonNull;
 
 import com.annimon.stream.Optional;
+import com.raizlabs.android.dbflow.sql.language.SQLOperator;
 import com.xmartlabs.moviefan.controller.BaseController;
 import com.xmartlabs.moviefan.controller.genres.GenreController;
 import com.xmartlabs.moviefan.model.Film;
@@ -15,13 +16,14 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.Flowable;
 import io.reactivex.Single;
 
 /**
  * Created by bruno on 12/21/17.
  */
-//TODO change conditions with DB integration
-public class FilmController extends BaseController<Long, Film, Void, FilmServiceController> {
+public class FilmController extends BaseController<Long, Film, SQLOperator, FilmServiceController> {
+  private static final int FIRST_PAGE = 1;
   private static final Year YEAR_1991 = Year.of(1991);
 
   @Inject
@@ -34,9 +36,16 @@ public class FilmController extends BaseController<Long, Film, Void, FilmService
 
   @CheckResult
   @NonNull
+  public Flowable<List<Film>> getFirstPageOfLatestFilms(@NonNull Optional<Genre> genre, boolean adultContent) {
+    return super.getEntities(getEntityServiceProvider()
+          .getLatestFilms(FIRST_PAGE, genre, genreController.getAllGenres(), adultContent));
+  }
+
+  @CheckResult
+  @NonNull
   public Single<List<Film>> getLatestFilms(int pageNumber,
-                                           @NonNull Optional<Genre> genre,
-                                           boolean adultContent) {
+                                             @NonNull Optional<Genre> genre,
+                                             boolean adultContent) {
     return getEntityServiceProvider().getLatestFilms(pageNumber, genre, genreController.getAllGenres(), adultContent);
   }
 
