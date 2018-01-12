@@ -38,7 +38,7 @@ public class FilmController extends BaseController<Long, Film, SQLOperator, Film
   @NonNull
   public Flowable<List<Film>> getFirstPageOfLatestFilms(@NonNull Optional<Genre> genre, boolean adultContent) {
     return super.getEntities(getEntityServiceProvider()
-          .getLatestFilms(FIRST_PAGE, genre, genreController.getAllGenres(), adultContent));
+          .getLatestFilms(FIRST_PAGE, genre, adultContent, genreController::getAllGenres));
   }
 
   @CheckResult
@@ -46,7 +46,7 @@ public class FilmController extends BaseController<Long, Film, SQLOperator, Film
   public Single<List<Film>> getLatestFilms(int pageNumber,
                                              @NonNull Optional<Genre> genre,
                                              boolean adultContent) {
-    return getEntityServiceProvider().getLatestFilms(pageNumber, genre, genreController.getAllGenres(), adultContent);
+    return getEntityServiceProvider().getLatestFilms(pageNumber, genre, adultContent, genreController::getAllGenres);
   }
 
   @CheckResult
@@ -55,7 +55,7 @@ public class FilmController extends BaseController<Long, Film, SQLOperator, Film
                                               @NonNull Optional<Genre> genre,
                                               boolean adultContent) {
     return getEntityServiceProvider().getYearFilms
-        (Year.now(), pageNumber, genre, genreController.getAllGenres(), adultContent);
+        (Year.now(), pageNumber, genre, genreController::getAllGenres, adultContent);
   }
 
   @CheckResult
@@ -64,6 +64,6 @@ public class FilmController extends BaseController<Long, Film, SQLOperator, Film
                                                  @NonNull Optional<Genre> genre,
                                                  boolean adultContent) {
     return getEntityServiceProvider().getYearFilms
-        (YEAR_1991, pageNumber, genre, genreController.getAllGenres(), adultContent);
+        (YEAR_1991, pageNumber, genre, genreController::getAllGenres, adultContent);
   }
 }

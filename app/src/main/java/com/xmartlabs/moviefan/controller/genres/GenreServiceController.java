@@ -21,7 +21,7 @@ public class GenreServiceController extends BaseServiceController<Long, Genre> {
   GenresService genresService;
 
   @NonNull
-  public Single<List<Genre>> getGenresFromService() {
+  Single<List<Genre>> getGenresFromService() {
     return genresService.getGenres()
         .map(GenreResponse::getGenres);
   }

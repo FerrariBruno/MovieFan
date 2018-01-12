@@ -3,10 +3,11 @@ package com.xmartlabs.moviefan.controller.films;
 import android.support.annotation.CheckResult;
 import android.support.annotation.NonNull;
 import android.support.annotation.WorkerThread;
+import android.support.v4.util.Pair;
 
-import com.annimon.stream.Collectors;
 import com.annimon.stream.Optional;
 import com.annimon.stream.Stream;
+import com.xmartlabs.bigbang.core.helper.function.Function;
 import com.xmartlabs.moviefan.MovieFanApplication;
 import com.xmartlabs.moviefan.R;
 import com.xmartlabs.moviefan.controller.BaseServiceController;
@@ -24,13 +25,14 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import io.reactivex.Observable;
 import io.reactivex.Single;
 
 /**
  * Created by bruno on 12/21/17.
  */
 public class FilmServiceController extends BaseServiceController<Long, Film> {
-  private static final  String SORT_BY_QUERY_VALUE = "release_date.desc";
+  private static final String SORT_BY_QUERY_VALUE = "release_date.desc";
 
   @Inject
   FilmsService filmsService;
@@ -38,15 +40,22 @@ public class FilmServiceController extends BaseServiceController<Long, Film> {
   @CheckResult
   @NonNull
   @WorkerThread
-  protected Single<List<Film>> getLatestFilms(int pageNumber, @NonNull Optional<Genre> genre,
-                                              @NonNull Single<Map<Long, Genre>> genres, boolean adultContent){
+  Single<List<Film>> getLatestFilms(int pageNumber, @NonNull Optional<Genre> genre, boolean adultContent,
+                                    @NonNull Function<Boolean, Single<Map<Long, Genre>>> genresRequest) {
     return Single
         .zip(
-            genres,
+            genresRequest.apply(false),
             getLatestFilmsFromService(pageNumber, getIdFromGenreOptional(genre), adultContent)
                 .map(ListResponse::getResults),
-            this::updateFilmsWithGenresAndImageUrl)
-        .compose(applySingleIoSchedulers());
+            Pair::new)
+        .compose(applySingleIoSchedulers())
+        .flatMap(pair -> {
+          Single<Map<Long, Genre>> genreMapSingle = checkIfGenresNeedRefreshing(pair)
+              ? genresRequest.apply(true)
+              : Single.just(pair.first);
+          return  genreMapSingle
+              .flatMap(genreMap -> updateFilmsWithGenresAndImageUrl(genreMap, pair.second));
+        });
   }
 
   @NonNull
@@ -61,18 +70,34 @@ public class FilmServiceController extends BaseServiceController<Long, Film> {
   @CheckResult
   @NonNull
   @WorkerThread
-  protected Single<List<Film>> getYearFilms(@NonNull Year year,
-                                            int pageNumber,
-                                            @NonNull Optional<Genre> genre,
-                                            @NonNull Single<Map<Long, Genre>> genres,
-                                            boolean adultContent) {
+  Single<List<Film>> getYearFilms(@NonNull Year year,
+                                  int pageNumber,
+                                  @NonNull Optional<Genre> genre,
+                                  @NonNull Function<Boolean, Single<Map<Long, Genre>>> genresRequest,
+                                  boolean adultContent) {
     return Single
         .zip(
-            genres,
+            genresRequest.apply(false),
             getYearFilmsFromService(year, pageNumber, getIdFromGenreOptional(genre), adultContent)
                 .map(ListResponse::getResults),
-            this::updateFilmsWithGenresAndImageUrl)
-        .compose(applySingleIoSchedulers());
+            Pair::new)
+        .compose(applySingleIoSchedulers())
+        .flatMap(pair -> {
+          Single<Map<Long, Genre>> genreMapSingle = checkIfGenresNeedRefreshing(pair)
+              ? genresRequest.apply(true)
+              : Single.just(pair.first);
+          return  genreMapSingle
+              .flatMap(genreMap -> updateFilmsWithGenresAndImageUrl(genreMap, pair.second));
+        });
+  }
+
+  @WorkerThread
+  private boolean checkIfGenresNeedRefreshing(Pair<Map<Long, Genre>, List<FilmResponse>> pair) {
+    return Stream.of(pair.second)
+        .map(FilmResponse::getGenresIds)
+        .flatMap(Stream::of)
+        .distinct()
+        .anyMatch(genreId -> !pair.first.containsKey(genreId));
   }
 
   @NonNull
@@ -85,9 +110,9 @@ public class FilmServiceController extends BaseServiceController<Long, Film> {
   }
 
   @NonNull
-  private List<Film> updateFilmsWithGenresAndImageUrl(@NonNull Map<Long, Genre> genreMap,
+  private Single<List<Film>> updateFilmsWithGenresAndImageUrl(@NonNull Map<Long, Genre> genreMap,
                                                       @NonNull List<FilmResponse> filmsResponse) {
-    return Stream.of(filmsResponse)
+    return Observable.fromIterable(filmsResponse)
         .map(response -> {
           response.setPosterPath(MovieFanApplication.getContext().getString(R.string.base_url_image) + response.getPosterPath());
           List<Genre> genres = Stream.of(response.getGenresIds())
@@ -96,7 +121,8 @@ public class FilmServiceController extends BaseServiceController<Long, Film> {
           response.setGenresFromList(genres);
           return response;
         })
-        .collect(Collectors.<Film>toList());
+        .cast(Film.class)
+        .toList();
   }
 
   @NonNull

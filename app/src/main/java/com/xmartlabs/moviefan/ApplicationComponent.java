@@ -9,8 +9,10 @@ import com.xmartlabs.bigbang.retrofit.module.RestServiceModule;
 import com.xmartlabs.bigbang.retrofit.module.ServiceGsonModule;
 import com.xmartlabs.moviefan.controller.SessionController;
 import com.xmartlabs.moviefan.controller.films.FilmController;
+import com.xmartlabs.moviefan.controller.films.FilmDatabaseController;
 import com.xmartlabs.moviefan.controller.films.FilmServiceController;
 import com.xmartlabs.moviefan.controller.genres.GenreController;
+import com.xmartlabs.moviefan.controller.genres.GenreDatabaseController;
 import com.xmartlabs.moviefan.controller.genres.GenreServiceController;
 import com.xmartlabs.moviefan.database.common.DatabaseManager;
 import com.xmartlabs.moviefan.database.converters.GenresConverter;
@@ -62,8 +64,10 @@ public interface ApplicationComponent {
   void inject(ThisYearPagePresenter thisYearPagePresenter);
 
   void inject(FilmController filmController);
+  void inject(FilmDatabaseController filmDatabaseController);
   void inject(FilmServiceController filmServiceController);
   void inject(GenreController genreController);
+  void inject(GenreDatabaseController genreDatabaseController);
   void inject(GenreServiceController genreServiceController);
   void inject(SessionController sessionController);
   void inject(SharedPreferencesController sharedPreferencesController);
