@@ -12,12 +12,14 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.Flowable;
 import io.reactivex.Single;
 
 /**
  * Created by bruno on 1/2/18.
  */
 public class LatestPagePresenter extends MovieFanPageBasePresenter<LatestPageView> {
+  private static final int FIRST_PAGE = 1;
   @Inject
   public LatestPagePresenter() { }
 
@@ -29,7 +31,12 @@ public class LatestPagePresenter extends MovieFanPageBasePresenter<LatestPageVie
 
   @NonNull
   @Override
-  protected Single<List<Film>> requestFilms(int pageNumber, @NonNull Optional<Genre> genre, boolean adultContent) {
-    return filmController.getLatestFilms(pageNumber, genre, adultContent);
+  protected Flowable<List<Film>> requestFilms(int pageNumber, @NonNull Optional<Genre> genre, boolean adultContent) {
+    return pageNumber == FIRST_PAGE
+        ? filmController
+            .getFirstPageOfLatestFilms(genre, adultContent)
+        : filmController
+            .getLatestFilms(pageNumber, genre, adultContent)
+            .toFlowable();
   }
 }

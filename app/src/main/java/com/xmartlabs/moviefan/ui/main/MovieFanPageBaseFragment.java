@@ -41,9 +41,9 @@ public abstract class MovieFanPageBaseFragment<V extends MovieFanPageBaseView, P
   }
 
   @Override
-  public void addFilmsAndNotifyAdapter(@NonNull List<Film> films) {
+  public void addFilms(@NonNull List<Film> films) {
     //noinspection ConstantConditions
-    adapter.setItems(films);
+    adapter.addItems(films);
     adapter.notifyDataSetChanged();
   }
 

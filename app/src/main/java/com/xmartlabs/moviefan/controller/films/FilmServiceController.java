@@ -92,7 +92,7 @@ public class FilmServiceController extends BaseServiceController<Long, Film> {
   }
 
   @WorkerThread
-  private boolean checkIfGenresNeedRefreshing(Pair<Map<Long, Genre>, List<FilmResponse>> pair) {
+  private boolean checkIfGenresNeedRefreshing(@NonNull Pair<Map<Long, Genre>, List<FilmResponse>> pair) {
     return Stream.of(pair.second)
         .map(FilmResponse::getGenresIds)
         .flatMap(Stream::of)
