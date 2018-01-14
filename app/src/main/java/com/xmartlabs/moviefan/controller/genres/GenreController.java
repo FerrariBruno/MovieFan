@@ -17,9 +17,9 @@ import io.reactivex.Single;
  * Created by bruno on 12/21/17.
  */
 public class GenreController extends BaseController<Long, Genre, SQLOperator, GenreServiceController> {
-  public GenreController(@NonNull GenreDatabaseController genreDatabaseController,
+  public GenreController(@NonNull GenreDatabaseController entityProvider,
                          @NonNull GenreServiceController serviceController) {
-    super(genreDatabaseController, serviceController);
+    super(entityProvider, serviceController);
   }
 
   @NonNull

@@ -29,15 +29,15 @@ public class FilmController extends BaseController<Long, Film, SQLOperator, Film
   @Inject
   GenreController genreController;
 
-  public FilmController(@NonNull FilmDatabaseController filmDatabaseController,
+  public FilmController(@NonNull FilmDatabaseController entityProvider,
                         @NonNull FilmServiceController serviceProvider) {
-    super(filmDatabaseController, serviceProvider);
+    super(entityProvider, serviceProvider);
   }
 
   @CheckResult
   @NonNull
   public Flowable<List<Film>> getFirstPageOfLatestFilms(@NonNull Optional<Genre> genre, boolean adultContent) {
-    return super.getEntities(getEntityServiceProvider()
+    return getEntities(getEntityServiceProvider()
           .getLatestFilms(FIRST_PAGE, genre, adultContent, genreController::getAllGenres));
   }
 
