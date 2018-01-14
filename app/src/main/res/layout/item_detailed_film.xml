@@ -9,7 +9,7 @@
 
     <com.xmartlabs.moviefan.ui.views.MovieFanImageView
         android:id="@+id/poster"
-        android:layout_width="135dp"
+        android:layout_width="120dp"
         android:layout_height="match_parent"
         android:contentDescription="@string/poster_description"
         android:scaleType="fitXY"
