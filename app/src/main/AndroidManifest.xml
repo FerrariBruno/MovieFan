@@ -15,6 +15,7 @@
 
         <activity
             android:name="com.xmartlabs.moviefan.ui.StartActivity"
+            android:screenOrientation="portrait"
             >
 
             <intent-filter>
@@ -28,6 +29,7 @@
         <activity
             android:name=".ui.main.HomeActivity"
             android:launchMode="singleTask"
+            android:screenOrientation="portrait"
             />
 
         <meta-data

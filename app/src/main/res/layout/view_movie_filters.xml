@@ -36,6 +36,7 @@
             android:text="@string/filter_view.genre"
             tools:text="Genre"
             style="@style/FilterTitleText"
+            tools:ignore="RelativeOverlap"
             />
 
         <Spinner
@@ -75,6 +76,7 @@
             android:text="@string/filter_view.clear_filters"
             tools:text="Clear filters"
             style="@style/ClearFilterText"
+            tools:ignore="RelativeOverlap"
             />
 
         <Button
