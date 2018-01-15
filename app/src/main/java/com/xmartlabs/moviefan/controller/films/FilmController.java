@@ -3,7 +3,9 @@ package com.xmartlabs.moviefan.controller.films;
 import android.support.annotation.CheckResult;
 import android.support.annotation.NonNull;
 
+import com.annimon.stream.ComparatorCompat;
 import com.annimon.stream.Optional;
+import com.annimon.stream.Stream;
 import com.raizlabs.android.dbflow.sql.language.SQLOperator;
 import com.xmartlabs.moviefan.controller.BaseController;
 import com.xmartlabs.moviefan.controller.genres.GenreController;
@@ -37,8 +39,14 @@ public class FilmController extends BaseController<Long, Film, SQLOperator, Film
   @CheckResult
   @NonNull
   public Flowable<List<Film>> getFirstPageOfLatestFilms(@NonNull Optional<Genre> genre, boolean adultContent) {
-    return getEntities(getEntityServiceProvider()
-          .getLatestFilms(FIRST_PAGE, genre, adultContent, genreController::getAllGenres));
+    return getEntities(
+        getEntityServiceProvider()
+          .getLatestFilms(FIRST_PAGE, genre, adultContent, genreController::getAllGenres)
+            .doOnSuccess(films -> Stream.of(films)
+              .forEachIndexed((index, film) -> film.setLatestCategoryIndex(Long.valueOf(index)))))
+        .flatMapSingle(films -> Flowable.fromIterable(films)
+            .sorted(ComparatorCompat.comparing(Film::getLatestCategoryIndex))
+            .toList());
   }
 
   @CheckResult

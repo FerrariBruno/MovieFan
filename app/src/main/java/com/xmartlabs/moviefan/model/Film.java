@@ -43,6 +43,9 @@ public class Film extends BaseModel implements EntityWithId<Long> {
   private Genre[] genres;
   @Column
   @Nullable
+  private Long latestCategoryIndex;
+  @Column
+  @Nullable
   private String overview;
   @Column
   @Nullable
