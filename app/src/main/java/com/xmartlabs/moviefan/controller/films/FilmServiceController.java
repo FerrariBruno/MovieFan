@@ -107,6 +107,7 @@ public class FilmServiceController extends BaseServiceController<Long, Film> {
                                                                      boolean adultContent) {
     return filmsService.getSpecificYearFilms(year, adultContent, genreId, pageNumber)
         .compose(applySingleIoSchedulers());
+
   }
 
   @NonNull
@@ -121,7 +122,14 @@ public class FilmServiceController extends BaseServiceController<Long, Film> {
           response.setGenresFromList(genres);
           return response;
         })
-        .cast(Film.class)
+        .map(response -> Film.builder()
+            .genres(response.getGenres())
+            .id(response.getId())
+            .overview(response.getOverview())
+            .popularity(response.getPopularity())
+            .posterPath(response.getPosterPath())
+            .title(response.getTitle())
+            .build())
         .toList();
   }
 

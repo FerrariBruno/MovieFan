@@ -12,5 +12,6 @@ import java.util.List;
  */
 public interface MovieFanPageBaseView extends MovieFanView {
   void addFilms(@NonNull List<Film> films);
+  void setFilms(@NonNull List<Film> films);
   void setupView();
 }

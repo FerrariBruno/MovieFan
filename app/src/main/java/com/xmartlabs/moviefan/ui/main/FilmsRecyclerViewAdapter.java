@@ -2,13 +2,19 @@ package com.xmartlabs.moviefan.ui.main;
 
 import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.util.Pair;
+import android.support.v7.util.DiffUtil;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.annimon.stream.Collectors;
 import com.annimon.stream.Stream;
+import com.xmartlabs.bigbang.core.helper.CollectionHelper;
+import com.xmartlabs.bigbang.core.helper.function.BiFunction;
 import com.xmartlabs.bigbang.ui.common.recyclerview.BaseRecyclerViewAdapter;
+import com.xmartlabs.bigbang.ui.common.recyclerview.RecycleItemType;
 import com.xmartlabs.bigbang.ui.common.recyclerview.SimpleItemRecycleItemType;
 import com.xmartlabs.bigbang.ui.common.recyclerview.SingleItemBaseViewHolder;
 import com.xmartlabs.moviefan.MovieFanApplication;
@@ -22,6 +28,11 @@ import java.util.List;
 import java.util.Locale;
 
 import butterknife.BindView;
+import io.reactivex.Single;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
+import lombok.val;
 
 /**
  * Created by bruno on 1/5/18.
@@ -56,10 +67,31 @@ public class FilmsRecyclerViewAdapter extends BaseRecyclerViewAdapter {
         .limit(detailedViewholdersToBeAdded)
         .forEach(film -> addItemWithoutNotifying(detailedItemType, film, true));
 
-
     Stream.of(films)
         .skip(detailedViewholdersToBeAdded)
         .forEach(film -> addItemWithoutNotifying(collapsedItemType, film, true));
+
+    notifyDataSetChanged();
+  }
+
+  @MainThread
+  void setItems(@NonNull List<Film> films) {
+    int detailedViewholdersToBeAdded = Math.max(0, DETAILED_FILM_VIEWHOLDER_LIMIT - getItems().size());
+
+    Stream.of(films)
+        .limit(detailedViewholdersToBeAdded)
+        .map(film -> new Pair<>(detailedItemType, film));
+
+    Stream.of(films)
+        .skip(detailedViewholdersToBeAdded)
+        .map(film -> new Pair<>(collapsedItemType, film));
+
+
+    setItems(detailedItemType, detailedViewHolderFilms,
+        (firstFilm, secondFilm) -> firstFilm == secondFilm, Object::equals);
+
+    setItems(collapsedItemType, collapsedViewHolderFilms,
+        (firstFilm, secondFilm) -> firstFilm == secondFilm, Object::equals);
 
     notifyDataSetChanged();
   }

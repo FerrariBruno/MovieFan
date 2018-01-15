@@ -24,6 +24,8 @@ import io.reactivex.Single;
  * Created by bruno on 1/2/18.
  */
 public abstract class MovieFanPageBasePresenter<T extends MovieFanPageBaseView> extends MovieFanPresenter<T> {
+  private static final int FIRST_PAGE = 1;
+
   @Inject
   protected FilmController filmController;
 
@@ -58,7 +60,11 @@ public abstract class MovieFanPageBasePresenter<T extends MovieFanPageBaseView> 
             .subscribe(new GeneralFlowableSubscriber<List<Film>>() {
               @Override
               public void onNext(@NonNull List<Film> films){
-                view.addFilms(films);
+                if(pageNumber == FIRST_PAGE) {
+                  view.setFilms(films);
+                } else {
+                  view.addFilms(films);
+                }
               }
             })
     );
