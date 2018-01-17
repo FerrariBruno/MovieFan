@@ -143,7 +143,7 @@ final RXJAVA_VERSION = '2.1.2'
 final RXLIFECYCLE_VERSION = '2.2.1'
 final STREAM_VERSION = '1.1.9'
 final TIMBER_VERSION = '4.5.1'
-final TRACEUR_VERSION = 'x'
+final TRACEUR_VERSION = '273cc7d582'
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
