@@ -53,8 +53,7 @@ public class FilmServiceController extends BaseServiceController<Long, Film> {
           Single<Map<Long, Genre>> genreMapSingle = checkIfGenresNeedRefreshing(pair)
               ? genresRequest.apply(true)
               : Single.just(pair.first);
-          return  genreMapSingle
-              .flatMap(genreMap -> updateFilmsWithGenresAndImageUrl(genreMap, pair.second));
+          return  genreMapSingle.flatMap(genreMap -> updateFilmsWithGenresAndImageUrl(genreMap, pair.second));
         });
   }
 
@@ -86,8 +85,7 @@ public class FilmServiceController extends BaseServiceController<Long, Film> {
           Single<Map<Long, Genre>> genreMapSingle = checkIfGenresNeedRefreshing(pair)
               ? genresRequest.apply(true)
               : Single.just(pair.first);
-          return  genreMapSingle
-              .flatMap(genreMap -> updateFilmsWithGenresAndImageUrl(genreMap, pair.second));
+          return  genreMapSingle.flatMap(genreMap -> updateFilmsWithGenresAndImageUrl(genreMap, pair.second));
         });
   }
 
@@ -119,7 +117,7 @@ public class FilmServiceController extends BaseServiceController<Long, Film> {
           List<Genre> genres = Stream.of(response.getGenresIds())
               .map(genreMap::get)
               .toList();
-          response.setGenresFromList(genres);
+          response.setGenres(genres);
           return response;
         })
         .map(response -> Film.builder()

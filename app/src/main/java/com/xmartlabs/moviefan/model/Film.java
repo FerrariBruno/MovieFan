@@ -3,14 +3,12 @@ package com.xmartlabs.moviefan.model;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.annimon.stream.Stream;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.ManyToMany;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
 import com.xmartlabs.bigbang.core.model.EntityWithId;
 import com.xmartlabs.moviefan.database.MovieFanDatabase;
-import com.xmartlabs.moviefan.database.converters.GenresConverter;
 import com.xmartlabs.moviefan.model.common.BaseModel;
 
 import java.util.List;
@@ -37,10 +35,8 @@ public class Film extends BaseModel implements EntityWithId<Long> {
   private Long id;
   @Column
   private float popularity;
-
-  @Column(typeConverter = GenresConverter.class)
-  @NonNull
-  private Genre[] genres;
+  @Nullable
+  private List<Genre> genres;
   @Column
   @Nullable
   private Long latestCategoryIndex;
@@ -53,16 +49,4 @@ public class Film extends BaseModel implements EntityWithId<Long> {
   @Column
   @NonNull
   private String title;
-
-  @NonNull
-  public List<Genre> getGenresAsList() {
-    return Stream.ofNullable(genres)
-        .flatMap(Stream::of)
-        .toList();
-  }
-
-  public void setGenresFromList(@NonNull List<Genre> genres) {
-    this.genres = Stream.ofNullable(genres)
-        .toArray(Genre[]::new);
-  }
 }

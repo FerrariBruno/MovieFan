@@ -15,7 +15,6 @@ import com.xmartlabs.moviefan.controller.genres.GenreController;
 import com.xmartlabs.moviefan.controller.genres.GenreDatabaseController;
 import com.xmartlabs.moviefan.controller.genres.GenreServiceController;
 import com.xmartlabs.moviefan.database.common.DatabaseManager;
-import com.xmartlabs.moviefan.database.converters.GenresConverter;
 import com.xmartlabs.moviefan.module.ApiKeyQueryInterceptor;
 import com.xmartlabs.moviefan.module.ControllerModule;
 import com.xmartlabs.moviefan.module.RestServiceApiModule;
@@ -71,8 +70,6 @@ public interface ApplicationComponent {
   void inject(GenreServiceController genreServiceController);
   void inject(SessionController sessionController);
   void inject(SharedPreferencesController sharedPreferencesController);
-
-  void inject(GenresConverter genresConverter);
 
   void inject(DatabaseManager databaseManager);
 

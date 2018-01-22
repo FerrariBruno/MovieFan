@@ -2,6 +2,7 @@ package com.xmartlabs.moviefan.ui.main;
 
 import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.util.Pair;
 import android.view.View;
 import android.view.ViewGroup;
@@ -76,11 +77,17 @@ public class FilmsRecyclerViewAdapter extends BaseRecyclerViewAdapter {
                 .map(film -> new Pair<>(collapsedItemType, film)))
         .collect(Collectors.toList());
 
-    setMultipleTypeItems(items,
-        (firstFilm, secondFilm) -> Objects.equals(firstFilm.getId(), secondFilm.getId()),
-        (firstFilm, secondFilm) -> Objects.equals(firstFilm.getTitle(), secondFilm.getTitle())
-            && Objects.equals(firstFilm.getPosterPath(), secondFilm.getPosterPath())
-            && Objects.equals(firstFilm.getOverview(), secondFilm.getOverview()));
+    setMultipleTypeItems(items, this::areFilmsTheSame, this::areFilmContentsTheSame);
+  }
+
+  private boolean areFilmsTheSame(@NonNull Film firstFilm, @NonNull Film secondFilm) {
+    return Objects.equals(firstFilm.getId(), secondFilm.getId());
+  }
+
+  private boolean areFilmContentsTheSame(@NonNull Film firstFilm, @NonNull Film secondFilm) {
+    return Objects.equals(firstFilm.getTitle(), secondFilm.getTitle())
+        && Objects.equals(firstFilm.getPosterPath(), secondFilm.getPosterPath())
+        && Objects.equals(firstFilm.getOverview(), secondFilm.getOverview());
   }
 
   static final class DetailedFilmViewHolder extends SingleItemBaseViewHolder<Film> {
@@ -103,7 +110,8 @@ public class FilmsRecyclerViewAdapter extends BaseRecyclerViewAdapter {
     public void bindItem(@NonNull Film film) {
       super.bindItem(film);
       posterImageView.loadImageWithPicassoIncludingPlaceholder(film.getPosterPath());
-      genresTextView.setText(joinGenresWithACommaDelimiter(film.getGenresAsList()));
+      //noinspection ConstantConditions
+      genresTextView.setText(joinGenresWithACommaDelimiter(film.getGenres()));
       titleTextView.setText(film.getTitle());
       popularityTextView.setText(String.format(Locale.US, "%s %.2f",
           MovieFanApplication.getContext().getString(R.string.popularity),
@@ -112,8 +120,8 @@ public class FilmsRecyclerViewAdapter extends BaseRecyclerViewAdapter {
     }
 
     @NonNull
-    private String joinGenresWithACommaDelimiter(@NonNull List<Genre> genres){
-      return Stream.of(genres)
+    private String joinGenresWithACommaDelimiter(@Nullable List<Genre> genres){
+      return Stream.ofNullable(genres)
           .map(Genre::getName)
           .collect(Collectors.joining(", "));
     }

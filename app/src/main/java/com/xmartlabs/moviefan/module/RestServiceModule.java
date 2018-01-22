@@ -27,7 +27,7 @@ public class RestServiceModule extends com.xmartlabs.bigbang.retrofit.module.Res
   }
 
   @Override
-   public ServiceStringConverter provideStringConverter() {
+  public ServiceStringConverter provideStringConverter() {
     return new MovieFanServiceStringConverter();
   }
 
