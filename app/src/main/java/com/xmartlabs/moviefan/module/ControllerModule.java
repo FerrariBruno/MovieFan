@@ -5,8 +5,10 @@ import android.support.annotation.NonNull;
 import com.xmartlabs.bigbang.core.controller.CoreSessionController;
 import com.xmartlabs.moviefan.controller.SessionController;
 import com.xmartlabs.moviefan.controller.films.FilmController;
+import com.xmartlabs.moviefan.controller.films.FilmDatabaseController;
 import com.xmartlabs.moviefan.controller.films.FilmServiceController;
 import com.xmartlabs.moviefan.controller.genres.GenreController;
+import com.xmartlabs.moviefan.controller.genres.GenreDatabaseController;
 import com.xmartlabs.moviefan.controller.genres.GenreServiceController;
 import com.xmartlabs.moviefan.model.Session;
 
@@ -25,9 +27,15 @@ public class ControllerModule {
 
   @Provides
   @Singleton
-  FilmController providerFilmController(@NonNull FilmServiceController filmServiceController) {
-    //TODO add entity provider when DB integration comes
-    return new FilmController(null, filmServiceController);
+  FilmController provideFilmController(@NonNull FilmDatabaseController filmDatabaseController,
+                                       @NonNull FilmServiceController filmServiceController) {
+    return new FilmController(filmDatabaseController, filmServiceController);
+  }
+
+  @Provides
+  @Singleton
+  FilmDatabaseController provideFilmDatabaseController() {
+    return new FilmDatabaseController();
   }
 
   @Provides
@@ -38,9 +46,15 @@ public class ControllerModule {
 
   @Provides
   @Singleton
-  GenreController provideGenreController(@NonNull GenreServiceController genreServiceController) {
-    //TODO add entity provider when DB integration comes
-    return new GenreController(null, genreServiceController);
+  GenreController provideGenreController(@NonNull GenreDatabaseController genreDatabaseController,
+                                         @NonNull GenreServiceController genreServiceController) {
+    return new GenreController(genreDatabaseController, genreServiceController);
+  }
+
+  @Provides
+  @Singleton
+  GenreDatabaseController provideGenreDatabaseController() {
+    return new GenreDatabaseController();
   }
 
   @Provides

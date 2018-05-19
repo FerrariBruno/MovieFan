@@ -6,6 +6,8 @@ import android.support.annotation.NonNull;
 
 import com.annimon.stream.Optional;
 import com.xmartlabs.moviefan.controller.films.FilmController;
+import com.xmartlabs.moviefan.helper.GeneralFlowableSubscriber;
+import com.xmartlabs.moviefan.helper.GeneralObservableSubscriber;
 import com.xmartlabs.moviefan.helper.GeneralSingleSubscriber;
 import com.xmartlabs.moviefan.model.Film;
 import com.xmartlabs.moviefan.model.Genre;
@@ -15,12 +17,15 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.Flowable;
 import io.reactivex.Single;
 
 /**
  * Created by bruno on 1/2/18.
  */
 public abstract class MovieFanPageBasePresenter<T extends MovieFanPageBaseView> extends MovieFanPresenter<T> {
+  private static final int FIRST_PAGE = 1;
+
   @Inject
   protected FilmController filmController;
 
@@ -29,7 +34,7 @@ public abstract class MovieFanPageBasePresenter<T extends MovieFanPageBaseView> 
 
   @CheckResult
   @NonNull
-  protected abstract Single<List<Film>> requestFilms(int pageNumber, @NonNull Optional<Genre> genre, boolean adultContent);
+  protected abstract Flowable<List<Film>> requestFilms(int pageNumber, @NonNull Optional<Genre> genre, boolean adultContent);
 
   @Override
   public void attachView(@NonNull T movieFanPageBaseView) {
@@ -51,11 +56,15 @@ public abstract class MovieFanPageBasePresenter<T extends MovieFanPageBaseView> 
   private void bindFilmsToRecyclerView(int pageNumber, @NonNull Optional<Genre> genre, boolean adultContent) {
     executeOnViewIfPresent(view ->
         requestFilms(pageNumber, genre, adultContent)
-            .compose(view.keepAliveWhileVisibleSingle())
-            .subscribe(new GeneralSingleSubscriber<List<Film>>() {
+            .compose(view.keepAliveWhileVisibleFlowable())
+            .subscribe(new GeneralFlowableSubscriber<List<Film>>() {
               @Override
-              public void onSuccess(@NonNull List<Film> films){
-                view.addFilmsAndNotifyAdapter(films);
+              public void onNext(@NonNull List<Film> films){
+                if(pageNumber == FIRST_PAGE) {
+                  view.setFilms(films);
+                } else {
+                  view.addFilms(films);
+                }
               }
             })
     );

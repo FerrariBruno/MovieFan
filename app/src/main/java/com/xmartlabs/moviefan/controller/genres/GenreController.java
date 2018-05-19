@@ -2,46 +2,40 @@ package com.xmartlabs.moviefan.controller.genres;
 
 import android.support.annotation.CheckResult;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
-import com.xmartlabs.bigbang.core.controller.EntityDao;
+import com.raizlabs.android.dbflow.sql.language.SQLOperator;
 import com.xmartlabs.moviefan.controller.BaseController;
 import com.xmartlabs.moviefan.model.Genre;
 
+import java.util.List;
 import java.util.Map;
 
+import io.reactivex.Observable;
 import io.reactivex.Single;
-import lombok.Getter;
 
 /**
  * Created by bruno on 12/21/17.
  */
-//TODO change conditions with DB integration
-public class GenreController extends BaseController<Long, Genre, Void, GenreServiceController> {
-  @Getter
-  @Nullable
-  private Map<Long, Genre> genres;
-
-  //TODO change nullability after DB integration
-  public GenreController(@Nullable EntityDao<Long, Genre, Void> entityDao, @NonNull GenreServiceController serviceController) {
-    super(entityDao, serviceController);
+public class GenreController extends BaseController<Long, Genre, SQLOperator, GenreServiceController> {
+  public GenreController(@NonNull GenreDatabaseController entityProvider,
+                         @NonNull GenreServiceController serviceController) {
+    super(entityProvider, serviceController);
   }
 
-  @Nullable
-  private Single<Map<Long, Genre>> getGenresFromService = getEntityServiceProvider()
-      .getGenresFromService()
-      .doOnSuccess(genres -> this.genres = genres)
-      .toObservable()
+  @NonNull
+  private Single<List<Genre>> getGenresFromService = getEntities(getEntityServiceProvider().getGenresFromService())
       .share()
-      .firstOrError();
+      .lastOrError();
 
   @CheckResult
   @NonNull
-  public Single<Map<Long, Genre>> getAllGenres() {
+  public Single<Map<Long, Genre>> getAllGenres(boolean forceReload) {
     return Single
-        .defer(() -> genres == null
+        .defer(() -> forceReload
             ? getGenresFromService
-            : Single.just(genres))
-        .compose(applySingleIoSchedulers());
+            : getEntityDao().getEntities())
+        .compose(applySingleIoSchedulers())
+        .flatMapObservable(Observable::fromIterable)
+        .toMap(Genre::getId);
   }
 }

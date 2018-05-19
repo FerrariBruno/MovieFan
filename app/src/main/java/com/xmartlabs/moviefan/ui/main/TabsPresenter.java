@@ -26,7 +26,7 @@ public class TabsPresenter extends MovieFanPresenter<TabsView> {
 
   void getGenresFromService(@NonNull MovieFanFilterView filterView) {
     executeOnViewIfPresent(view ->
-        genreController.getAllGenres()
+        genreController.getAllGenres(false)
         .compose(view.keepAliveWhileVisibleSingle())
         .subscribe(new GeneralSingleSubscriber<Map<Long, Genre>>() {
           @Override

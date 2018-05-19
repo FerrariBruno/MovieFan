@@ -12,6 +12,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.Flowable;
 import io.reactivex.Single;
 
 /**
@@ -29,7 +30,9 @@ public class SpecificYearPagePresenter extends MovieFanPageBasePresenter<Specifi
 
   @NonNull
   @Override
-  protected Single<List<Film>> requestFilms(int pageNumber, @NonNull Optional<Genre> genre, boolean adultContent) {
-    return filmController.getSpecificYearFilms(pageNumber, genre, adultContent);
+  protected Flowable<List<Film>> requestFilms(int pageNumber, @NonNull Optional<Genre> genre, boolean adultContent) {
+    return filmController
+        .getSpecificYearFilms(pageNumber, genre, adultContent)
+        .toFlowable();
   }
 }

@@ -2,13 +2,17 @@ package com.xmartlabs.moviefan.ui.main;
 
 import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.util.Pair;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.annimon.stream.Collectors;
+import com.annimon.stream.Objects;
 import com.annimon.stream.Stream;
 import com.xmartlabs.bigbang.ui.common.recyclerview.BaseRecyclerViewAdapter;
+import com.xmartlabs.bigbang.ui.common.recyclerview.RecycleItemType;
 import com.xmartlabs.bigbang.ui.common.recyclerview.SimpleItemRecycleItemType;
 import com.xmartlabs.bigbang.ui.common.recyclerview.SingleItemBaseViewHolder;
 import com.xmartlabs.moviefan.MovieFanApplication;
@@ -59,14 +63,34 @@ public class FilmsRecyclerViewAdapter extends BaseRecyclerViewAdapter {
     Stream.of(films)
         .skip(detailedViewholdersToBeAdded)
         .forEach(film -> addItemWithoutNotifying(collapsedItemType, film, true));
+  }
 
-    notifyDataSetChanged();
+  @MainThread
+  void setItems(@NonNull List<Film> films) {
+    List<Pair<? extends RecycleItemType, Film>> items = Stream
+        .concat(
+            Stream.of(films)
+                .limit(DETAILED_FILM_VIEWHOLDER_LIMIT)
+                .map(film -> new Pair<>(detailedItemType, film)),
+            Stream.of(films)
+                .skip(DETAILED_FILM_VIEWHOLDER_LIMIT)
+                .map(film -> new Pair<>(collapsedItemType, film)))
+        .collect(Collectors.toList());
+
+    setMultipleTypeItems(items, this::areFilmsTheSame, this::areFilmContentsTheSame);
+  }
+
+  private boolean areFilmsTheSame(@NonNull Film firstFilm, @NonNull Film secondFilm) {
+    return Objects.equals(firstFilm.getId(), secondFilm.getId());
+  }
+
+  private boolean areFilmContentsTheSame(@NonNull Film firstFilm, @NonNull Film secondFilm) {
+    return Objects.equals(firstFilm.getTitle(), secondFilm.getTitle())
+        && Objects.equals(firstFilm.getPosterPath(), secondFilm.getPosterPath())
+        && Objects.equals(firstFilm.getOverview(), secondFilm.getOverview());
   }
 
   static final class DetailedFilmViewHolder extends SingleItemBaseViewHolder<Film> {
-    @NonNull
-    private static final String DELIMITER = ", ";
-
     @BindView(R.id.poster)
     MovieFanImageView posterImageView;
     @BindView(R.id.title)
@@ -95,10 +119,10 @@ public class FilmsRecyclerViewAdapter extends BaseRecyclerViewAdapter {
     }
 
     @NonNull
-    private String joinGenresWithACommaDelimiter(@NonNull List<Genre> genres){
-      return Stream.of(genres)
+    private String joinGenresWithACommaDelimiter(@Nullable List<Genre> genres){
+      return Stream.ofNullable(genres)
           .map(Genre::getName)
-          .collect(Collectors.joining(DELIMITER));
+          .collect(Collectors.joining(", "));
     }
   }
 

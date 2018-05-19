@@ -9,8 +9,6 @@ import android.support.multidex.MultiDex;
 
 import com.annimon.stream.Optional;
 import com.jakewharton.threetenabp.AndroidThreeTen;
-import com.raizlabs.android.dbflow.config.FlowConfig;
-import com.raizlabs.android.dbflow.config.FlowManager;
 import com.tspoon.traceur.Traceur;
 import com.tspoon.traceur.TraceurConfig;
 import com.xmartlabs.bigbang.core.Injector;
@@ -19,6 +17,7 @@ import com.xmartlabs.bigbang.core.log.LoggerTree;
 import com.xmartlabs.bigbang.core.model.BuildInfo;
 import com.xmartlabs.bigbang.log.crashlytics.CrashlyticsLogger;
 import com.xmartlabs.bigbang.retrofit.helper.ServiceErrorHandler;
+import com.xmartlabs.moviefan.database.common.DatabaseManager;
 import com.xmartlabs.moviefan.module.AndroidModule;
 import com.xmartlabs.moviefan.module.OkHttpModule;
 import com.xmartlabs.moviefan.module.RestServiceModule;
@@ -35,6 +34,8 @@ public class MovieFanApplication extends Application {
 
   @Inject
   BuildInfo buildInfo;
+  @Inject
+  DatabaseManager databaseManager;
   @Inject
   GeneralErrorHelper generalErrorHelper;
   @Inject
@@ -65,7 +66,7 @@ public class MovieFanApplication extends Application {
     super.onCreate();
     initializeThreeTenABP();
     initializeInjections();
-    initializeDataBase();
+    initializeDatabase();
     initializeRxErrorHandler();
     initializeLogging();
   }
@@ -92,8 +93,8 @@ public class MovieFanApplication extends Application {
     return new BulletApplicationComponent(component);
   }
 
-  private void initializeDataBase() {
-    FlowManager.init(new FlowConfig.Builder(this).build());
+  private void initializeDatabase() {
+    databaseManager.initializeDatabase();
   }
 
   private void initializeThreeTenABP() {
